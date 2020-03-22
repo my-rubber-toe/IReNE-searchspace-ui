@@ -1,2 +1,30 @@
-<h1>Main app for SearchSpace</h1>
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <p>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <span class="material-icons">
+          menu
+      </span>
+  </button>
+  </p>
+  <h1><span style="vertical-align: bottom; font-size: 2em; font-weight: bold">IReNE</span>
+    &nbsp;&nbsp;&nbsp;Interdisciplinary Research Network Extension</h1>
+  <span style="flex: 1 1 auto"></span>
+  <a mat-button color="primary" routerLink="documents">Browse</a>
+  <a mat-button color="primary" routerLink="about">About</a>
+  <a mat-button color="primary" routerLink="collab-request">Collaborator Access</a>
+  <span class="material-icons">
+    help
+  </span>
+</mat-toolbar>
+<mat-sidenav-container (backdropClick)="sidenav.close()">
+  <mat-sidenav #sidenav mode="over" role="navigation">
+    <a mat-button (click)="sidenav.close()" color="primary" routerLink="documents">Browse</a>
+    <br>
+    <a mat-button (click)="sidenav.close()" color="primary" routerLink="about">About</a>
+    <br>
+    <a mat-button (click)="sidenav.close()" color="primary" routerLink="collab-request">Collaborator Access</a>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
