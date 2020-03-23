@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "IReNE-searchspace-ui"
+  "defaultProject": "IReNE-searchspace-ui",
+  "schematics": {
+    "@nrwl/schematics:component": {
+      "styleext": "scss"
+    }
+  }
 }
