@@ -1,6 +1,101 @@
-app-search{
-  margin: auto;
+div.disclaimer {
+  border: thin black solid;
+  padding: 10px;
 }
-div.disclaimer{
-  border-style: solid;
+p{
+  text-align: justify;
+  opacity: .6;
+}
+p#irene{
+  opacity: 1;
+  font-size: 5em;
+  font-weight: bold;
+}
+p#searchspace{
+  opacity: 1;
+  font-size: 2em;
+  font-weight: bold
+}
+h2{
+  opacity:.6;
+  text-align: center
+}
+li {
+  width: 15%;
+  display: inline-flex;
+}
+button.nav-buttons {
+  transition-duration: 0.5s;
+  background: whitesmoke;
+  width: 25%;
+  height: 0;
+  padding-bottom: 30%;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 2px;
+  border: thin black solid;
+  outline: none;
+}
+button.nav-buttons:active {
+  background: white;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+button.nav-buttons span{
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  font-size: 1em;
+}
+button.nav-buttons span.cases:after {
+  content: 'Cases';
+  position: absolute;
+  opacity: 0;
+  bottom: 1.5em;
+  right: 10px;
+  transition: 0.5s;
+}
+button.nav-buttons span.timeline-view:after {
+  content: 'Timeline View';
+  position: absolute;
+  opacity: 0;
+  bottom: .3em;
+  right: 10px;
+  transition: 0.5s;
+}
+button.nav-buttons span.map-view:after {
+  content: 'Map View';
+  position: absolute;
+  opacity: 0;
+  bottom: .3em;
+  right: 10px;
+  transition: 0.5s;
+}
+button.nav-buttons span.data-view:after {
+  content: 'Data View';
+  position: absolute;
+  opacity: 0;
+  bottom: .3em;
+  right: 10px;
+  transition: 0.5s;
+}
+button.nav-buttons:hover span{
+  padding-right: 25px;
+}
+button.nav-buttons:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+img.nav{
+  display: block;
+  width: 100%;
+  padding-top: 30%;
+  padding-bottom: 0;
+  text-align: center;
+  line-height: 2em;
+  font-size: 2em;
+  margin-top: -1em;
+  opacity: .6;
 }
