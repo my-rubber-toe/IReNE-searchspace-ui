@@ -10,7 +10,10 @@
         <mat-option value="flood">Flood</mat-option>
       </mat-select>
     </mat-form-field>
-    <app-search fxFlex="70" (typed)="documentsTableComponent.applyFilter($event)"></app-search>
+    <app-search fxFlex="70" hint= "false"
+                (typed)="documentsTableComponent.applyFilter($event); documentsTableComponent.show = true">
+
+    </app-search>
   </div>
 </div>
 <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="5px">
@@ -55,5 +58,5 @@
     </mat-form-field>
   </div>
   <mat-divider [vertical]="true" fxFlex="1" style="height: 500px"></mat-divider>
-  <app-documents-table fxFlex="80" #documentsTableComponent></app-documents-table>
+  <app-documents-table show="true" fxFlex="80" #documentsTableComponent></app-documents-table>
 </div>

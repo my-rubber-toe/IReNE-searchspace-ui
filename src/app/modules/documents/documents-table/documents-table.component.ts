@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {DocumentMetadata} from '../../../shared/Models/documents';
 import { DocumentsService } from '../../../shared/services/documents.service';
@@ -11,6 +11,7 @@ import {MatSort} from '@angular/material/sort';
   styleUrls: ['./documents-table.component.css']
 })
 export class DocumentsTableComponent implements OnInit {
+  @Input() show: boolean;
   dataSource: MatTableDataSource<DocumentMetadata>;
   displayedColumns: string[] = ['title', 'creator', 'location',
   'publication', 'incident', 'modification', 'infrastructure',
@@ -21,9 +22,13 @@ export class DocumentsTableComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (filterValue === '') {
+      this.show = false;
+    }else {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
     }
   }
   constructor(
@@ -36,6 +41,7 @@ export class DocumentsTableComponent implements OnInit {
       this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.documentService.documents);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      console.log(this.show);
     });
   }
 

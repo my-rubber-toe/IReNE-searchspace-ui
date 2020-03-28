@@ -1,3 +1,4 @@
+<ng-template [ngIf]="show"><div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
   <!-- titleColumn -->
   <ng-container matColumnDef="title">
@@ -57,3 +58,4 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[9, 15, 20]" showFirstLastButtons></mat-paginator>
+</div></ng-template>
