@@ -1,1 +1,59 @@
-<p>documents works!</p>
+<mat-divider></mat-divider>
+<div fxLayout="column" fxLayoutAlign="space-evenly stretch">
+  <div fxLayoutAlign="center" fxLayoutGap="3px">
+    <mat-form-field fxFlexAlign="center" appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select>
+        <mat-option value="hurricane">Hurricane</mat-option>
+        <mat-option value="earthquake">Earthquake</mat-option>
+        <mat-option value="energy">Energy</mat-option>
+        <mat-option value="flood">Flood</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-search fxFlex="70" (typed)="documentsTableComponent.applyFilter($event)"></app-search>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+  <div fxFlex="10">
+    <mat-form-field class="side">
+      <mat-label>Enter Start Date</mat-label>
+      <input matInput [matDatepicker]="picker"
+             (dateChange)="addEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="side">
+      <mat-label>Enter Finish Date</mat-label>
+      <input matInput [matDatepicker]="picker2"
+             (dateChange)="addEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="side">
+      <mat-label>Locations</mat-label>
+      <mat-select [formControl]="formControl" multiple>
+        <mat-option *ngFor="let location of locationList" [value]="location">{{location}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="side">
+      <mat-label>Infrastructure</mat-label>
+      <mat-select [formControl]="formControl" multiple>
+        <mat-option *ngFor="let structure of structureList" [value]="structure">{{structure}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="side">
+      <mat-label>Damages</mat-label>
+      <mat-select [formControl]="formControl" multiple>
+        <mat-option *ngFor="let dmg of dmgList" [value]="dmg">{{dmg}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="side">
+      <mat-label>Locations</mat-label>
+      <mat-select [formControl]="formControl" multiple>
+        <mat-option *ngFor="let language of languageList" [value]="language">{{language}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-divider [vertical]="true" fxFlex="1" style="height: 500px"></mat-divider>
+  <app-documents-table fxFlex="80" #documentsTableComponent></app-documents-table>
+</div>

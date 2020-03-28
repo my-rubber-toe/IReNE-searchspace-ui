@@ -5,6 +5,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DefaultModule} from './layouts/default/default.module';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import {HttpClientModule} from '@angular/common/http';
+import { fakeBackendProvider} from './shared/fakebackend.interceptor';
+import {MatNativeDateModule} from '@angular/material/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,8 +19,12 @@ import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.c
     BrowserAnimationsModule,
     AppRoutingModule,
     DefaultModule,
+    HttpClientModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,6 +15,12 @@ import {AboutComponent} from '../../about/about.component';
 import {HomeModule} from '../../modules/home/home.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
+import {DocumentsModule} from '../../modules/documents/documents.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -36,8 +42,14 @@ import {MatIconModule} from '@angular/material/icon';
     MatToolbarModule,
     FlexLayoutModule,
     HomeModule,
+    DocumentsModule,
     MatGridListModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
   ]
 })
 export class DefaultModule { }

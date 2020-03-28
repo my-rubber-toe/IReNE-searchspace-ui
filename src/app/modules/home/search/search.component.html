@@ -1,5 +1,5 @@
 <mat-form-field fxFill appearance="outline"  hintLabel="Search the database" class="search">
-    <input matInput type="search" placeholder="Search">
+    <input matInput (keyup)="apply($event)" type="search" placeholder="Search">
   <button mat-button matSuffix mat-icon-button aria-label="Search">
     <mat-icon>search</mat-icon>
   </button>
