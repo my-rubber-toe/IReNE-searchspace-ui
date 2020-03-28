@@ -13,7 +13,7 @@ import { FlexLayoutModule} from '@angular/flex-layout';
   declarations: [SearchComponent,
   ],
   exports: [
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
     CommonModule,

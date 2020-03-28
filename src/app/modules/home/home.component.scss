@@ -24,9 +24,8 @@ li {
   width: 15%;
   display: inline-flex;
 }
-button.nav-buttons {
+a.nav-buttons {
   transition-duration: 0.5s;
-  background: whitesmoke;
   width: 25%;
   height: 0;
   padding-bottom: 30%;
@@ -37,65 +36,53 @@ button.nav-buttons {
   border: thin black solid;
   outline: none;
 }
-button.nav-buttons:active {
+a.nav-buttons:active {
   background: white;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
-button.nav-buttons span{
+a.nav-buttons p{
   cursor: pointer;
   display: inline-block;
-  position: relative;
+  font-size: 2vw;
   transition: 0.5s;
-  font-size: 1em;
 }
-button.nav-buttons span.cases:after {
+a.nav-buttons p.cases:after {
   content: 'Cases';
-  position: absolute;
+  margin-right: 30%;
   opacity: 0;
-  bottom: 1.5em;
-  right: 10px;
   transition: 0.5s;
 }
-button.nav-buttons span.timeline-view:after {
-  content: 'Timeline View';
-  position: absolute;
+a.nav-buttons p.timeline-view:after {
+  content: 'Timeline';
   opacity: 0;
-  bottom: .3em;
-  right: 10px;
   transition: 0.5s;
 }
-button.nav-buttons span.map-view:after {
-  content: 'Map View';
-  position: absolute;
+a.nav-buttons p.map-view:after {
+  content: 'Map';
   opacity: 0;
-  bottom: .3em;
-  right: 10px;
   transition: 0.5s;
 }
-button.nav-buttons span.data-view:after {
-  content: 'Data View';
-  position: absolute;
+a.nav-buttons p.data-view:after {
+  content: 'Plots';
   opacity: 0;
-  bottom: .3em;
-  right: 10px;
   transition: 0.5s;
 }
-button.nav-buttons:hover span{
+a.nav-buttons:hover p{
   padding-right: 25px;
 }
-button.nav-buttons:hover span:after {
+a.nav-buttons:hover p:after {
   opacity: 1;
   right: 0;
 }
 img.nav{
   display: block;
   width: 100%;
-  padding-top: 30%;
-  padding-bottom: 0;
   text-align: center;
-  line-height: 2em;
-  font-size: 2em;
-  margin-top: -1em;
+  line-height: 1em;
+  font-size: 1em;
+  margin-top: 10px;
+  margin-bottom: 1px;
   opacity: .6;
+  overflow: hidden;
 }

@@ -1,13 +1,17 @@
 <mat-divider></mat-divider>
-<div fxLayout="row wrap" fxFill fxLayoutAlign="center space-around">
-  <div fxFlex="grow" fxLayoutAlign="center">
+<div fxLayout="row wrap" fxLayoutAlign="center space-evenly">
+  <div style="margin-top: 30px" fxFlex="grow" fxLayoutAlign="center">
   <p id="irene">
     IReNE
   </p>
   <p id="searchspace">Search Space</p>
   </div>
-  <app-search fxFlex="70" fxFlexOrder="1"></app-search>
-  <div class="disclaimer" fxFlex="65" fxFlexOrder="2">
+  <app-search (typed)="documentsTableComponent.show= true; searching = true;
+   documentsTableComponent.applyFilter($event)" fxFlex="70" fxFlexOrder="1">
+
+  </app-search>
+  <app-documents-table fxFlexOrder="2" fxFlex="70" #documentsTableComponent></app-documents-table>
+  <div *ngIf="!documentsTableComponent.show" class="disclaimer" fxFlex="65" fxFlexOrder="2">
     <h2>
       Welcome to the Interdisciplinary Research Network Extension
     </h2>
@@ -29,23 +33,23 @@
     </p>
   </div>
 </div>
-<div fxLayout="row" fxLayoutAlign="center">
+<div *ngIf="!documentsTableComponent.show" style="margin-top: 50px" fxLayout="row" fxLayoutAlign="center">
 <li fxFlex="50">
-  <button class="nav-buttons">
+  <a mat-button color="primary" class="nav-buttons" routerLink="/documents">
     <img class="nav" src="assets/pictures/search-black-48dp.svg" alt="search">
-    <span class="cases"></span>
-  </button>
-  <button class="nav-buttons">
+    <p class="cases"></p>
+  </a>
+  <a mat-button color="primary" class="nav-buttons">
     <img class="nav" src="assets/pictures/room_black.svg" alt="map view">
-    <span class="map-view"></span>
-  </button>
-  <button class="nav-buttons">
+    <p class="map-view"></p>
+  </a>
+  <a mat-button color="primary" class="nav-buttons">
     <img class="nav" src="assets/pictures/date_range.svg" alt="timeline view">
-    <span class="timeline-view"></span>
-  </button>
-  <button class="nav-buttons">
+    <p class="timeline-view"></p>
+  </a>
+  <a mat-button color="primary" class="nav-buttons">
     <img class="nav" src="assets/pictures/show_chart.svg" alt="Data view">
-    <span class="data-view"></span>
-  </button>
+    <p class="data-view"></p>
+  </a>
 </li>
 </div>
