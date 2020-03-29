@@ -27,11 +27,7 @@ export interface Map {
     title: string,
     infrastructure_type: Array<string>,
     damage_type: Array<string>,
-    language: string,
-    tag: Array<string>,
-    publication_date: string,
-    incident_date: string,
-    author_name: Array<string>
+    tag: Array<string>
 }
 
 export interface XY {
@@ -47,10 +43,5 @@ export interface XY {
 export interface Timeline{
     id: string,
     title: string,
-    tag: Array<string>,
-    infrastructure_type: Array<string>,
-    damage_type: Array<string>,
-    publication_date: string,
-    incident_date: string,
-    timeline: Array<object>,
+    timeline: Array<object>
 }

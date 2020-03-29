@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 
 @Component({
   selector: 'app-documents',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocumentsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private docservice:SearchSpaceService) { }
 
   ngOnInit(): void {
+    this.docservice.getDocuments()
   }
 
 }
