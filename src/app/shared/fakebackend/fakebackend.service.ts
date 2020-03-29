@@ -65,17 +65,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function handleRoute() {
             switch (true) {
-                case url.endsWith('/collab-request') && method === 'POST':
+                case url.endsWith('/collab-request') && method === 'GET':
                     return collabRequest();
-                case url.endsWith('/api/documents') && method === 'POST':
+                case url.endsWith('/api/documents') && method === 'GET':
                     return getDocuments();
                 case url.endsWith('/api/documents/{doc_id}') && method === 'GET':
                     return getDocument();      
-                case url.endsWith('/documents/visualize/map') && method === 'POST':
+                case url.endsWith('/documents/visualize/map') && method === 'GET':
                     return docMap();
-                case url.endsWith('/documents/visualize/comparison-graph') && method === 'POST':
+                case url.endsWith('/documents/visualize/comparison-graph') && method === 'GET':
                     return docXY();
-                case url.endsWith('/documents/visualize/timeline') && method === 'POST':
+                case url.endsWith('/documents/visualize/timeline') && method === 'GET':
                     return docTimeline();
                 default:
                     return next.handle(request);
@@ -95,66 +95,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getDocument() {
             return ok(base64PDF);
         }
+        
 
         function docMap() {
-          const {filter} = body;
-          for (let index = 0; index < mapDocument.length; index++) {
-            const element = mapDocument[index];
-            if(element.damage_type.includes(filter)){
-                console.log(filter);
-                return ok(filter);
-            }
-            else if(element.infrastructure_type.includes(filter)){
-                console.log(filter);
-                return ok(filter);
-            }
-            else if(element.location === filter){
-                console.log(filter);
-                return ok(filter)
-            }
-            else if(element.tag.includes(filter)){
-                console.log(filter);
-                return ok(filter)
-            }
-          }
+            console.log(mapDocument);
+            return ok(mapDocument);
         }
 
         function docXY() {
-            const {filter} = body;
-            for (let index = 0; index < xyDocument.length; index++) {
-              const element = xyDocument[index];
-              if(element.damage_type.includes(filter)){
-                  console.log(filter);
-                  return ok(filter);
-              }
-              else if(element.incident_date == filter){
-                  console.log(filter);
-                  return ok(filter);
-              }
-              else if(element.infrastructure_type.includes(filter)){
-                  console.log(filter);
-                  return ok(filter);
-              }
-              else if(element.publication_date == filter){
-                  console.log(filter);
-                  return ok(filter)
-              }
-              else if(element.tag.includes(filter)){
-                  console.log(filter);
-                  return ok(filter)
-              }
-            }
+            console.log(xyDocument);
+            return ok(xyDocument);
           }
 
         function docTimeline() {
-            const {filter} = body;
-            for (let index = 0; index < timelineDocument.length; index++) {
-              const element = timelineDocument[index];
-              if(element.title.includes(filter)){
-                  console.log(filter);
-                  return ok(filter);
-              }
-            }
+            console.log(timelineDocument);
+            return ok(timelineDocument);
           }  
 
         // helper functions
@@ -163,22 +118,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return of(new HttpResponse({ status: 200, body }))
         }
 
-        function unauthorized() {
-            return throwError({ status: 401, error: { message: 'Unauthorised' } });
-        }
-
-        function error(message) {
-            return throwError({ error: { message } });
-        }
-
-        function isLoggedIn() {
-            return headers.get('Authorization') === 'Bearer fake-jwt-token';
-        }
-
-        function idFromUrl() {
-            const urlParts = url.split('/');
-            return parseInt(urlParts[urlParts.length - 1]);
-        }
     }
 }
 

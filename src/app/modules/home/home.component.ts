@@ -13,6 +13,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.docservice.getDocuments()
+    this.docservice.collabRequest()
+    this.docservice.docMap()
+    this.docservice.docXY()
+    this.docservice.docTimeline()
   }
 
 }
