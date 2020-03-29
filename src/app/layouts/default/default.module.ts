@@ -21,6 +21,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -32,24 +33,25 @@ import {ReactiveFormsModule} from '@angular/forms';
     AboutComponent,
     HomeComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatToolbarModule,
-    FlexLayoutModule,
-    HomeModule,
-    DocumentsModule,
-    MatGridListModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatToolbarModule,
+        FlexLayoutModule,
+        HomeModule,
+        DocumentsModule,
+        MatGridListModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatCardModule,
+    ]
 })
 export class DefaultModule { }
