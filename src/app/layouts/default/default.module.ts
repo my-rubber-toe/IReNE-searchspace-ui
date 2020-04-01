@@ -13,6 +13,17 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
+import {HomeModule} from '../../modules/home/home.module';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import {DocumentsModule} from '../../modules/documents/documents.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+
 
 
 
@@ -24,18 +35,26 @@ import { SearchSpaceService } from 'src/app/shared/services/searchspace.service'
     AboutComponent,
     HomeComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatToolbarModule,
-    FlexLayoutModule,
-  ],
-  providers: [
-    SearchSpaceService
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatToolbarModule,
+        FlexLayoutModule,
+        HomeModule,
+        DocumentsModule,
+        MatGridListModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        SearchSpaceService
+    ]
 })
 export class DefaultModule { }
