@@ -1,3 +1,4 @@
+import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
@@ -19,8 +20,9 @@ export class DocumentsComponent implements OnInit {
   addEvent(type: string, event: MatDatepickerInputEvent<unknown>) {
     this.events.push(`${type}: ${event.value}`);
   }
-  constructor() { }
+  constructor(private docservice:SearchSpaceService) { }
 
   ngOnInit(): void {
+    this.docservice.getDocuments()
   }
 }

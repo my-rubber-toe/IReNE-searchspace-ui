@@ -12,6 +12,7 @@ import {HomeComponent} from '../../modules/home/home.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
+import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import {HomeModule} from '../../modules/home/home.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
@@ -21,6 +22,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import { XyModule } from 'src/app/modules/xy/xy.module';
+import { XyComponent } from 'src/app/modules/xy/xy.component';
+
 
 
 
@@ -30,26 +35,30 @@ import {ReactiveFormsModule} from '@angular/forms';
     DocumentsComponent,
     CollabRequestComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    XyComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatToolbarModule,
-    FlexLayoutModule,
-    HomeModule,
-    DocumentsModule,
-    MatGridListModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatToolbarModule,
+        FlexLayoutModule,
+        HomeModule,
+        DocumentsModule,
+        MatGridListModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        XyModule
+
+    ]
 })
 export class DefaultModule { }

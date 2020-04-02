@@ -1,3 +1,4 @@
+import { base64PDF } from './fake-data/samplePdf';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
@@ -26,11 +27,11 @@ const dbDocuments: DocumentMetadata[] = [
 ];
 
 const mapDocument: Map[] = [
-    {id: 'tPbl1DyxToy1FUHpfcqn', author_name: ['Roberto Guzman'], title: 'The great Flooding', location: 'Caguas', publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type:['Building'], damage_type:['Flooding'], language:'English', tag:['Flood'] },
-    {id: 'iO0PxjKJY0FwezeVq943', author_name: ['Yomar Ruiz'], title: 'The great Shake', location: 'Mayagüez', publication_date:'2020-02-01',incident_date:'2017-07-03',infrastructure_type:['Building'], damage_type:['broken sewer'], language:'Spanish', tag:['Earthquake'] },
-    {id: 'qkdQoXSmnNeMISTmMP4f', author_name: ['Alberto Canela'], title: 'The great Rain', location: 'Cabo Rojo',publication_date: '2019-10-02', incident_date:'2017-08-13',infrastructure_type:['Building'], damage_type:['Flooding'], language:'Mandarin', tag:['Flood'] },
-    {id: 'RYTSBZAiwlAG0t8EOb6B', author_name: ['Alejandro Vasquez'], title: 'The great Wind', location:'San Juan', publication_date: '2020-02-03', incident_date:'2017-07-03',infrastructure_type:['Building'], damage_type:['Flooding'], language:'English', tag:['Hurricane']  },
-    {id: 'VzunBYihBS05mpj0U9pP', author_name: ['Jainel Torres'], title: 'The great Fire', location: 'Ponce',publication_date:'2019-02-02',incident_date:'2016-08-03',infrastructure_type:['Building'], damage_type:['Burn'], language:'Spanish', tag:['Fire']  },
+    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', location: 'Caguas',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'] },
+    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', location: 'Mayagüez', infrastructure_type:['Building'], damage_type:['broken sewer'], tag:['Earthquake'] },
+    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', location: 'Cabo Rojo',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'] },
+    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', location:'San Juan', infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Hurricane']  },
+    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', location: 'Ponce', infrastructure_type:['Building'], damage_type:['Burn'], tag:['Fire'] },
 ];
 
 const xyDocument: XY[] = [
@@ -42,11 +43,11 @@ const xyDocument: XY[] = [
 ];
 
 const timelineDocument: Timeline[] = [
-    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'], timeline: [{event:'it flooded', eventDate:'2017-07-09'}] },
-    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake',  publication_date:'2020-02-01',incident_date:'2017-07-03',infrastructure_type:['Building'], damage_type:['broken sewer'],tag:['Earthquake'], timeline: [{event:'the ground shake', eventDate:'2016-01-09'}]  },
-    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', publication_date: '2019-10-02', incident_date:'2017-08-13',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'], timeline: [{event:'it rained', eventDate:'2017-09-09'}]  },
-    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', publication_date: '2020-02-03', incident_date:'2017-07-03',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Hurricane'], timeline: [{event:'it rained with wind', eventDate:'2017-07-10'}]   },
-    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', publication_date:'2019-02-02',incident_date:'2016-08-03',infrastructure_type:['Building'], damage_type:['Burn'], tag:['Fire'], timeline: [{event:'it burned a lot', eventDate:'2018-07-09'}]},
+    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', timeline: [{event:'it flooded', eventDate:'2017-07-09'}] },
+    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', timeline: [{event:'the ground shake', eventDate:'2016-01-09'}]  },
+    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', timeline: [{event:'it rained', eventDate:'2017-09-09'}]  },
+    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', timeline: [{event:'it rained with wind', eventDate:'2017-07-10'}]   },
+    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', timeline: [{event:'it burned a lot', eventDate:'2018-07-09'}]},
 ];
 
 
@@ -64,17 +65,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function handleRoute() {
             switch (true) {
-                case url.endsWith('/collab-request') && method === 'POST':
+                case url.endsWith('/collab-request') && method === 'GET':
                     return collabRequest();
-                case url.endsWith('/api/documents') && method === 'POST':
+                case url.endsWith('/api/documents') && method === 'GET':
                     return getDocuments();
                 case url.endsWith('/api/documents/{doc_id}') && method === 'GET':
                     return getDocument();      
-                case url.endsWith('/documents/visualize/map') && method === 'POST':
+                case url.endsWith('/documents/visualize/map') && method === 'GET':
                     return docMap();
-                case url.endsWith('/documents/visualize/comparison-graph') && method === 'POST':
+                case url.endsWith('/documents/visualize/comparison-graph') && method === 'GET':
                     return docXY();
-                case url.endsWith('/documents/visualize/timeline') && method === 'POST':
+                case url.endsWith('/documents/visualize/timeline') && method === 'GET':
                     return docTimeline();
                 default:
                     return next.handle(request);
@@ -83,96 +84,32 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // Collaborators
         function collabRequest() {
+            console.log(collaborators);
             return ok(collaborators);
         }
         //documents
         function getDocuments() {
+            console.log(dbDocuments);
             return ok(dbDocuments);
         }
         function getDocument() {
-            const {docID} = body;
-            for (let index = 0; index < dbDocuments.length; index++) {
-              const element = dbDocuments[index];
-              if (element.id === docID){
-                return ok(docID);
-              }
-            }
-            return error('Something went wrong at /api/collaborators');
+            return ok(base64PDF);
         }
+        
 
         function docMap() {
-          const {filter} = body;
-          for (let index = 0; index < mapDocument.length; index++) {
-            const element = mapDocument[index];
-            if (element.author_name === filter){
-              return ok(filter);
-            }
-            else if(element.damage_type.includes(filter)){
-                return ok(filter);
-            }
-            else if(element.incident_date === filter){
-                return ok(filter);
-            }
-            else if(element.infrastructure_type.includes(filter)){
-                return ok(filter);
-            }
-            else if(element.language === filter){
-                return ok(filter)
-            }
-            else if(element.location === filter){
-                return ok(filter)
-            }
-            else if(element.publication_date === filter){
-                return ok(filter)
-            }
-            else if(element.tag.includes(filter)){
-                return ok(filter)
-            }
-          }
+            console.log(mapDocument);
+            return ok(mapDocument);
         }
 
         function docXY() {
-            const {filter} = body;
-            for (let index = 0; index < xyDocument.length; index++) {
-              const element = xyDocument[index];
-              if(element.damage_type.includes(filter)){
-                  return ok(filter);
-              }
-              else if(element.incident_date == filter){
-                  return ok(filter);
-              }
-              else if(element.infrastructure_type.includes(filter)){
-                  return ok(filter);
-              }
-              else if(element.publication_date == filter){
-                  return ok(filter)
-              }
-              else if(element.tag.includes(filter)){
-                  return ok(filter)
-              }
-            }
+            console.log(xyDocument);
+            return ok(xyDocument);
           }
 
         function docTimeline() {
-            const {filter} = body;
-            for (let index = 0; index < timelineDocument.length; index++) {
-              const element = timelineDocument[index];
-              if(element.damage_type.includes(filter)){
-                  return ok(filter);
-              }
-              else if(element.incident_date == filter){
-                  return ok(filter);
-              }
-              else if(element.infrastructure_type.includes(filter)){
-                  return ok(filter);
-              }
-              else if(element.publication_date == filter){
-                  return ok(filter)
-              }
-              else if(element.tag.includes(filter)){
-                  return ok(filter)
-              }
-            }
+            console.log(timelineDocument);
+            return ok(timelineDocument);
           }  
 
         // helper functions
@@ -181,22 +118,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return of(new HttpResponse({ status: 200, body }))
         }
 
-        function unauthorized() {
-            return throwError({ status: 401, error: { message: 'Unauthorised' } });
-        }
-
-        function error(message) {
-            return throwError({ error: { message } });
-        }
-
-        function isLoggedIn() {
-            return headers.get('Authorization') === 'Bearer fake-jwt-token';
-        }
-
-        function idFromUrl() {
-            const urlParts = url.split('/');
-            return parseInt(urlParts[urlParts.length - 1]);
-        }
     }
 }
 

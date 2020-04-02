@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DocumentMetadata } from '../Models/searchspace.model';
+import { DocumentMetadata } from '../models/searchspace.model';
 
 @Injectable({
   providedIn: 'root'
