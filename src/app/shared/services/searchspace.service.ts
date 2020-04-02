@@ -13,7 +13,7 @@ import { Timeline } from '../models/searchspace.model';
 })
 export class SearchSpaceService {
 
-  fakeBackend = 'http://localhost:8080/api';
+  fakeBackend = 'http://localhost:4200/api';
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   maps: Map[];
@@ -52,25 +52,25 @@ export class SearchSpaceService {
     (response: Map[]) => {
       this.maps = response;
     });
-}
-docXY(){
-    /**
-   * Get all documents from the fake server.
-   */
-  return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
-    (response: XY[]) => {
-      this.comparison = response;
-    });
-}
+  }
+  docXY(){
+      /**
+     * Get all documents from the fake server.
+     */
+    return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
+      (response: XY[]) => {
+        this.comparison = response;
+      });
+  }
 
-docTimeline(){
-    /**
-   * Get all documents from the fake server.
-   */
-  return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
-    (response: Timeline[]) => {
-      this.timeline = response;
-    });
-}
+  docTimeline(){
+      /**
+     * Get all documents from the fake server.
+     */
+    return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
+      (response: Timeline[]) => {
+        this.timeline = response;
+      });
+  }
 
 }

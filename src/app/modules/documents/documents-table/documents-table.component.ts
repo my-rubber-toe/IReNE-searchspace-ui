@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {DocumentMetadata} from '../../../shared/Models/searchspace.model';
+import {DocumentMetadata} from '../../../shared/models/searchspace.model';
 import { DocumentsService } from '../../../shared/services/documents.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';

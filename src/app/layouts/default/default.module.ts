@@ -23,6 +23,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import { XyModule } from 'src/app/modules/xy/xy.module';
+import { XyComponent } from 'src/app/modules/xy/xy.component';
 
 
 
@@ -33,7 +35,8 @@ import {MatCardModule} from '@angular/material/card';
     DocumentsComponent,
     CollabRequestComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    XyComponent
   ],
     imports: [
         CommonModule,
@@ -54,7 +57,8 @@ import {MatCardModule} from '@angular/material/card';
         MatDatepickerModule,
         ReactiveFormsModule,
         MatCardModule,
-        SearchSpaceService
+        XyModule
+
     ]
 })
 export class DefaultModule { }

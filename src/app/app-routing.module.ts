@@ -7,6 +7,7 @@ import {AboutComponent} from './about/about.component';
 import {HomeComponent} from './modules/home/home.component';
 import {DefaultComponent} from './layouts/default/default.component';
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
+import { XyComponent } from './modules/xy/xy.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'visualize',
         component: VisualizeComponent
+      },
+      {
+        path: 'xy',
+        component: XyComponent
       }],
   },
   { path: '**', component: PageNotFoundComponent }
