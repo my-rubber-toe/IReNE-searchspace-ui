@@ -1,4 +1,4 @@
-import { base64PDF } from './fake-data/samplePdf';
+import { base64PDF } from './samplePDF';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
