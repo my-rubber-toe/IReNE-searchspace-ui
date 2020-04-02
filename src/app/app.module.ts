@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DefaultModule} from './layouts/default/default.module';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,7 @@ import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.c
     AppRoutingModule,
     DefaultModule
   ],
-  providers: [],
+  providers: [fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

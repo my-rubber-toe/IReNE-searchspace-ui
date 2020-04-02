@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private docservice:SearchSpaceService) { }
 
   ngOnInit(): void {
-    this.docservice.getDocuments()
+    this.docservice.getDocuments();
   }
 
 }

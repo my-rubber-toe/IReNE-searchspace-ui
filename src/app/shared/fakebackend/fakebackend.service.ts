@@ -67,7 +67,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.endsWith('/collab-request') && method === 'POST':
                     return collabRequest();
-                case url.endsWith('/api/documents') && method === 'POST':
+                case url.endsWith('/api/documents') && method === 'GET':
                     return getDocuments();
                 case url.endsWith('/api/documents/{doc_id}') && method === 'GET':
                     return getDocument();      

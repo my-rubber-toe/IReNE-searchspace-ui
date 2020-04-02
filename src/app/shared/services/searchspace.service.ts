@@ -35,7 +35,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+    return this.http.get('http://localhost:4200/api/documents').subscribe(
         (response: DocumentMetadata[]) => {
           this.documents = response;
         });

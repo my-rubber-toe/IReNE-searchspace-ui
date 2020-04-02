@@ -13,6 +13,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -33,6 +34,7 @@ import { SearchSpaceService } from 'src/app/shared/services/searchspace.service'
     MatButtonModule,
     MatToolbarModule,
     FlexLayoutModule,
+    HttpClientModule
   ],
   providers: [
     SearchSpaceService
