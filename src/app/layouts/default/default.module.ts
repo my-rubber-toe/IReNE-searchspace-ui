@@ -13,7 +13,19 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-import { HttpClientModule } from '@angular/common/http';
+import {HomeModule} from '../../modules/home/home.module';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import {DocumentsModule} from '../../modules/documents/documents.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import { XyModule } from 'src/app/modules/xy/xy.module';
+import { XyComponent } from 'src/app/modules/xy/xy.component';
+
 
 
 
@@ -23,21 +35,30 @@ import { HttpClientModule } from '@angular/common/http';
     DocumentsComponent,
     CollabRequestComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    XyComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatToolbarModule,
-    FlexLayoutModule,
-    HttpClientModule
-  ],
-  providers: [
-    SearchSpaceService
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatToolbarModule,
+        FlexLayoutModule,
+        HomeModule,
+        DocumentsModule,
+        MatGridListModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        XyModule
+
+    ]
 })
 export class DefaultModule { }

@@ -1,1 +1,113 @@
-<p>home works!</p>
+<mat-divider></mat-divider>
+<div fxLayout="row wrap" fxLayoutAlign="center space-evenly">
+  <div style="margin-top: 30px" fxFlex="grow" fxLayoutAlign="center">
+  <p id="irene">
+    IReNE
+  </p>
+  <p id="searchspace">Search Space</p>
+  </div>
+  <app-search (typed)="documentsTableComponent.show= true; searching = true;
+   documentsTableComponent.applyFilter($event)" fxFlex="60" fxFlexOrder="1">
+
+  </app-search>
+  <app-documents-table fxFlexOrder="2" fxFlex="70" #documentsTableComponent></app-documents-table>
+  <div *ngIf="!documentsTableComponent.show" class="disclaimer" fxFlex="60" fxFlexOrder="2">
+    <h2>
+      Welcome to the Interdisciplinary Research Network Extension
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
+      eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
+      Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
+      Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
+      Ut rutrum felis ut sapien malesuada, sed bibendum mi volutpat.
+      Aliquam eu cursus dui, et ultricies arcu. Orci varius natoque
+      penatibus et magnis dis parturient montes, nascetur ridiculus
+      mus. Nam scelerisque libero lacinia metus consequat consectetur.
+      Maecenas eget ex eu sem viverra aliquet et ut eros. Ut velit ex,
+      aliquam molestie tellus vel, laoreet pulvinar enim. Ut consectetur
+      laoreet convallis. Curabitur vel vulputate neque, quis elementum
+      ligula. Sed euismod odio elit. Suspendisse imperdiet interdum lectus.
+      Phasellus porttitor arcu ligula, et molestie ligula eleifend eu
+    </p>
+  </div>
+</div>
+<div *ngIf="!documentsTableComponent.show" style="margin-top: 10px" fxLayout="row" fxLayoutAlign="center start">
+  <mat-card fxFlex="15">
+    <mat-card-header>
+      <mat-card-title>Search</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/pictures/search-black-48dp.svg" alt="search">
+    <mat-card-content>
+      <p>
+        Search documents in the database and apply different filters.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button routerLink="/documents">Go to Search</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card fxFlex="15">
+    <mat-card-header>
+      <mat-card-title>Map</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/pictures/room_black.svg" alt="search">
+    <mat-card-content>
+      <p>
+        Select filters for the documents and show the locations of it in a map.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button routerLink="/documents">Map View</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card fxFlex="15">
+    <mat-card-header>
+      <mat-card-title>Timeline</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/pictures/date_range.svg" alt="search">
+    <mat-card-content>
+      <p>
+        Select document to visualize the timeline of it.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button routerLink="/documents">Timeline view</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card fxFlex="15">
+    <mat-card-header>
+      <mat-card-title>XvsY Plot</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="assets/pictures/show_chart.svg" alt="search">
+    <mat-card-content>
+      <p>
+        Select filters and view a X vs Y plot to visualize the correlation.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button routerLink="/xy">X vs Y Plot</button>
+    </mat-card-actions>
+  </mat-card>
+  <!--
+  <li fxFlex="50">
+  <a mat-button color="primary" class="nav-buttons" routerLink="/documents">
+    <img class="nav" src="assets/pictures/search-black-48dp.svg" alt="search">
+    <p class="cases"></p>
+  </a>
+  <a mat-button color="primary" class="nav-buttons">
+    <img class="nav" src="assets/pictures/room_black.svg" alt="map view">
+    <p class="map-view"></p>
+  </a>
+  <a mat-button color="primary" class="nav-buttons">
+    <img class="nav" src="assets/pictures/date_range.svg" alt="timeline view">
+    <p class="timeline-view"></p>
+  </a>
+  <a mat-button color="primary" class="nav-buttons">
+    <img class="nav" src="assets/pictures/show_chart.svg" alt="Data view">
+    <p class="data-view"></p>
+  </a>
+</li>
+  -->
+</div>

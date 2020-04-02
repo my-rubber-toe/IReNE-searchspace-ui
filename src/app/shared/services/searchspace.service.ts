@@ -46,79 +46,31 @@ export class SearchSpaceService {
 
   docMap(){
     /**
-   * Get all documents with filter from the fake server.
+   * Get all documents  from the fake server.
    */
   return this.http.get(`${this.fakeBackend}/documents/visualize/map`).subscribe(
-    (response) => {
-        this.maps.forEach(e => {
-          if(e.id === response){
-             response = e;
-          }
-          else if(e.damage_type === response){
-            response = e;
-         }
-          else if(e.infrastructure_type === response){
-             response = e;
-         }
-         else if(e.tag === response){
-            response = e;
-         }
-         else if(e.location === response){
-            response = e;
-         }
-        });
-      }
-    );
-}
-docXY(){
-    /**
-   * Get all documents with filter from the fake server.
-   */
-  return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
-    (response) => {
-        this.comparison.forEach(e => {
-          if(e.id === response){
-             response = e;
-          }
-          else if(e.damage_type === response){
-            response = e;
-         }
-          else if(e.infrastructure_type === response){
-             response = e;
-         }
-         else if(e.tag === response){
-            response = e;
-         }
-         else if(e.publication_date === response){
-            response = e;
-         }
-         else if(e.incident_date === response){
-             response = e;
-         }
-        });
-      }
-    );
-}
+    (response: Map[]) => {
+      this.maps = response;
+    });
+  }
+  docXY(){
+      /**
+     * Get all documents from the fake server.
+     */
+    return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
+      (response: XY[]) => {
+        this.comparison = response;
+      });
+  }
 
-docTimeline(){
-    /**
-   * Get all documents with filter from the fake server.
-   */
-  return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
-    (response) => {
-        this.timeline.forEach(e => {
-          if(e.id === response){
-             response = e;
-          }
-          else if(e.title === response){
-            response = e;
-         }
-          else if(e.timeline === response){
-             response = e;
-         }
-        });
-      }
-    );
-}
+  docTimeline(){
+      /**
+     * Get all documents from the fake server.
+     */
+    return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
+      (response: Timeline[]) => {
+        this.timeline = response;
+      });
+  }
 
 }
