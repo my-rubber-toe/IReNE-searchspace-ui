@@ -11,7 +11,7 @@ export class DocumentsComponent implements OnInit {
 
   events: string[] = [];
   formControl = new FormControl();
-  locationList: string[] = ['Arecibo', 'Ponce', 'Mayaguez', 'Caguas', 'Cabo Rojo'];
+  locationList: string[] = ['Arecibo', 'Ponce', 'Mayagüez', 'Caguas', 'Cabo Rojo'];
   languageList: string[] = ['English', 'Spanish'];
   structureList: string[] = ['Building', 'Bridge'];
   dmgList: string[] = ['Fire', 'Flooding', 'Broken Sewer'];

@@ -10,13 +10,21 @@ import {not} from 'rxjs/internal-compatibility';
 export class SearchComponent implements OnInit {
   hintDescription = 'Advance Search';
   @Output() typed = new EventEmitter();
+  @Output() empty = new EventEmitter();
+  public search;
   apply(event: Event) {
-    this.typed.emit(event);
+    if ((event.target as HTMLInputElement).value === '') {
+      this.empty.emit(event);
+    } else {
+      this.typed.emit(event);
+    }
   }
+
   constructor() {
   }
 
   ngOnInit(): void {
+    this.search = new FormControl('');
   }
 
 }

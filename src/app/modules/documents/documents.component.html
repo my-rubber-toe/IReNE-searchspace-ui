@@ -11,7 +11,9 @@
       </mat-select>
     </mat-form-field>
     <app-search fxFlex="70" hint= "false"
-                (typed)="documentsTableComponent.applyFilter($event); documentsTableComponent.show = true">
+                (typed)="documentsTableComponent.searchEvent($event);
+                 documentsTableComponent.show = true; documentsTableComponent.applyFilter()"
+                (empty)="documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()">
 
     </app-search>
   </div>
@@ -34,7 +36,8 @@
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Locations</mat-label>
-      <mat-select [formControl]="formControl" multiple>
+      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.locationEvent($event.value);
+      documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let location of locationList" [value]="location">{{location}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -46,13 +49,15 @@
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Damages</mat-label>
-      <mat-select [formControl]="formControl" multiple>
+      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.damageEvent($event.value);
+      documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let dmg of dmgList" [value]="dmg">{{dmg}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="side">
-      <mat-label>Locations</mat-label>
-      <mat-select [formControl]="formControl" multiple>
+      <mat-label>Language</mat-label>
+      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.languageEvent($event.value);
+      documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let language of languageList" [value]="language">{{language}}</mat-option>
       </mat-select>
     </mat-form-field>
