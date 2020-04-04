@@ -10,7 +10,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import { GoogleChartsModule } from 'angular-google-charts';
 // import { AppComponent } from 'src/app/app.component';
 
 
@@ -23,9 +22,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
     MatDatepickerModule,
     MatIconModule,
     MatPaginatorModule,
-    MatSortModule,
-    GoogleChartsModule
-  ],
-  providers: [], bootstrap: [XyComponent]
+    MatSortModule
+  ]
 })
 export class XyModule { }
