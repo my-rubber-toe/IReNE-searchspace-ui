@@ -60,7 +60,6 @@ import { MapComponent } from 'src/app/modules/map/map.component';
         ReactiveFormsModule,
         MatCardModule,
         XyModule,
-        // GoogleChartsModule.forRoot('AIzaSyAolVwonoNR4EmgszPOUerN4MNbpVerjkI')
         GoogleChartsModule.forRoot()
     ]
 })
