@@ -15,7 +15,7 @@
     <h1>Infrastrucutre</h1>
     <mat-form-field>
       <mat-label>Select options</mat-label>
-      <mat-select [formControl]="infrastructure" multiple>
+      <mat-select [formControl]="infrastructure" multiple (selectionChange)="updateMapValues($event)">
         <mat-select-trigger>
           {{infrastructure.value ? infrastructure.value[0] : ''}}
           <span *ngIf="infrastructure.value?.length > 1" class="additional-selection">
