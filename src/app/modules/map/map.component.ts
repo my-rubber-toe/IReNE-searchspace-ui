@@ -1,6 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { GoogleChartComponent, ChartEvent } from 'angular-google-charts';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+
+
+
+interface SearchValues {
+  infras: string;
+  damage: string;
+  tags: string;
+}
 
 @Component({
   selector: 'app-map',
@@ -12,18 +22,22 @@ export class MapComponent implements OnInit {
   @ViewChild('map')
   map: GoogleChartComponent;
 
+  results: Observable<any>;
+  subject = new Subject()
+
   constructor(){}
 
   ngOnInit(){
     let scrollToTop = window.setInterval(() => {
-      let pos = window.pageYOffset;
-      if (pos > 0) {
-          window.scrollTo(0, pos - 30); // how far to scroll on each step
-      } else {
-          window.clearInterval(scrollToTop);
-      }
-      }, 16);
+    let pos = window.pageYOffset;
+    if (pos > 0) {
+        window.scrollTo(0, pos - 30); // how far to scroll on each step
+    } else {
+        window.clearInterval(scrollToTop);
+    }
+    }, 16);
 
+    this.results = this.subject.pipe(debounceTime(1000), map((searchValues: SearchValues) => console.log(searchValues)))
   }
 
   // Google Map Data Setup
@@ -65,6 +79,15 @@ export class MapComponent implements OnInit {
       ['Aguada, PR', "Titulo",  "123456"],
       ['Cabo Rojo, PR', "Titulo",  "123456"],
     ]
+  }
+
+  updateMapValues(e){
+    const searchValues: SearchValues = {
+      infras: this.infrastructure.value,
+      damage: this.damage.value,
+      tags: this.tags.value
+    }
+    this.subject.next(searchValues)
   }
 
 }
