@@ -10,7 +10,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-
+// import { AppComponent } from 'src/app/app.component';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import {MatSortModule} from '@angular/material/sort';
     MatDatepickerModule,
     MatIconModule,
     MatPaginatorModule,
-    MatSortModule,
+    MatSortModule
   ]
 })
 export class XyModule { }
