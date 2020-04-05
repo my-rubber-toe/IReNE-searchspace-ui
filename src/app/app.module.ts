@@ -8,7 +8,6 @@ import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.c
 import {HttpClientModule} from '@angular/common/http';
 import { fakeBackendProvider} from './shared/fakebackend/fakebackend.service';
 import {MatNativeDateModule} from '@angular/material/core';
-import { RouterModule } from '@angular/router';
 
 
 @NgModule({

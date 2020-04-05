@@ -26,6 +26,7 @@ import {MatCardModule} from '@angular/material/card';
 import { XyModule } from 'src/app/modules/xy/xy.module';
 import { XyComponent } from 'src/app/modules/xy/xy.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { MapComponent } from 'src/app/modules/map/map.component';
 
 
 
@@ -36,7 +37,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
     CollabRequestComponent,
     AboutComponent,
     HomeComponent,
-    XyComponent
+    XyComponent,
+    MapComponent
   ],
     imports: [
         CommonModule,
@@ -58,7 +60,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
         ReactiveFormsModule,
         MatCardModule,
         XyModule,
-        GoogleChartsModule
+        // GoogleChartsModule.forRoot('AIzaSyAolVwonoNR4EmgszPOUerN4MNbpVerjkI')
+        GoogleChartsModule.forRoot()
     ]
 })
 export class DefaultModule { }
