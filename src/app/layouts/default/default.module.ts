@@ -21,7 +21,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import { XyModule } from 'src/app/modules/xy/xy.module';
 import { XyComponent } from 'src/app/modules/xy/xy.component';
@@ -58,7 +58,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
         ReactiveFormsModule,
         MatCardModule,
         XyModule,
-        GoogleChartsModule
+        GoogleChartsModule,
+        FormsModule
     ]
 })
 export class DefaultModule { }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 // import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import { ChartEvent } from 'angular-google-charts';
@@ -10,8 +10,16 @@ import { XY } from 'src/app/shared/models/searchspace.model';
 import { query } from '@angular/animations';
 import { XyModule } from './xy.module';
 import { validateBasis } from '@angular/flex-layout';
+import { Subject } from 'rxjs';
 
-
+interface CatXValues {
+  cat_x: string
+}
+interface CatYValues {
+  numberCases: string,
+  pubDate: string,
+  inDate: string
+}
 @Component({
   selector: 'app-xy',
   templateUrl: './xy.component.html',
@@ -25,19 +33,22 @@ export class XyComponent implements OnInit {
   tempEvent: Event;
   dataSource: MatTableDataSource<XY>;
   tempDataSource: MatTableDataSource<XY>;
-  
+  subject =  new Subject();
   events: string[] = [];
-  formControl = new FormControl();
-  locationList: string[] = ['Arecibo', 'Ponce', 'Mayaguez', 'Caguas', 'Cabo Rojo'];
-  languageList: string[] = ['English', 'Spanish'];
+  category_x = new FormControl();
+  categoryX: string[] = ['Infrastructure', 'Damage', 'Tag'];
+
   structureList: string[] = ['Transportation', 'Energy', 'Water', 'Security', 'Ports', 'Structure', 'Construction'];
   dmgList: string[] = ['Fire', 'Flooding', 'Broken Sewer'];
-  categoryX: string[] = ['Infrastructure', 'Damage', 'Tag'];
+  
   categoryY: string[] = ['Number of Cases', 'Incident Date', 'Publication Date'];
   //chart
+  selectedValue: string = 'Damage';
+  selected = 'Damage';
+  
   el: HTMLElement = document.getElementById('catX');
   
-  title = 'Browser market shares at a specific website, 2014';
+  title = 'Comparison Graph';
   type = 'BarChart';
    columnNames = [];
    options = {
@@ -51,19 +62,29 @@ export class XyComponent implements OnInit {
   ];
    width = 550;
    height = 400;
+ 
+   updateCatX(){
+     const catxVal : CatXValues = {
+      cat_x: this.category_x.value
+     }
+    //  console.log(catxVal.cat_x);
+     return catxVal.cat_x;
+   }
    onSelect(e: ChartEvent){
      console.log(this.data[e[0].row[2]])
    }
-  constructor(private docservice:SearchSpaceService) { }
+  constructor(private docservice:SearchSpaceService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.docservice.docXY().add(() => {
+      console.log(this.updateCatX());
       this.dataSource =  new MatTableDataSource<XY>(this.docservice.comparison);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      const x = 'Damage';
-      const y = 'Number of Cases';
       
+      var x = this.updateCatX();
+      // const x = 'Damage';
+      const y = 'Publication Date';
       
       let map = new Map();
       let key = '';
@@ -182,6 +203,7 @@ export class XyComponent implements OnInit {
         
         this.columnNames = rowy;
         this.columnNames.unshift(x);
+        console.log(this.columnNames);
         this.data = row;
       }
       else {
@@ -222,7 +244,7 @@ export class XyComponent implements OnInit {
         let index = 0;
         map.forEach((value: number, key: string) => {
             row[index] = [key, value];
-            console.log(row);
+            // console.log(row);
             index++;
          });
         this.columnNames = [x,y];
