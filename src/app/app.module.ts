@@ -9,10 +9,11 @@ import {HttpClientModule} from '@angular/common/http';
 import { fakeBackendProvider} from './shared/fakebackend/fakebackend.service';
 import {MatNativeDateModule} from '@angular/material/core';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +21,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     AppRoutingModule,
     DefaultModule,
     HttpClientModule,
-    MatNativeDateModule,
+    MatNativeDateModule
   ],
   providers: [
     fakeBackendProvider

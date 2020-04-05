@@ -5,7 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DocumentMetadata } from '../../../shared/Models/searchspace.model';
 
-
 @Component({
   selector: 'app-documents-table',
   templateUrl: './documents-table.component.html',

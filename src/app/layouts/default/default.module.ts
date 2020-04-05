@@ -12,6 +12,7 @@ import {HomeComponent} from '../../modules/home/home.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
+import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import {HomeModule} from '../../modules/home/home.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,6 +25,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { XyModule } from 'src/app/modules/xy/xy.module';
+import { XyComponent } from 'src/app/modules/xy/xy.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { MapComponent } from 'src/app/modules/map/map.component';
 
 
 
@@ -33,7 +38,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     DocumentsComponent,
     CollabRequestComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    XyComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -56,6 +63,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatCardModule,
     MatChipsModule,
     MatAutocompleteModule,
+    XyModule,
+    GoogleChartsModule.forRoot()
   ]
 })
 export class DefaultModule { }

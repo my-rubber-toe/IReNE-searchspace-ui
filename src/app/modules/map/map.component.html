@@ -1,0 +1,75 @@
+<div class="map-information">
+  <h1><b>Map View</b></h1>
+  <p>
+    Filter the case studies by selecting the multiple options based on infrastrucutre and damage types as
+    well as the tags present on those case studies. The locations will be loaded automatically on the map depending on the selected options.
+  </p>
+  <p>
+    <i>Note: Some case studies may not have their locations properly placed. If the case study that you are looking for doesn't 
+      show on the map, the creator of said case study might have not set the location properly for that specofic case study.</i>
+  </p>
+
+</div>
+<div class="main-options-container">
+  <div class="map-option-box">
+    <h1>Infrastrucutre</h1>
+    <mat-form-field>
+      <mat-label>Select options</mat-label>
+      <mat-select [formControl]="infrastructure" multiple>
+        <mat-select-trigger>
+          {{infrastructure.value ? infrastructure.value[0] : ''}}
+          <span *ngIf="infrastructure.value?.length > 1" class="additional-selection">
+            (+{{infrastructure.value.length - 1}} {{infrastructure.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let element of infrastructureList" [value]="element">{{element}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="map-option-box">
+    <h1>Damage</h1>
+    <mat-form-field>
+      <mat-label>Select options</mat-label>
+      <mat-select [formControl]="damage" multiple>
+        <mat-select-trigger>
+          {{damage.value ? damage.value[0] : ''}}
+          <span *ngIf="damage.value?.length > 1" class="additional-selection">
+            (+{{damage.value.length - 1}} {{damage.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let element of damageList" [value]="element">{{element}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="map-option-box">
+    <h1>Tags</h1>
+    <mat-form-field>
+      <mat-label>Select options</mat-label>
+      <mat-select [formControl]="tags" multiple>
+        <mat-select-trigger>
+          {{tags.value ? tags.value[0] : ''}}
+          <span *ngIf="tags.value?.length > 1" class="additional-selection">
+            (+{{tags.value.length - 1}} {{tags.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let element of tagsList" [value]="element">{{element}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<div class="map-container">
+  <google-chart #map
+    [title]="title"
+    [type]="type"
+    [data]="data"
+    [columnNames]="columnNames"
+    [options]="options"
+    [width]="width"
+    [height]="height"
+    (select)="onSelect($event)"
+    >
+  </google-chart>
+</div>
+

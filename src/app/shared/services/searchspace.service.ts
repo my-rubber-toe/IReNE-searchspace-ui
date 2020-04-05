@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {DocumentMetadata, Filters} from '../models/searchspace.model';
-import { Collaborators } from '../models/searchspace.model';
+import { CollaboratorRequest } from '../models/searchspace.model';
 import { Map } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
@@ -14,7 +14,7 @@ import { Timeline } from '../models/searchspace.model';
 export class SearchSpaceService {
 
   fakeBackend = 'http://localhost:4200/api';
-  collaboratorsReq: Collaborators[];
+  collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
   maps: Map[];
@@ -28,7 +28,7 @@ export class SearchSpaceService {
      * Get all requests for collaborators from the fake server.
      */
     return this.http.get(`${this.fakeBackend}/collab-request`).subscribe(
-      (response: Collaborators[]) => {
+      (response: CollaboratorRequest[]) => {
         this.collaboratorsReq = response;
       });
   }
@@ -65,7 +65,7 @@ export class SearchSpaceService {
       });
   }
   docXY() {
-    /**
+      /**
      * Get all documents from the fake server.
      */
     return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
@@ -74,8 +74,9 @@ export class SearchSpaceService {
       });
   }
 
+
   docTimeline() {
-    /**
+      /**
      * Get all documents from the fake server.
      */
     return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
@@ -84,4 +85,7 @@ export class SearchSpaceService {
       });
   }
 
+
+
 }
+

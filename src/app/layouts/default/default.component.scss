@@ -1,8 +1,13 @@
-:host{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+mat-sidenav-container {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 100px; /* height of your footer */
 }
-mat-sidenav-container{
-  height: 100%;
-}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+ }

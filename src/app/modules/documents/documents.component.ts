@@ -68,7 +68,7 @@ export class DocumentsComponent implements OnInit {
   dmgList: string[];
   tagList: string[];
 
-  checkEvent(event: MatDatepickerInputEvent<any> ) {
+  checkEvent(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
       event.value = event.value.format('Y-MM-DD');
       console.log(event.value);
@@ -116,8 +116,16 @@ export class DocumentsComponent implements OnInit {
     private filtersService: SearchSpaceService
   ) {
   }
-
   ngOnInit(): void {
+    // Smooth scroll up
+    let scrollToTop = window.setInterval(() => {
+      let pos = window.pageYOffset;
+      if (pos > 0) {
+        window.scrollTo(0, pos - 20); // how far to scroll on each step
+      } else {
+        window.clearInterval(scrollToTop);
+      }
+    }, 16);
     this.filtersService.getFilters().add(() => {
       this.filters = this.filtersService.filters;
       this.creators = this.filters[0].creators;
