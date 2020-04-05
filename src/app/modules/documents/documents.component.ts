@@ -6,7 +6,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {Moment} from 'moment';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
-import {Filters} from '../../shared/Models/searchspace.model';
+import {Filters} from '../../shared/models/searchspace.model';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';

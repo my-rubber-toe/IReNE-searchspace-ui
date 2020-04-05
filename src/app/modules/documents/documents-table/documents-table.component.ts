@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {SearchSpaceService} from '../../../shared/services/searchspace.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DocumentMetadata } from '../../../shared/Models/searchspace.model';
+import { DocumentMetadata } from '../../../shared/models/searchspace.model';
 
 @Component({
   selector: 'app-documents-table',
