@@ -13,7 +13,7 @@
       <mat-form-field fxFlexAlign="center center" fxFill appearance="fill">
         <mat-label>Last Name</mat-label>
         <input matInput [formControl]="lastName" required>
-        <mat-error *ngIf="firstName">{{getErrorMessage()}}</mat-error>
+        <mat-error *ngIf="lastName.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
     <div fxFlexAlign="center" fxFill>
@@ -24,7 +24,7 @@
       </mat-form-field>
     </div>
     <div fxFill>
-    <button style="margin-left:75%" fxFlex="25" mat-raised-button>Submit Request</button>
+    <button style="margin-left:75%" fxFlex="25" mat-raised-button type="submit">Submit Request</button>
     </div>
   </mat-card>
 </div>

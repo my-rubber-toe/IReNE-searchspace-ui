@@ -24,6 +24,7 @@ export class DocumentsTableComponent implements OnInit {
     'damage_type', 'language', 'tag'];
   filterSelection: Map<string, any> = new Map<string, any>([
    // ['location', ''],
+    ['creators', ''],
     ['infrastructure_type', ''],
     ['damage_type', ''],
     ['language', ''],
@@ -41,6 +42,7 @@ export class DocumentsTableComponent implements OnInit {
     this.filterBySelection(this.filterSelection.get('infrastructure_type'), filteringDataSource, 'infrastructure_type');
     this.filterBySelection(this.filterSelection.get('publication_date'), filteringDataSource, 'publication_date');
     this.filterBySelection(this.filterSelection.get('incident_date'), filteringDataSource, 'incident_date');
+    this.filterBySelection(this.filterSelection.get('creators'), filteringDataSource, 'creators');
     this.dataSource = filteringDataSource;
     if (this.tempEvent) {
       this.searchFilter(this.tempEvent);
@@ -141,6 +143,16 @@ export class DocumentsTableComponent implements OnInit {
             }
           });
           break;
+        case 'creators':
+          filteringDataSource.data.forEach(e => {
+            for (const value of filter) {
+              if (e.creator.includes(value)) {
+                tempFilterData.data.push(e);
+                break;
+              }
+            }
+          });
+          break;
       }
       filteringDataSource.data = tempFilterData.data;
     }
@@ -186,6 +198,7 @@ export class DocumentsTableComponent implements OnInit {
       this.dataSource = this.tempDataSource;
     }
     this.filterSelection.set(type, selection);
+  console.log(this.filterSelection);
   }
 
   searchEvent(event: Event) {

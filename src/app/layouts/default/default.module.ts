@@ -22,6 +22,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 
@@ -33,25 +35,27 @@ import {MatCardModule} from '@angular/material/card';
     AboutComponent,
     HomeComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        SharedModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatButtonModule,
-        MatToolbarModule,
-        FlexLayoutModule,
-        HomeModule,
-        DocumentsModule,
-        MatGridListModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        ReactiveFormsModule,
-        MatCardModule,
-    ]
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatToolbarModule,
+    FlexLayoutModule,
+    HomeModule,
+    DocumentsModule,
+    MatGridListModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+  ]
 })
 export class DefaultModule { }
