@@ -27,6 +27,7 @@ import { XyModule } from 'src/app/modules/xy/xy.module';
 import { XyComponent } from 'src/app/modules/xy/xy.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { MapComponent } from 'src/app/modules/map/map.component';
+import {environment} from 'src/environments/environment';
 
 
 
@@ -60,7 +61,7 @@ import { MapComponent } from 'src/app/modules/map/map.component';
         ReactiveFormsModule,
         MatCardModule,
         XyModule,
-        GoogleChartsModule.forRoot()
+        GoogleChartsModule.forRoot(environment.MAPS_API_KEY || null)
     ]
 })
 export class DefaultModule { }

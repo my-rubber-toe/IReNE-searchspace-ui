@@ -51,7 +51,7 @@ export class MapComponent implements OnInit {
   columnNames = ["location","title", "docId"];
   options = {   
     showTip: true,
-    scrollwheel: true
+    enableScrollWheel: true
   };
   width = window.innerWidth - 18;
   height = 600;
