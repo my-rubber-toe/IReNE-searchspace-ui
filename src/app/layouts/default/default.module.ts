@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DefaultComponent } from './default.component';
 import { RouterModule } from '@angular/router';
 import {  SharedModule } from '../../shared/shared.module';
@@ -21,7 +21,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -45,6 +45,7 @@ import {environment} from 'src/environments/environment';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     SharedModule,
     MatSidenavModule,
@@ -66,6 +67,9 @@ import {environment} from 'src/environments/environment';
     MatAutocompleteModule,
     XyModule,
     GoogleChartsModule.forRoot(environment.MAPS_API_KEY || null)
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class DefaultModule { }

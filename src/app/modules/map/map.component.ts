@@ -3,13 +3,18 @@ import {FormControl} from '@angular/forms';
 import { GoogleChartComponent, ChartEvent } from 'angular-google-charts';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 
 
 interface SearchValues {
+  publicationDate: string;
+  incidentDate: string;
   infras: string;
   damage: string;
   tags: string;
+  language:string;
 }
 
 @Component({
@@ -22,10 +27,12 @@ export class MapComponent implements OnInit {
   @ViewChild('map')
   map: GoogleChartComponent;
 
+  dirtyFields = false;
+
   results: Observable<any>;
   subject = new Subject()
 
-  constructor(){}
+  constructor(private datepipe: DatePipe){}
 
   ngOnInit(){
     let scrollToTop = window.setInterval(() => {
@@ -56,7 +63,10 @@ export class MapComponent implements OnInit {
   width = window.innerWidth - 18;
   height = 600;
 
-  // Option Forms
+  // Option Forms and Date
+  publicationDate = '';
+  incidentDate = '';
+
   infrastructure = new FormControl();
   infrastructureList: string[] = ['Puertos', 'Carreteras', 'Acueductos', 'Hotelera', 'Aviación', 'Marítima'];
 
@@ -65,6 +75,38 @@ export class MapComponent implements OnInit {
 
   tags = new FormControl();
   tagsList: string[] = ['alto voltage', 'sin agua', 'desorganización'];
+
+  language = new FormControl();
+  languageList: string[] = ['Any','English', 'Spanish'];
+
+
+  // Search Values
+  searchValues: SearchValues;
+
+  /**
+   * Set the fields to be dirty
+   */
+  setDirty(){
+    this.dirtyFields = true;
+    const tmpIncidentDate = this.datepipe.transform(this.incidentDate, 'yyyy-MM-dd')
+    const tmpPublicationDate = this.datepipe.transform(this.publicationDate, 'yyyy-MM-dd')
+    this.searchValues= {
+      publicationDate: tmpPublicationDate,
+      incidentDate: tmpIncidentDate,
+      infras: this.infrastructure.value,
+      damage: this.damage.value,
+      tags: this.tags.value,
+      language: this.language.value
+    }
+  }
+
+  /**
+   * Reload the map with the new values based on the selected search criteria.
+   */
+  updateMap(){
+    this.dirtyFields = false;
+    console.log(this.searchValues)
+  }
 
 
   onSelect(e: ChartEvent) {
@@ -79,15 +121,6 @@ export class MapComponent implements OnInit {
       ['Aguada, PR', "Titulo",  "123456"],
       ['Cabo Rojo, PR', "Titulo",  "123456"],
     ]
-  }
-
-  updateMapValues(e){
-    const searchValues: SearchValues = {
-      infras: this.infrastructure.value,
-      damage: this.damage.value,
-      tags: this.tags.value
-    }
-    this.subject.next(searchValues)
   }
 
 }
