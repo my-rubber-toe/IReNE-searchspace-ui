@@ -8,6 +8,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import {MatListModule} from '@angular/material/list';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -25,6 +27,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
+    MatSelectModule,
   ]
 })
 export class DocumentsModule { }

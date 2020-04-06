@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DocumentMetadata } from '../models/searchspace.model';
+import {DocumentMetadata, Filters} from '../models/searchspace.model';
 import { CollaboratorRequest } from '../models/searchspace.model';
 import { Map } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
@@ -16,6 +16,7 @@ export class SearchSpaceService {
   fakeBackend = 'http://localhost:4200/api';
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
+  filters: Filters[];
   maps: Map[];
   comparison: XY[];
   timeline: Timeline[];
@@ -31,29 +32,39 @@ export class SearchSpaceService {
         this.collaboratorsReq = response;
       });
   }
-  getDocuments(){
-      /**
+  getDocuments() {
+    /**
      * Get all documents from the fake server.
      */
-    return this.http.get('http://localhost:4200/api/documents').subscribe(
-        (response: DocumentMetadata[]) => {
-          this.documents = response;
-        });
+    return this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+      (response: DocumentMetadata[]) => {
+        this.documents = response;
+      });
   }
   getDocumentById(id: string) {
-    return;
+    this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+      (response: DocumentMetadata[]) => {
+        this.documents = response;
+      });
+  }
+  getFilters() {
+    return this.http.get(`${this.fakeBackend}/api/filters`).subscribe(
+      (response: Filters[]) => {
+        this.filters = response;
+      }
+    );
   }
 
-  docMap(){
+  docMap() {
     /**
-   * Get all documents  from the fake server.
-   */
-  return this.http.get(`${this.fakeBackend}/documents/visualize/map`).subscribe(
-    (response: Map[]) => {
-      this.maps = response;
-    });
+     * Get all documents  from the fake server.
+     */
+    return this.http.get(`${this.fakeBackend}/documents/visualize/map`).subscribe(
+      (response: Map[]) => {
+        this.maps = response;
+      });
   }
-  docXY(){
+  docXY() {
       /**
      * Get all documents from the fake server.
      */
@@ -63,7 +74,8 @@ export class SearchSpaceService {
       });
   }
 
-  docTimeline(){
+
+  docTimeline() {
       /**
      * Get all documents from the fake server.
      */
@@ -73,4 +85,7 @@ export class SearchSpaceService {
       });
   }
 
+
+
 }
+

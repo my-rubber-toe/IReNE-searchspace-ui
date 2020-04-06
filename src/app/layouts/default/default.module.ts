@@ -23,6 +23,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { XyModule } from 'src/app/modules/xy/xy.module';
 import { XyComponent } from 'src/app/modules/xy/xy.component';
 import { GoogleChartsModule } from 'angular-google-charts';
@@ -41,27 +43,29 @@ import {environment} from 'src/environments/environment';
     XyComponent,
     MapComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        SharedModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatButtonModule,
-        MatToolbarModule,
-        FlexLayoutModule,
-        HomeModule,
-        DocumentsModule,
-        MatGridListModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        XyModule,
-        GoogleChartsModule.forRoot(environment.MAPS_API_KEY || null)
-    ]
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatToolbarModule,
+    FlexLayoutModule,
+    HomeModule,
+    DocumentsModule,
+    MatGridListModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    XyModule,
+    GoogleChartsModule.forRoot(environment.MAPS_API_KEY || null)
+  ]
 })
 export class DefaultModule { }
