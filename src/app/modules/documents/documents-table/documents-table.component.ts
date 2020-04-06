@@ -197,7 +197,6 @@ export class DocumentsTableComponent implements OnInit {
       this.dataSource = this.tempDataSource;
     }
     this.filterSelection.set(type, selection);
-  console.log(this.filterSelection);
   }
 
   searchEvent(event: Event) {

@@ -71,7 +71,6 @@ export class DocumentsComponent implements OnInit {
   checkEvent(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
       event.value = event.value.format('Y-MM-DD');
-      console.log(event.value);
     } else {
       event.value = '';
     }
@@ -99,7 +98,6 @@ export class DocumentsComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    console.log(event);
     this.selectedCreators.push(event.option.viewValue);
     this.creatorInput.nativeElement.value = '';
     this.creatorCtrl.setValue(null);
