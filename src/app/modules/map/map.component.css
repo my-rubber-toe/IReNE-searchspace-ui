@@ -13,16 +13,17 @@
   flex-direction: column;
 }
 
-.main-options-container{
+.options-container{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.map-option-box{
+.option-box{
   flex: 1;
-  padding-left: 10%;
+  padding-left: 5%;
 }
 
 .additional-selection {
