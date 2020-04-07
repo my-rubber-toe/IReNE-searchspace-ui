@@ -66,7 +66,7 @@ import {environment} from 'src/environments/environment';
     MatChipsModule,
     MatAutocompleteModule,
     XyModule,
-    GoogleChartsModule.forRoot()
+    GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY)
   ],
   providers: [
     DatePipe
