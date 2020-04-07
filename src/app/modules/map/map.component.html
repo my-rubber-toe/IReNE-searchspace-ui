@@ -16,37 +16,41 @@
     <div fxFlex="8">
       <mat-form-field>
         <mat-label>Publication date</mat-label>
-        <input matInput [matDatepicker]="picker" [formControl]="publicationDate">
+        <input matInput [matDatepicker]="picker" [max]="todayDate"
+          [formControl]="publicationDate" 
+          (dateChange)="checkEvent($event); selectionEvent($event.value, 'publication_date')">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field >
         <mat-label>Incident date</mat-label>
-        <input matInput [matDatepicker]="picker2" [formControl]="incidentDate" value="=null">
+        <input matInput [matDatepicker]="picker2" [max]="todayDate"
+          [formControl]="incidentDate"
+          (dateChange)="checkEvent($event); selectionEvent($event.value, 'incident_date')">
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Infrastructure</mat-label>
-        <mat-select [formControl]="infrastructure" multiple (selectionChange)="setDirty()">
+        <mat-select [formControl]="infrastructure" multiple (selectionChange)="selectionEvent($event.value, 'infrastructure_type')">
           <mat-option *ngFor="let element of infrastructureList" [value]="element">{{element}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Damages</mat-label>
-        <mat-select [formControl]="damage" multiple (selectionChange)="setDirty()">
+        <mat-select [formControl]="damage" multiple (selectionChange)="selectionEvent($event.value, 'damage_type')">
           <mat-option *ngFor="let element of damageList" [value]="element">{{element}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Language</mat-label>
-        <mat-select [formControl]="language" multiple (selectionChange)="setDirty()">
+        <mat-select [formControl]="language" multiple (selectionChange)="selectionEvent($event.value, 'language')">
           <mat-option *ngFor="let element of languageList" [value]="element">{{element}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Tags</mat-label>
-        <mat-select [formControl]="tags" multiple (selectionChange)="setDirty()">
+        <mat-select [formControl]="tags" multiple (selectionChange)="selectionEvent($event.value, 'tag')">
           <mat-option *ngFor="let element of tagsList" [value]="element">{{element}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -73,7 +77,7 @@
         [options]="options"
         [width]="width"
         [height]="height"
-        (select)="onSelect($event)"
+        (select)="markerSelect($event)"
         >
       </google-chart>
     </div>

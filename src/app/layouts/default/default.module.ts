@@ -66,8 +66,6 @@ import {environment} from 'src/environments/environment';
     MatChipsModule,
     MatAutocompleteModule,
     XyModule,
-    // Map2Component,
-    // GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null)
     GoogleChartsModule.forRoot()
   ],
   providers: [
