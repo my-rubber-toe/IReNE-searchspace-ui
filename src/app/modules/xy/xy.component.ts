@@ -1,17 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
-// import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import { ChartEvent } from 'angular-google-charts';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { XY } from 'src/app/shared/models/searchspace.model';
-import { query } from '@angular/animations';
-import { XyModule } from './xy.module';
-import { validateBasis } from '@angular/flex-layout';
-import { Subject, BehaviorSubject, fromEvent } from 'rxjs';
-import { map, tap, mergeMap } from 'rxjs/operators';
 
 interface CatXValues {
   cat_x: string
@@ -23,7 +17,6 @@ interface CatYValues {
   selector: 'app-xy',
   templateUrl: './xy.component.html',
   styleUrls: ['./xy.component.scss']
-  // template: `<app-barChart></app-barChart>`
 })
 export class XyComponent implements OnInit {
   @Input() show: boolean;
@@ -43,20 +36,18 @@ export class XyComponent implements OnInit {
   //char
 
 
-  title = 'Comparison Graph';
+  title = '';
   type = 'BarChart';
    columnNames = [];
    options = {
     enableScrollWheel:true,
     showTip:true,
-    isStacked:true
+    isStacked:true,
+    
    };
    data = [];
-   myRoles = [
-    { role: 'annotation', type: 'string', index: 6}
-  ];
-   width = 550;
-   height = 400;
+   width = 750;
+   height = 550;
  
    
    sendValueX(value) {
@@ -110,14 +101,16 @@ export class XyComponent implements OnInit {
       if(y != 'Number of Cases'){
         if(x == 'Damage' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            if(!map.has(String(this.dataSource.filteredData[i].damage_type))){
-              key = String(this.dataSource.filteredData[i].damage_type);
-              rowx.push(key);
-              value = this.dataSource.filteredData[i].publication_date.substr(0,4);
-              map.set(key,new Array(value));
-            }
-            else{
-              map.get(String(this.dataSource.filteredData[i].damage_type)).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+            for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].damage_type[j]))){
+                key = String(this.dataSource.filteredData[i].damage_type[j]);
+                rowx.push(key);
+                value = this.dataSource.filteredData[i].publication_date.substr(0,4);
+                map.set(key,new Array(value));
+              }
+              else{
+                map.get(String(this.dataSource.filteredData[i].damage_type[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+              }
             }
             if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
@@ -126,30 +119,34 @@ export class XyComponent implements OnInit {
         }
         else if(x == 'Infrastructure' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type))){
-              key = String(this.dataSource.filteredData[i].infrastructure_type);
-              rowx.push(key);
-              value = this.dataSource.filteredData[i].publication_date.substr(0,4);
-              map.set(key,new Array(value));
+            for(let j = 0; j < this.dataSource.filteredData[i].infrastructure_type.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type[j]))){
+                key = String(this.dataSource.filteredData[i].infrastructure_type[j]);
+                rowx.push(key);
+                value = this.dataSource.filteredData[i].publication_date.substr(0,4);
+                map.set(key,new Array(value));
+              }
+              else{
+                map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+              }
             }
-            else{
-              map.get(String(this.dataSource.filteredData[i].infrastructure_type)).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
-            } 
             if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
-            }
+            } 
           }
         }
         else if(x == 'Tag' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            if(!map.has(String(this.dataSource.filteredData[i].tag))){
-              key = String(this.dataSource.filteredData[i].tag);
-              rowx.push(key);
-              value = this.dataSource.filteredData[i].publication_date.substr(0,4); 
-              map.set(key,new Array(value));
-            }
-            else{
-              map.get(String(this.dataSource.filteredData[i].tag)).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+            for(let j = 0; j < this.dataSource.filteredData[i].tag.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].tag[j]))){
+                key = String(this.dataSource.filteredData[i].tag[j]);
+                rowx.push(key);
+                value = this.dataSource.filteredData[i].publication_date.substr(0,4);
+                map.set(key,new Array(value));
+              }
+              else{
+                map.get(String(this.dataSource.filteredData[i].tag[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+              }
             }
             if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
@@ -159,54 +156,61 @@ export class XyComponent implements OnInit {
 
         else if(x == 'Damage' && y == 'Incident Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            if(!map.has(String(this.dataSource.filteredData[i].damage_type))){
-              key = String(this.dataSource.filteredData[i].damage_type);
-              rowx.push(key);
-              value = this.dataSource.filteredData[i].incident_date.substr(0,4); 
-              map.set(key,new Array(value));
-            }
-            else{
-              map.get(String(this.dataSource.filteredData[i].damage_type)).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+            for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].damage_type[j]))){
+                key = String(this.dataSource.filteredData[i].damage_type[j]);
+                rowx.push(key);
+                value = this.dataSource.filteredData[i].incident_date.substr(0,4);
+                map.set(key,new Array(value));
+              }
+              else{
+                map.get(String(this.dataSource.filteredData[i].damage_type[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+              }
             }
             if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            }
+            } 
           }
+          console.log(map);
         }
         else if(x == 'Infrastructure' && y == 'Incident Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type))){
-              key = String(this.dataSource.filteredData[i].infrastructure_type);
-              rowx.push(key);
-              value = this.dataSource.filteredData[i].incident_date.substr(0,4); 
-              map.set(key,new Array(value));
+            for(let j = 0; j < this.dataSource.filteredData[i].infrastructure_type.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type[j]))){
+                key = String(this.dataSource.filteredData[i].infrastructure_type[j]);
+                rowx.push(key);
+                value = this.dataSource.filteredData[i].incident_date.substr(0,4);
+                map.set(key,new Array(value));
+              }
+              else{
+                map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+              }
             }
-            else{
-              map.get(String(this.dataSource.filteredData[i].infrastructure_type)).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            } 
             if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            }
+            } 
           }
         }
         else if(x == 'Tag' && y == 'Incident Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            if(!map.has(String(this.dataSource.filteredData[i].tag))){
-              key = String(this.dataSource.filteredData[i].tag);
-              rowx.push(key);
-              value = this.dataSource.filteredData[i].incident_date.substr(0,4);
-              map.set(key,new Array(value));
+            for(let j = 0; j < this.dataSource.filteredData[i].tag.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].tag[j]))){
+                key = String(this.dataSource.filteredData[i].tag[j]);
+                rowx.push(key);
+                value = this.dataSource.filteredData[i].incident_date.substr(0,4);
+                map.set(key,new Array(value));
+              }
+              else{
+                map.get(String(this.dataSource.filteredData[i].tag[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+              }
             }
-            else{
-              map.get(String(this.dataSource.filteredData[i].tag)).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            } 
             if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
             } 
           }
         }
         //gives the count for each value within each type within cat x
-        
+        rowy = rowy.sort();
         let countsy = []; 
         map.forEach((value: string, key: string) => {
               let countValue = [];
@@ -237,39 +241,46 @@ export class XyComponent implements OnInit {
         this.columnNames.unshift(x);
         console.log(this.columnNames);
         this.data = row;
+        this.title = 'Comparision Graph \n Where: \n X = ' + x + " & Y = " + y;
       }
       else {
           if(x == "Damage"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
-                  if(!map.has(String(this.dataSource.filteredData[i].damage_type))){
-                    key = String(this.dataSource.filteredData[i].damage_type);
+              for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
+                  if(!map.has(String(this.dataSource.filteredData[i].damage_type[j]))){
+                    key = String(this.dataSource.filteredData[i].damage_type[j]);
                     map.set(key, 1);
                   }
                   else{
-                    map.set(String(this.dataSource.filteredData[i].damage_type), map.get(String(this.dataSource.filteredData[i].damage_type)) + 1);
+                    map.set(String(this.dataSource.filteredData[i].damage_type[j]), map.get(String(this.dataSource.filteredData[i].damage_type[j])) + 1);
                   } 
+               }
              }
           }
           else if(x == "Infrastructure"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
-                if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type))){
-                    key = String(this.dataSource.filteredData[i].infrastructure_type);
+              for(let j = 0; j < this.dataSource.filteredData[i].infrastructure_type.length; j++){
+                  if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type[j]))){
+                    key = String(this.dataSource.filteredData[i].infrastructure_type[j]);
                     map.set(key, 1);
                   }
                   else{
-                    map.set(String(this.dataSource.filteredData[i].infrastructure_type), map.get(String(this.dataSource.filteredData[i].infrastructure_type)) + 1);
-                } 
+                    map.set(String(this.dataSource.filteredData[i].infrastructure_type[j]), map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])) + 1);
+                  } 
                }
+             }
           }
           else if(x == "Tag"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
-                  if(!map.has(String(this.dataSource.filteredData[i].tag))){
-                    key = String(this.dataSource.filteredData[i].tag);
+              for(let j = 0; j < this.dataSource.filteredData[i].tag.length; j++){
+                  if(!map.has(String(this.dataSource.filteredData[i].tag[j]))){
+                    key = String(this.dataSource.filteredData[i].tag[j]);
                     map.set(key, 1);
                   }
                   else{
-                    map.set(String(this.dataSource.filteredData[i].tag), map.get(String(this.dataSource.filteredData[i].tag)) + 1);
+                    map.set(String(this.dataSource.filteredData[i].tag[j]), map.get(String(this.dataSource.filteredData[i].tag[j])) + 1);
                   } 
+               }
              }
           }
         //sets the data table for the chart

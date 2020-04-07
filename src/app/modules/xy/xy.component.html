@@ -1,7 +1,17 @@
-<mat-divider></mat-divider>
-<div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-    
-    <div fxFlex="15">
+<div class="comparison-graph">
+    <h1><b>Comparison View</b></h1>
+    <p>
+      Do a comparision with the case studies available by selecting categories like Infrastructure type, Damage type and
+      Tags for the X axis. There are also categories like Publication Date, Incident Date, and Number of Cases for
+      for the Y axis. Depending on the categories chosen, the graph will change in order to satisfy the categories chosen.
+    </p>
+    <p>
+      <i>Note: The graph has the Categories "Damage"(X) & "Publication Date"(Y) as a default.</i>
+    </p>
+  </div>
+  <div fxFill>
+    <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
+      <div fxFlex="20">
         <mat-form-field class="side">
             <mat-label>Category X</mat-label>
             <mat-select  [formControl]= "category_x"  (selectionChange)="updateCatX()" (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
@@ -14,8 +24,9 @@
               <mat-option  *ngFor="let catY of categoryY" [value]="catY">{{catY}}</mat-option>
             </mat-select>
           </mat-form-field>
+     
     </div>
-    <div>
+    <div fxFlex="1" fxLayoutAlign="center center" style="padding-left: 33em;">
         <google-chart #chart
             [title]="title"
             [type]="type"
@@ -27,9 +38,8 @@
             (select)="onSelect($event)"
         ></google-chart>
     </div>
-    
+      
 </div>
-
 
 
 
