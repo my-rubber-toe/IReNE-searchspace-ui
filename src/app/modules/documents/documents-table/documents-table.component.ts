@@ -4,6 +4,7 @@ import {SearchSpaceService} from '../../../shared/services/searchspace.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DocumentMetadata } from '../../../shared/models/searchspace.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-documents-table',
@@ -20,7 +21,7 @@ export class DocumentsTableComponent implements OnInit {
   tempDataSource: MatTableDataSource<DocumentMetadata>;
   displayedColumns: string[] = ['title', 'creator', 'location',
     'publication_date', 'incident_date', 'modification_date', 'infrastructure_type',
-    'damage_type', 'language', 'tag'];
+    'damage_type', 'language', 'tag', 'actions'];
   filterSelection: Map<string, any> = new Map<string, any>([
    // ['location', ''],
     ['creators', ''],
@@ -66,7 +67,8 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   constructor(
-    private documentService: SearchSpaceService
+    private documentService: SearchSpaceService,
+    private router: Router
     ) {
   }
 
@@ -197,6 +199,9 @@ export class DocumentsTableComponent implements OnInit {
 
   searchEvent(event: Event) {
     this.tempEvent = event;
+  }
+  previewDoc(docId: string) {
+    this.router.navigate([`/preview/${docId}`]);
   }
 }
 

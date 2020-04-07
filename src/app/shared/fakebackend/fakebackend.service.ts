@@ -1,4 +1,4 @@
-import { base64PDF } from './samplePDF';
+import { base64PDF } from './sample-document';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
@@ -54,11 +54,16 @@ const mapDocument: Map[] = [
 ];
 
 const xyDocument: XY[] = [
-  {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake',  publication_date:'2020-02-01',incident_date:'2017-07-03',infrastructure_type:['Building'], damage_type:['broken sewer'],tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', publication_date: '2019-10-02', incident_date:'2017-08-13',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'] },
-  {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', publication_date: '2020-02-03', incident_date:'2017-07-03',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Hurricane']  },
-  {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', publication_date:'2019-02-02',incident_date:'2016-08-03',infrastructure_type:['Building'], damage_type:['Burn'], tag:['Fire']  },
+    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type:['Building', 'Energy'], damage_type:['Flooding', 'broken sewer'], tag:['Flood'] },
+    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake',  publication_date:'2020-02-01',incident_date:'2017-07-03',infrastructure_type:['Transportation', 'Building'], damage_type:['broken sewer'],tag:['Earthquake', 'Tsunami'] },
+    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', publication_date: '2019-10-02', incident_date:'2010-08-13',infrastructure_type:['Building', 'Water'], damage_type:['Flooding', 'Fire'], tag:['Flood'] },
+    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', publication_date: '2020-02-03', incident_date:'2018-07-03',infrastructure_type:['Energy'], damage_type:['Flooding'], tag:['Hurricane']  },
+    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Story', publication_date:'2018-02-02',incident_date:'2016-08-20',infrastructure_type:['Building'], damage_type:['Fallen Structure'], tag:['Tornado']  },
+    {id: 'VzunBKHhBSl5mpj0U9pP', title: 'The great Mind', publication_date:'2016-09-02',incident_date:'2014-08-10',infrastructure_type:['Water', 'Energy'], damage_type:['Burn'], tag:['Tsunami', 'Fire']  },
+    {id: 'VzunaoihBS05mpsgU9pP', title: 'The great Place', publication_date:'2017-02-02',incident_date:'2015-07-19',infrastructure_type:['Water'], damage_type:['Burn'], tag:['Fire']  },
+    {id: 'VzunBYihBS05mpsJW9pP', title: 'The great Fall', publication_date:'2019-02-02',incident_date:'2012-01-03',infrastructure_type:['Building', 'Water'], damage_type:['Burn', 'Flooding'], tag:['Fire', 'Tornado']  },
+    {id: 'Vzun980hBS05mpj0U9pP', title: 'The great Structure', publication_date:'2015-02-02',incident_date:'2011-04-12',infrastructure_type:['Structure'], damage_type:['Burn'], tag:['Fire']  },
+    {id: 'HHkwBYihBS05mpj0U9pP', title: 'The great Port', publication_date:'2017-02-02',incident_date:'2015-05-11',infrastructure_type:['Energy'], damage_type:['Fallen Structure', 'Crack'], tag:['Fire', 'Earthquake']  },
 ];
 
 const timelineDocument: Timeline[] = [
@@ -85,7 +90,7 @@ export class FakebackendService implements HttpInterceptor {
 
     function handleRoute() {
       switch (true) {
-        case url.endsWith('/collab-request') && method === 'POST':
+        case url.endsWith('/api/collabrequest/create') && method === 'POST':
           return collabRequest();
         case url.endsWith('/api/documents') && method === 'GET':
           return getDocuments();
@@ -93,7 +98,7 @@ export class FakebackendService implements HttpInterceptor {
           return getFilters();
         case url.endsWith('/api/documents') && method === 'POST':
           return getDocuments();
-        case url.endsWith('/api/documents/{doc_id}') && method === 'GET':
+        case url.endsWith('/api/documents/view') && method === 'GET':
           return getDocument();
         case url.endsWith('/documents/visualize/map') && method === 'POST':
           return docMap();
@@ -108,7 +113,15 @@ export class FakebackendService implements HttpInterceptor {
 
     // Collaborators
     function collabRequest() {
-      return ok(collaborators);
+      if (checkEmail(body.email)) {
+        collaborators.push(
+          {id: 'aq9zI01ORNE9Okyziyup', first_name: body.firstName, last_name: body.lastName, email: body.email}
+        );
+        console.log(collaborators);
+        return ok();
+    } else {
+        return collaboratorExist();
+      }
     }
     // documents
     function getDocuments() {
@@ -139,6 +152,21 @@ export class FakebackendService implements HttpInterceptor {
 
     function ok(body?) {
       return of(new HttpResponse({ status: 200, body }));
+    }
+
+    function collaboratorExist() {
+      return throwError({ status: 401, error: { message: 'Collaborator Request already creasted' } });
+    }
+
+    function checkEmail(email: string) {
+      let valid = true;
+      collaborators.forEach(e => {
+        if (e.email === email) {
+          console.log('found');
+          valid = false;
+        }
+      });
+      return valid;
     }
   }
 }

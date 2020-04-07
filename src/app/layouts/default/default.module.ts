@@ -12,7 +12,6 @@ import {HomeComponent} from '../../modules/home/home.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
-import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import {HomeModule} from '../../modules/home/home.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
@@ -45,7 +44,6 @@ import {environment} from 'src/environments/environment';
   ],
   imports: [
     CommonModule,
-    FormsModule,
     RouterModule,
     SharedModule,
     MatSidenavModule,
@@ -63,13 +61,15 @@ import {environment} from 'src/environments/environment';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatChipsModule,
-    MatAutocompleteModule,
     XyModule,
-    GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY)
+    GoogleChartsModule,
+    FormsModule,
+    GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null),
+    MatChipsModule,
+    MatAutocompleteModule
   ],
-  providers: [
-    DatePipe
-  ]
+      providers: [
+        DatePipe
+      ]
 })
 export class DefaultModule { }

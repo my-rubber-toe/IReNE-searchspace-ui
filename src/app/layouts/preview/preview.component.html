@@ -1,0 +1,16 @@
+<div class="spinner-container" *ngIf="loadingDocument">
+  <mat-spinner></mat-spinner>
+</div>
+
+
+<div *ngIf="!loadingDocument">
+  <ngx-extended-pdf-viewer
+    [base64Src]="base64Src"
+    backgroundColor="#ffffff"
+    [height]="'90vh'"
+    [useBrowserLocale]="true"
+    [handTool]="false"
+    [showHandToolButton]="true"
+  >
+  </ngx-extended-pdf-viewer>
+</div>
