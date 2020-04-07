@@ -5,6 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
+import { DocumentMetadata } from 'src/app/shared/models/searchspace.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 
@@ -29,10 +32,12 @@ export class MapComponent implements OnInit {
 
   dirtyFields = false;
 
-  results: Observable<any>;
-  subject = new Subject()
+  documents: DocumentMetadata[]
 
-  constructor(private datepipe: DatePipe){}
+  constructor(
+    private datepipe: DatePipe,
+    private searchSpaceService: SearchSpaceService
+    ){}
 
   ngOnInit(){
     let scrollToTop = window.setInterval(() => {
@@ -44,7 +49,7 @@ export class MapComponent implements OnInit {
     }
     }, 16);
 
-    this.results = this.subject.pipe(debounceTime(1000), map((searchValues: SearchValues) => console.log(searchValues)))
+    this.searchSpaceService.getDocuments();
   }
 
   // Google Map Data Setup
@@ -60,12 +65,12 @@ export class MapComponent implements OnInit {
     showTip: true,
     enableScrollWheel: true
   };
-  width = window.innerWidth - 18;
+  width = 1250;
   height = 600;
 
   // Option Forms and Date
-  publicationDate = '';
-  incidentDate = '';
+  publicationDate = new FormControl();
+  incidentDate = new FormControl();
 
   infrastructure = new FormControl();
   infrastructureList: string[] = ['Puertos', 'Carreteras', 'Acueductos', 'Hotelera', 'Aviación', 'Marítima'];
@@ -83,11 +88,17 @@ export class MapComponent implements OnInit {
   // Search Values
   searchValues: SearchValues;
 
+  dataSource: MatTableDataSource<DocumentMetadata>;
+  tempDataSource: MatTableDataSource<DocumentMetadata>;
+
   /**
-   * Set the fields to be dirty
+   * Set the fields to be dirty and disable the button
    */
   setDirty(){
     this.dirtyFields = true;
+  }
+
+  applyFilter(){
     const tmpIncidentDate = this.datepipe.transform(this.incidentDate, 'yyyy-MM-dd')
     const tmpPublicationDate = this.datepipe.transform(this.publicationDate, 'yyyy-MM-dd')
     this.searchValues= {
@@ -104,8 +115,17 @@ export class MapComponent implements OnInit {
    * Reload the map with the new values based on the selected search criteria.
    */
   updateMap(){
+    this.data = []
     this.dirtyFields = false;
     console.log(this.searchValues)
+    let result: Array<DocumentMetadata> = [];
+    this.searchSpaceService.documents.forEach(e => {
+      if(e.location === 'Caguas'){
+        this.data.push([e.location, e.title, e.id])
+      }
+    })
+
+    console.log(result);
   }
 
 

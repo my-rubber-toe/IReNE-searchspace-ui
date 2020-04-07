@@ -3,10 +3,9 @@
 <div fxLayout="column" fxLayoutAlign="space-evenly stretch">
   <div fxLayoutAlign="center" fxLayoutGap="3px">
     <app-search fxFlex="80" hint= "false"
-                (typed)="documentsTableComponent.searchEvent($event);
-                 documentsTableComponent.show = true; documentsTableComponent.applyFilter()"
-                (empty)="documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()">
-
+      (typed)="documentsTableComponent.searchEvent($event);
+        documentsTableComponent.show = true; documentsTableComponent.applyFilter()"
+      (empty)="documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()">
     </app-search>
   </div>
 </div>
