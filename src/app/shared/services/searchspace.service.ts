@@ -5,7 +5,8 @@ import { CollaboratorRequest } from '../models/searchspace.model';
 import { Map } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
-
+import { Observable } from 'rxjs';  
+import { BehaviorSubject} from 'rxjs'; 
 
 
 @Injectable({
@@ -19,9 +20,21 @@ export class SearchSpaceService {
   maps: Map[];
   comparison: XY[];
   timeline: Timeline[];
-
+  private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
+  private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
   constructor(private http: HttpClient) { }
-
+  setBehaviorViewX(behaveX: Object) { 
+    this.behaveX.next(behaveX); 
+  } 
+  getBehaviorViewX(): Observable<any> { 
+      return this.behaveX.asObservable(); 
+  }
+  setBehaviorViewY(behaveY: Object) { 
+    this.behaveY.next(behaveY); 
+  } 
+  getBehaviorViewY(): Observable<any> { 
+      return this.behaveY.asObservable(); 
+  }
   collabRequest() {
     /**
      * Get all requests for collaborators from the fake server.
