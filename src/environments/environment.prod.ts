@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  MAPS_API_KEY: null
+  GOOGLE_MAPS_API_KEY: 'AIzaSyAZEkjgNHbvCFQ4ohopyKSg3-zbfHx4pSk' || null
 };
