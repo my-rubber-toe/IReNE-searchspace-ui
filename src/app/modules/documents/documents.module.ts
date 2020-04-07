@@ -10,6 +10,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -29,6 +31,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSortModule,
     MatListModule,
     MatSelectModule,
+    MatButtonModule,
+    MatTooltipModule,
   ]
 })
 export class DocumentsModule { }

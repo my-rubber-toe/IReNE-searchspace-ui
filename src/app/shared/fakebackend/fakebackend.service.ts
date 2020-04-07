@@ -85,7 +85,7 @@ export class FakebackendService implements HttpInterceptor {
 
     function handleRoute() {
       switch (true) {
-        case url.endsWith('/collab-request') && method === 'POST':
+        case url.endsWith('/api/collabrequest/create') && method === 'POST':
           return collabRequest();
         case url.endsWith('/api/documents') && method === 'GET':
           return getDocuments();
@@ -93,7 +93,7 @@ export class FakebackendService implements HttpInterceptor {
           return getFilters();
         case url.endsWith('/api/documents') && method === 'POST':
           return getDocuments();
-        case url.endsWith('/api/documents/{doc_id}') && method === 'GET':
+        case url.endsWith('/api/documents/view') && method === 'GET':
           return getDocument();
         case url.endsWith('/documents/visualize/map') && method === 'POST':
           return docMap();
@@ -108,7 +108,15 @@ export class FakebackendService implements HttpInterceptor {
 
     // Collaborators
     function collabRequest() {
-      return ok(collaborators);
+      if (checkEmail(body.email)) {
+        collaborators.push(
+          {id: 'aq9zI01ORNE9Okyziyup', first_name: body.firstName, last_name: body.lastName, email: body.email}
+        );
+        console.log(collaborators);
+        return ok();
+    } else {
+        return collaboratorExist();
+      }
     }
     // documents
     function getDocuments() {
@@ -139,6 +147,21 @@ export class FakebackendService implements HttpInterceptor {
 
     function ok(body?) {
       return of(new HttpResponse({ status: 200, body }));
+    }
+
+    function collaboratorExist() {
+      return throwError({ status: 401, error: { message: 'Collaborator Request already creasted' } });
+    }
+
+    function checkEmail(email: string) {
+      let valid = true;
+      collaborators.forEach(e => {
+        if (e.email === email) {
+          console.log('found');
+          valid = false;
+        }
+      });
+      return valid;
     }
   }
 }

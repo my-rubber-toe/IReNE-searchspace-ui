@@ -8,12 +8,31 @@ import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.c
 import {HttpClientModule} from '@angular/common/http';
 import { fakeBackendProvider} from './shared/fakebackend/fakebackend.service';
 import {MatNativeDateModule} from '@angular/material/core';
+import { PreviewModule } from './layouts/preview/preview.module';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import {SocialLoginModule, AuthServiceConfig, LoginOpt} from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 
+const googleLoginOptions: LoginOpt = {
+  scope: 'profile email'
+};
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('1069038586130-dovumgiu7070m7aimktgps3b95vv0ved.apps.googleusercontent.com',
+      googleLoginOptions)
+  },
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,10 +40,17 @@ import {MatNativeDateModule} from '@angular/material/core';
     AppRoutingModule,
     DefaultModule,
     HttpClientModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    PreviewModule,
+    NgxExtendedPdfViewerModule,
+    SocialLoginModule
   ],
   providers: [
-    fakeBackendProvider
+    fakeBackendProvider,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

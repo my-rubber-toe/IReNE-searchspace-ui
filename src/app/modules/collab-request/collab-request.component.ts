@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {SingupService} from '../../shared/services/singup.service';
 
 @Component({
   selector: 'app-collab-request',
@@ -11,17 +12,14 @@ export class CollabRequestComponent implements OnInit {
   firstName = new FormControl('', [Validators.required, Validators.minLength(1)]);
   lastName = new FormControl('', [Validators.required, Validators.minLength(1)]);
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+  signUp() {
+    this.singupService.signUp();
   }
 
-  constructor() { }
+  constructor(
+    private singupService: SingupService,
+  ) { }
 
   ngOnInit(): void {
   }
-
 }

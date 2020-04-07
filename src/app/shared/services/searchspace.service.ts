@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DocumentMetadata, Filters} from '../models/searchspace.model';
 import { CollaboratorRequest } from '../models/searchspace.model';
 import { Map } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
-import { Observable } from 'rxjs';  
-import { BehaviorSubject} from 'rxjs'; 
+import { BehaviorSubject} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchSpaceService {
+
+  constructor(private http: HttpClient) { }
 
   fakeBackend = 'http://localhost:4200/api';
   collaboratorsReq: CollaboratorRequest[];
@@ -23,18 +25,21 @@ export class SearchSpaceService {
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
   private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
-  constructor(private http: HttpClient) { }
-  setBehaviorViewX(behaveX: Object) { 
-    this.behaveX.next(behaveX); 
-  } 
-  getBehaviorViewX(): Observable<any> { 
-      return this.behaveX.asObservable(); 
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  setBehaviorViewX(behaveX: Object) {
+    this.behaveX.next(behaveX);
   }
-  setBehaviorViewY(behaveY: Object) { 
-    this.behaveY.next(behaveY); 
-  } 
-  getBehaviorViewY(): Observable<any> { 
-      return this.behaveY.asObservable(); 
+  getBehaviorViewX(): Observable<any> {
+      return this.behaveX.asObservable();
+  }
+  setBehaviorViewY(behaveY: Object) {
+    this.behaveY.next(behaveY);
+  }
+  getBehaviorViewY(): Observable<any> {
+      return this.behaveY.asObservable();
   }
   collabRequest() {
     /**
@@ -49,13 +54,13 @@ export class SearchSpaceService {
     /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+    return this.http.get(`${this.fakeBackend}/documents`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
   }
   getDocumentById(id: string) {
-    this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+    this.http.get(`${this.fakeBackend}/documents/{{doc_id}}`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
@@ -98,7 +103,14 @@ export class SearchSpaceService {
       });
   }
 
-
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
 
 }
 
