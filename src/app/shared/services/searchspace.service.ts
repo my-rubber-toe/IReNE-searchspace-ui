@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DocumentMetadata, Filters} from '../models/searchspace.model';
 import { CollaboratorRequest } from '../models/searchspace.model';
 import { Map } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
+import {SocialUser} from 'angularx-social-login';
+import {catchError} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 
 
@@ -20,29 +23,23 @@ export class SearchSpaceService {
   maps: Map[];
   comparison: XY[];
   timeline: Timeline[];
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(private http: HttpClient) { }
 
-  collabRequest() {
-    /**
-     * Get all requests for collaborators from the fake server.
-     */
-    return this.http.get(`${this.fakeBackend}/collab-request`).subscribe(
-      (response: CollaboratorRequest[]) => {
-        this.collaboratorsReq = response;
-      });
-  }
   getDocuments() {
     /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+    return this.http.get(`${this.fakeBackend}/documents`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
   }
   getDocumentById(id: string) {
-    this.http.get(`${this.fakeBackend}/api/documents`).subscribe(
+    this.http.get(`${this.fakeBackend}/documents/{{doc_id}}`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
@@ -85,7 +82,14 @@ export class SearchSpaceService {
       });
   }
 
-
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
 
 }
 

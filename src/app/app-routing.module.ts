@@ -8,6 +8,7 @@ import {DefaultComponent} from './layouts/default/default.component';
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import { XyComponent } from './modules/xy/xy.component';
 import { MapComponent } from './modules/map/map.component';
+import { PreviewComponent } from './layouts/preview/preview.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
         path: 'xy',
         component: XyComponent
       }],
+  },
+  {
+    path: 'preview/:docId',
+    component: PreviewComponent,
   },
   { path: '**', component: PageNotFoundComponent }
 ];

@@ -12,7 +12,6 @@ import {HomeComponent} from '../../modules/home/home.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
-import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import {HomeModule} from '../../modules/home/home.module';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
