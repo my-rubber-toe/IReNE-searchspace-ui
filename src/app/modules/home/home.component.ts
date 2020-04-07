@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -8,17 +6,10 @@ import { SearchSpaceService } from 'src/app/shared/services/searchspace.service'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  searching = false;
-  event1: Event;
-  constructor(private docservice:SearchSpaceService) { }
+  searching = true;
+  constructor() { }
 
   ngOnInit(): void {
-    this.docservice.getDocuments()
-    this.docservice.collabRequest()
-    this.docservice.docMap()
-    this.docservice.docXY()
-    this.docservice.docTimeline()
   }
 
 }

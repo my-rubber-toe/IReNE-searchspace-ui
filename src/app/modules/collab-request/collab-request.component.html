@@ -1,1 +1,30 @@
-<p>collab-request works!</p>
+<div fxLayout="column wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="50" fxFlexOffset="5" class="mat-elevation-z8">
+    <h1>
+      Request Access to became a SearchSpace Collaborator
+    </h1>
+    <div fxLayoutAlign="center" fxFill>
+    <mat-form-field fxFlexAlign="center center" fxFill appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput [formControl]="firstName" required>
+    </mat-form-field>
+    </div>
+    <div fxFlexAlign="center" fxFill>
+      <mat-form-field fxFlexAlign="center center" fxFill appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput [formControl]="lastName" required>
+        <mat-error *ngIf="lastName.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlexAlign="center" fxFill>
+      <mat-form-field fxFlexAlign="center center" fxFill appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFill>
+    <button style="margin-left:75%" fxFlex="25" mat-raised-button type="submit" color="primary">Submit Request</button>
+    </div>
+  </mat-card>
+</div>

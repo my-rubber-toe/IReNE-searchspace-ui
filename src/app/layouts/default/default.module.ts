@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DefaultComponent } from './default.component';
 import { RouterModule } from '@angular/router';
 import {  SharedModule } from '../../shared/shared.module';
@@ -23,9 +23,13 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { XyModule } from 'src/app/modules/xy/xy.module';
 import { XyComponent } from 'src/app/modules/xy/xy.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { MapComponent } from 'src/app/modules/map/map.component';
+import {environment} from 'src/environments/environment';
 
 
 
@@ -36,7 +40,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
     CollabRequestComponent,
     AboutComponent,
     HomeComponent,
-    XyComponent
+    XyComponent,
+    MapComponent
   ],
     imports: [
         CommonModule,
@@ -59,7 +64,11 @@ import { GoogleChartsModule } from 'angular-google-charts';
         MatCardModule,
         XyModule,
         GoogleChartsModule,
-        FormsModule
-    ]
+        FormsModule, 
+        GoogleChartsModule.forRoot(environment.MAPS_API_KEY || null)
+      ],
+      providers: [
+        DatePipe
+      ]
 })
 export class DefaultModule { }

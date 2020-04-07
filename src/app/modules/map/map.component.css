@@ -1,0 +1,33 @@
+
+.map-information{
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+}
+
+.map-container{
+  height: 65vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.options-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.option-box{
+  flex: 1;
+  padding-left: 5%;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
