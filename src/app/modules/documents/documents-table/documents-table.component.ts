@@ -44,10 +44,6 @@ export class DocumentsTableComponent implements OnInit {
     this.filterBySelection(this.filterSelection.get('incident_date'), filteringDataSource, 'incident_date');
     this.filterBySelection(this.filterSelection.get('creators'), filteringDataSource, 'creators');
     this.dataSource = filteringDataSource;
-    if (this.tempEvent) {
-      this.searchFilter(this.tempEvent);
-    }
-    this.paginateSort(this.dataSource);
   }
 
   searchFilter(event: Event) {
@@ -173,12 +169,12 @@ export class DocumentsTableComponent implements OnInit {
     }
   }
 
-  locationEvent(location: string) {
-    if (location.length === 0) {
-      this.dataSource = this.tempDataSource;
-    }
-    this.filterSelection.set('location', location);
-  }
+  // locationEvent(location: string) {
+  //   if (location.length === 0) {
+  //     this.dataSource = this.tempDataSource;
+  //   }
+  //   this.filterSelection.set('location', location);
+  // }
 
 /** filterByLocations(location: string[], filteringDataSource: MatTableDataSource<DocumentMetadata>) {
       if (location.length !== 0) {

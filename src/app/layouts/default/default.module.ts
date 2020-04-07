@@ -64,7 +64,7 @@ import {environment} from 'src/environments/environment';
     XyModule,
     GoogleChartsModule,
     FormsModule,
-    GoogleChartsModule.forRoot(environment.MAPS_API_KEY || null),
+    GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null),
     MatChipsModule,
     MatAutocompleteModule
   ],

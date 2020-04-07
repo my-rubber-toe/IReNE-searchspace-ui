@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
-import { base64PDF } from '../../shared/fakebackend/samplePdf';
 
 @Component({
   selector: 'app-preview',
