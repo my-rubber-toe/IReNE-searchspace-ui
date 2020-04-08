@@ -241,7 +241,7 @@ export class XyComponent implements OnInit {
         this.columnNames.unshift(x);
         console.log(this.columnNames);
         this.data = row;
-        this.title = 'Comparision Graph \n Where: \n X = ' + x + " & Y = " + y;
+        this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
       }
       else {
           if(x == "Damage"){
@@ -292,6 +292,7 @@ export class XyComponent implements OnInit {
          });
         this.columnNames = [x,y];
         this.data = row;
+        this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
       }    
     });
   });
