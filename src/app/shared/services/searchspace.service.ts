@@ -16,7 +16,7 @@ export class SearchSpaceService {
 
   constructor(private http: HttpClient) { }
 
-  fakeBackend = 'http://localhost:4200/api';
+  fakeBackend = 'http://localhost:8080/api';
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
