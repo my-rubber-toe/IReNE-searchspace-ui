@@ -14,7 +14,7 @@
     <mat-form-field class="side">
       <mat-label>Enter publication date</mat-label>
       <input matInput [matDatepicker]="picker"
-             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent($event.value, 'publication_date');
+             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent([$event.value], 'publication_date');
               documentsTableComponent.applyFilter()" [formControl]="date1" value=null
       >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -23,7 +23,7 @@
     <mat-form-field class="side">
       <mat-label>Enter incident date</mat-label>
       <input matInput [matDatepicker]="picker2"
-             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent($event.value, 'incident_date');
+             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent([$event.value], 'incident_date');
               documentsTableComponent.applyFilter()" [formControl]="date2" value="=null"
       >
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -56,7 +56,7 @@
           (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);
-       documentsTableComponent.selectionEvent(selectedCreators, 'creators'); documentsTableComponent.applyFilter()">
+       documentsTableComponent.selectionEvent(selectedCreators, 'creator'); documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let creator of filteredCreators | async" [value]="creator">
           {{creator}}
         </mat-option>
