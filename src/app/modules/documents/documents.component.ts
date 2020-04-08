@@ -7,7 +7,6 @@ import {MomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} fr
 import {Moment} from 'moment';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
-import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -51,7 +50,6 @@ export class DocumentsComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   date1 = new FormControl(moment(''));
   date2 = new FormControl(moment(''));
-  visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -62,7 +60,6 @@ export class DocumentsComponent implements OnInit {
   events: string[] = [];
   formControl = new FormControl();
   creatorCtrl = new FormControl();
-  // locationList: string[] = ['Arecibo', 'Ponce', 'Mayagüez', 'Caguas', 'Cabo Rojo'];
   languageList: string[] = ['English', 'Spanish'];
   structureList: string[];
   dmgList: string[];
@@ -76,32 +73,23 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      this.selectedCreators.push(value.trim());
-    }
-    if (input) {
-      input.value = '';
-    }
-
-    this.creatorCtrl.setValue(null);
-  }
-
   remove(creator: string): void {
     const index = this.selectedCreators.indexOf(creator);
 
     if (index >= 0) {
+      this.creators.push(this.selectedCreators[index]);
       this.selectedCreators.splice(index, 1);
     }
+    this.creatorInput.nativeElement.value = '';
+    this.creatorCtrl.setValue(null);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
+    const index = this.creators.indexOf(event.option.viewValue);
+    this.creators.splice(index, 1);
     this.selectedCreators.push(event.option.viewValue);
     this.creatorInput.nativeElement.value = '';
     this.creatorCtrl.setValue(null);
-    this.selectedEvent.emit(this.selectedCreators);
   }
 
   private _filter(value: string): string[] {
@@ -131,6 +119,7 @@ export class DocumentsComponent implements OnInit {
       this.structureList = this.filters[0].infrastructure_type;
       this.tagList = this.filters[0].tag;
       this.filteredCreators = this.creatorCtrl.valueChanges.pipe(
+        // tslint:disable-next-line:deprecation
         startWith(null),
         map((creator: string | null) => creator ? this._filter(creator) : this.creators.slice()));
     });
