@@ -42,7 +42,8 @@
           *ngFor="let creator of selectedCreators"
           [selectable]="selectable"
           [removable]="removable"
-          (removed)="remove(creator)">
+          (removed)="remove(creator); documentsTableComponent.selectionEvent(selectedCreators, 'creator');
+           documentsTableComponent.applyFilter()">
           {{creator}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
@@ -53,7 +54,7 @@
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          (matChipInputTokenEnd)="add($event)">
+          >
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);
        documentsTableComponent.selectionEvent(selectedCreators, 'creator'); documentsTableComponent.applyFilter()">
