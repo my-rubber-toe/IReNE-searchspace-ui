@@ -41,10 +41,7 @@ export class DocumentsTableComponent implements OnInit {
   applyFilter() {
     const filteringDataSource = new MatTableDataSource<DocumentMetadata>();
     filteringDataSource.data = this.tempDataSource.data;
-    const ite = this.filterSelection.keys();
-    for (const key of ite) {
-      this.filterBySelection(this.filterSelection.get(key), filteringDataSource, key);
-    }
+    this.filterBySelection(filteringDataSource);
     this.dataSource = filteringDataSource;
     if (this.tempEvent) {
       this.searchFilter(this.tempEvent);
@@ -93,22 +90,24 @@ export class DocumentsTableComponent implements OnInit {
     });
   }
 
-  filterBySelection(filter: string[], filteringDataSource: MatTableDataSource<DocumentMetadata>, selection: string) {
-    const tempFilterData = new MatTableDataSource<DocumentMetadata>();
-    if (filter.length !== 0) {
-          const ite = filteringDataSource.data.values();
-          for (const value of ite) {
-            for (const x of filter) {
-              if (value[selection].includes(x)) {
-                tempFilterData.data.push(value);
-                break;
-              }
+  filterBySelection(filteringDataSource: MatTableDataSource<DocumentMetadata>) {
+    const ite = this.filterSelection.keys();
+    for (const key of ite) {
+      const tempFilterData = new MatTableDataSource<DocumentMetadata>();
+      const filter = this.filterSelection.get(key);
+      if (filter.length !== 0) {
+        const iter = filteringDataSource.data.values();
+        for (const value of iter) {
+          for (const x of filter) {
+            if (value[key].includes(x)) {
+              tempFilterData.data.push(value);
+              break;
             }
           }
+        }
+        filteringDataSource.data = tempFilterData.data;
       }
-    if (tempFilterData.data.length !== 0) {
-      filteringDataSource.data = tempFilterData.data;
-    }
+}
     }
   selectionEvent(selection: any, type: string) {
     this.filterSelection.set(type, selection);
