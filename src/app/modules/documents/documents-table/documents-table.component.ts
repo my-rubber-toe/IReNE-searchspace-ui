@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DocumentMetadata } from '../../../shared/models/searchspace.model';
 import { Router } from '@angular/router';
+import {FilterService} from '../../../shared/services/filter.service';
 
 @Component({
   selector: 'app-documents-table',
@@ -33,16 +34,14 @@ export class DocumentsTableComponent implements OnInit {
   ]);
 
   constructor(
+    private filter: FilterService,
     private documentService: SearchSpaceService,
     private router: Router
   ) {
   }
 
   applyFilter() {
-    const filteringDataSource = new MatTableDataSource<DocumentMetadata>();
-    filteringDataSource.data = this.tempDataSource.data;
-    this.filterBySelection(filteringDataSource);
-    this.dataSource = filteringDataSource;
+    this.dataSource = this.filter.applyFilter(this.filterSelection, this.tempDataSource);
     if (this.tempEvent) {
       this.searchFilter(this.tempEvent);
     }
@@ -90,25 +89,6 @@ export class DocumentsTableComponent implements OnInit {
     });
   }
 
-  filterBySelection(filteringDataSource: MatTableDataSource<DocumentMetadata>) {
-    const ite = this.filterSelection.keys();
-    for (const key of ite) {
-      const tempFilterData = new MatTableDataSource<DocumentMetadata>();
-      const filter = this.filterSelection.get(key);
-      if (filter.length !== 0) {
-        const iter = filteringDataSource.data.values();
-        for (const value of iter) {
-          for (const x of filter) {
-            if (value[key].includes(x)) {
-              tempFilterData.data.push(value);
-              break;
-            }
-          }
-        }
-        filteringDataSource.data = tempFilterData.data;
-      }
-}
-    }
   selectionEvent(selection: any, type: string) {
     this.filterSelection.set(type, selection);
   }
