@@ -34,80 +34,54 @@
   </div>
 </div>
 <div *ngIf="!documentsTableComponent.show" style="margin-top: 10px" fxLayout="row" fxLayoutAlign="center start">
-  <mat-card fxFlex="15">
-    <mat-card-header>
+  <div fxLayout="row" fxFlex="70" fxLayoutAlign="space-evenly ">
+  <mat-card>
+    <mat-card-header >
       <mat-card-title>Search</mat-card-title>
     </mat-card-header>
     <img mat-card-image src="assets/pictures/search-black-48dp.svg" alt="search">
     <mat-card-content>
-      <p>
         Search documents in the database and apply different filters.
-      </p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-footer>
       <button mat-button routerLink="/documents">Go to Search</button>
-    </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
-  <mat-card fxFlex="15">
+  <mat-card>
     <mat-card-header>
       <mat-card-title>Map</mat-card-title>
     </mat-card-header>
     <img mat-card-image src="assets/pictures/room_black.svg" alt="search">
     <mat-card-content>
-      <p>
         Select filters for the documents and show the locations of it in a map.
-      </p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-footer>
       <button mat-button routerLink="/map">Map View</button>
-    </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
-  <mat-card fxFlex="15">
+  <mat-card>
     <mat-card-header>
       <mat-card-title>Timeline</mat-card-title>
     </mat-card-header>
     <img mat-card-image src="assets/pictures/date_range.svg" alt="search">
     <mat-card-content>
-      <p>
         Select document to visualize the timeline of it.
-      </p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-footer>
       <button mat-button routerLink="/documents">Timeline view</button>
-    </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
-  <mat-card fxFlex="15">
+  <mat-card>
     <mat-card-header>
       <mat-card-title>XvsY Plot</mat-card-title>
     </mat-card-header>
     <img mat-card-image src="assets/pictures/show_chart.svg" alt="search">
     <mat-card-content>
-      <p>
         Select filters and view a X vs Y plot to visualize the correlation.
-      </p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-footer>
       <button mat-button routerLink="/xy">X vs Y Plot</button>
-    </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
-  <!--
-  <li fxFlex="50">
-  <a mat-button color="primary" class="nav-buttons" routerLink="/documents">
-    <img class="nav" src="assets/pictures/search-black-48dp.svg" alt="search">
-    <p class="cases"></p>
-  </a>
-  <a mat-button color="primary" class="nav-buttons">
-    <img class="nav" src="assets/pictures/room_black.svg" alt="map view">
-    <p class="map-view"></p>
-  </a>
-  <a mat-button color="primary" class="nav-buttons">
-    <img class="nav" src="assets/pictures/date_range.svg" alt="timeline view">
-    <p class="timeline-view"></p>
-  </a>
-  <a mat-button color="primary" class="nav-buttons">
-    <img class="nav" src="assets/pictures/show_chart.svg" alt="Data view">
-    <p class="data-view"></p>
-  </a>
-</li>
-  -->
+  </div>
 </div>

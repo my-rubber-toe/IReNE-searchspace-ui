@@ -1,10 +1,14 @@
-<div>
-<a mat-button (click)="sidenav.close()" color="primary" routerLink="">Home</a>
-<mat-divider></mat-divider>
-<a mat-button (click)="sidenav.close()" color="primary" routerLink="/documents">Browse</a>
-<mat-divider></mat-divider>
-<a mat-button (click)="sidenav.close()" color="primary" routerLink="/about">About</a>
-<mat-divider></mat-divider>
-<a mat-button (click)="sidenav.close()" color="primary" routerLink="/collab-request">Collaborator Access</a>
-<mat-divider></mat-divider>
-</div>
+<mat-nav-list>
+  <div fxLayoutAlign="center center">
+    <h1>Navigation</h1>
+  </div>
+  <mat-divider></mat-divider>
+  <a mat-list-item (click)="sidenav.close()" routerLink="/home"
+     routerLinkActive="active-route">Home</a>
+  <a mat-list-item (click)="sidenav.close()" routerLink="/documents"
+     routerLinkActive="active-route">Browse</a>
+  <a mat-list-item (click)="sidenav.close()" color="primary" routerLink="/about"
+     routerLinkActive="active-route">About</a>
+  <a mat-list-item (click)="sidenav.close()" routerLink="/collab-request"
+     routerLinkActive="active-route">Collaborator Access</a>
+</mat-nav-list>

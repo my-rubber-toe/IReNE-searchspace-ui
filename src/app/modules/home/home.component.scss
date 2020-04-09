@@ -1,5 +1,23 @@
 mat-card{
+  display:flex;
+  flex-direction: column;
   margin: 5px;
+  width: 100%;
+}
+.mat-card-header {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+}
+.mat-card-content{
+  flex-grow: 1;
+  overflow: auto;
+}
+button{
+  width: 100%;
+}
+mat-card-header{
+justify-content: center;
 }
 
 div.disclaimer {
@@ -8,7 +26,7 @@ div.disclaimer {
 }
 p{
   text-align: justify;
-  opacity: .6;
+  opacity: .85;
 }
 p#irene{
   opacity: 1;
@@ -22,75 +40,7 @@ p#searchspace{
   font-weight: bold
 }
 h2{
-  opacity:.6;
+  opacity:.9;
   text-align: center
 }
-li {
-  width: 15%;
-  display: inline-flex;
-}
-button{
-  font-size: 1vw;
-}
-a.nav-buttons {
-  transition-duration: 0.5s;
-  width: 25%;
-  height: 0;
-  padding-bottom: 30%;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-  margin: 2px;
-  border: thin black solid;
-  outline: none;
-}
-a.nav-buttons:active {
-  background: white;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-a.nav-buttons p{
-  cursor: pointer;
-  display: inline-block;
-  font-size: 2vw;
-  transition: 0.5s;
-}
-a.nav-buttons p.cases:after {
-  content: 'Cases';
-  margin-right: 30%;
-  opacity: 0;
-  transition: 0.5s;
-}
-a.nav-buttons p.timeline-view:after {
-  content: 'Timeline';
-  opacity: 0;
-  transition: 0.5s;
-}
-a.nav-buttons p.map-view:after {
-  content: 'Map';
-  opacity: 0;
-  transition: 0.5s;
-}
-a.nav-buttons p.data-view:after {
-  content: 'Plots';
-  opacity: 0;
-  transition: 0.5s;
-}
-a.nav-buttons:hover p{
-  padding-right: 25px;
-}
-a.nav-buttons:hover p:after {
-  opacity: 1;
-  right: 0;
-}
-img.nav{
-  display: block;
-  width: 100%;
-  text-align: center;
-  line-height: 1em;
-  font-size: 1em;
-  margin-top: 10px;
-  margin-bottom: 1px;
-  opacity: .6;
-  overflow: hidden;
-}
+
