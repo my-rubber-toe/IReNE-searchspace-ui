@@ -1,13 +1,14 @@
 <mat-toolbar color="primary">
-<p>
+  <mat-toolbar-row>
   <button mat-icon-button (click)="sidenav.toggle()">
       <span class="material-icons">
           menu
       </span>
   </button>
-</p>
-<h1><span class="tittle" routerLink="/">IReNE</span>
-  &nbsp;&nbsp;&nbsp;Interdisciplinary Research Network Extension</h1>
+      <img routerLink="/home"
+       src="assets/pictures/app_logo_white.png" alt="Logo of IReNE">
+<span>
+  Interdisciplinary Research Network Extension</span>
 <span style="flex: 1 1 auto"></span>
 <a mat-button color="accent" routerLink="/documents">Browse</a>
 <a mat-button color="accent" routerLink="/about">About</a>
@@ -15,4 +16,5 @@
 <span class="material-icons">
     help
   </span>
+  </mat-toolbar-row>
 </mat-toolbar>

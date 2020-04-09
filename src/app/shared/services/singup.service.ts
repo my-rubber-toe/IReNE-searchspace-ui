@@ -1,10 +1,7 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Observable, of, BehaviorSubject } from 'rxjs';
-
-import {AuthService, GoogleLoginProvider, SocialUser} from 'angularx-social-login';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Swal from 'sweetalert2';
 
 @Injectable({

@@ -15,7 +15,11 @@ const routes: Routes = [
     path: '',
     component: DefaultComponent,
     children: [
-      {path: '', component: HomeComponent},
+      {path: '', pathMatch: 'full', redirectTo: 'home'},
+      {
+        path: 'home',
+        component: HomeComponent,
+      },
       {
       path: 'about',
       component: AboutComponent,
@@ -35,13 +39,14 @@ const routes: Routes = [
       {
         path: 'xy',
         component: XyComponent
-      }],
+      },
+      {
+        path: 'preview/:docId',
+        component: PreviewComponent,
+      },
+      { path: '**', component: PageNotFoundComponent },
+      ],
   },
-  {
-    path: 'preview/:docId',
-    component: PreviewComponent,
-  },
-  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

@@ -1,10 +1,10 @@
-import { Component, Input, OnInit, ViewChild} from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
 import {SearchSpaceService} from '../../../shared/services/searchspace.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { DocumentMetadata } from '../../../shared/models/searchspace.model';
-import { Router } from '@angular/router';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {DocumentMetadata} from '../../../shared/models/searchspace.model';
+import {Router} from '@angular/router';
 import {FilterService} from '../../../shared/services/filter.service';
 
 @Component({
