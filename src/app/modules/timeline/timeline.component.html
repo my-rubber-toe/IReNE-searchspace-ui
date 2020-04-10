@@ -13,6 +13,14 @@
   <div fxFill>
     <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
       <div fxFlex="1">
+        <mat-form-field class="side">
+            <mat-label>Case Studies</mat-label>
+            <mat-select  [formControl]= "timeTitle" (selectionChange)="updateCaseStudy()" (keyup)="sendValueCS(subjectCS.value)" #subjectCS placeholder="Damage" >
+              <mat-option  *ngFor="let caseStudy of timelineTitles" [value]="caseStudy">{{caseStudy}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+
         <!-- <mat-form-field class="side">
             <mat-label>Category X</mat-label>
             <mat-select  [formControl]= "category_x"  (selectionChange)="updateCatX()" (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
@@ -29,7 +37,7 @@
      
     </div>
     </div>
-    <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 20em; padding-top: 1em;">
+    <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 5em; padding-top: 1em;">
         <google-chart #chart
             [title]="title"
             [type]="type"
