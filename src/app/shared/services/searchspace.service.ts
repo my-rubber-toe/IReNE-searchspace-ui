@@ -22,12 +22,19 @@ export class SearchSpaceService {
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
   private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
+  private behaveCS = new BehaviorSubject<Object>({textVal: 'hello'});
   constructor(private http: HttpClient) { }
   setBehaviorViewX(behaveX: Object) { 
     this.behaveX.next(behaveX); 
   } 
   getBehaviorViewX(): Observable<any> { 
       return this.behaveX.asObservable(); 
+  }
+  setBehaviorViewCS(behaveCS: Object) { 
+    this.behaveCS.next(behaveCS); 
+  }
+  getBehaviorViewCS(): Observable<any> { 
+    return this.behaveCS.asObservable(); 
   }
   setBehaviorViewY(behaveY: Object) { 
     this.behaveY.next(behaveY); 

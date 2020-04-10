@@ -8,6 +8,7 @@ import {HomeComponent} from './modules/home/home.component';
 import {DefaultComponent} from './layouts/default/default.component';
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import { XyComponent } from './modules/xy/xy.component';
+import { TimelineComponent } from './modules/timeline/timeline.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: 'xy',
         component: XyComponent
+      },
+      {
+        path: 'timeline',
+        component: TimelineComponent
       }],
   },
   { path: '**', component: PageNotFoundComponent }
