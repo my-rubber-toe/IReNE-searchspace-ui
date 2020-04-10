@@ -12,6 +12,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {FlexModule} from '@angular/flex-layout';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSelectModule,
     MatButtonModule,
     MatTooltipModule,
+    FlexModule,
   ]
 })
 export class DocumentsModule { }
