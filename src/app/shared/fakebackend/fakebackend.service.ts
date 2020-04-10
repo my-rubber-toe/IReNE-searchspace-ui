@@ -67,11 +67,11 @@ const xyDocument: XY[] = [
 ];
 
 const timelineDocument: Timeline[] = [
-  {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', timeline: [{event:'it flooded', eventDate:'2017-07-09'}] },
-  {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', timeline: [{event:'the ground shake', eventDate:'2016-01-09'}]  },
-  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', timeline: [{event:'it rained', eventDate:'2017-09-09'}]  },
-  {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', timeline: [{event:'it rained with wind', eventDate:'2017-07-10'}]   },
-  {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', timeline: [{event:'it burned a lot', eventDate:'2018-07-09'}]},
+    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', timeline: [ {event:'it flooded', startDate:'2017-07-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2018-01-09', endDate: '2018-02-10'}] },
+    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', timeline: [{event:'the ground shake', startDate:'2016-01-09', endDate: '2016-09-10'}, {event:'started Case Study', startDate:'2017-03-09', endDate: '2017-04-10'}, {event:'ended Case Study', startDate:'2020-01-09', endDate: '2020-02-10'}, {event:'aftermath crisis', startDate:'2016-10-01', endDate: '2017-02-12'}]  },
+    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', timeline: [{event:'it rained', startDate:'2017-09-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2019-07-09', endDate: '2019-07-10'}]  },
+    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', timeline: [{event:'it rained with wind', startDate:'2017-07-10', endDate: '2017-09-10'}]   },
+    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', timeline: [{event:'it burned a lot', startDate:'2018-07-09', endDate: '2019-09-10'}, {event:'started Case Study', startDate:'2019-11-09', endDate: '2019-12-10'}, {event:'ended Case Study', startDate:'2020-01-09', endDate: '2020-02-10'}]},
 ];
 
 
