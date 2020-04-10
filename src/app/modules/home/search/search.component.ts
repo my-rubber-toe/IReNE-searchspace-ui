@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {not} from 'rxjs/internal-compatibility';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -8,7 +7,6 @@ import {not} from 'rxjs/internal-compatibility';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  hintDescription = 'Advance Search';
   @Output() typed = new EventEmitter();
   @Output() empty = new EventEmitter();
   public search;
