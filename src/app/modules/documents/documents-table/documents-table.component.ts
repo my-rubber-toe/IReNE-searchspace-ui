@@ -21,11 +21,11 @@ export class DocumentsTableComponent implements OnInit {
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
-  displayedColumns: string[] = ['title', 'creator', 'location',
+  displayedColumns: string[] = ['title', 'authors', 'location',
     'publication_date', 'incident_date', 'modification_date', 'infrastructure_type',
     'damage_type', 'language', 'tag', 'actions'];
   filterSelection: Map<string, any> = new Map<string, any>([
-    ['creator', ''],
+    ['author', ''],
     ['infrastructure_type', ''],
     ['damage_type', ''],
     ['language', ''],

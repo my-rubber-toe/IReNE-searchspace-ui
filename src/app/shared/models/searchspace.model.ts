@@ -14,7 +14,7 @@ export interface Filters {
 
 export interface DocumentMetadata {
     id: string;
-    creator: string;
+    authors: Array<string>;
     title: string;
     published: boolean;
     location: string;

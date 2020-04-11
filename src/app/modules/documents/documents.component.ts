@@ -57,9 +57,9 @@ export class DocumentsComponent implements OnInit {
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  creators: string[];
-  selectedCreators: string[] = [];
-  filteredCreators: Observable<string[]>;
+  authors: string[];
+  selectedAuthors: string[] = [];
+  filteredAuthors: Observable<string[]>;
   filters: Filters[];
   events: string[] = [];
   formControl = new FormControl();
@@ -89,14 +89,14 @@ export class DocumentsComponent implements OnInit {
     }, 16);
     this.filtersService.getFilters().add(() => {
       this.filters = this.filtersService.filters;
-      this.creators = this.filters[0].creators;
+      this.authors = this.filters[0].creators;
       this.dmgList = this.filters[0].damage_type;
       this.structureList = this.filters[0].infrastructure_type;
       this.tagList = this.filters[0].tag;
-      this.filteredCreators = this.creatorCtrl.valueChanges.pipe(
+      this.filteredAuthors = this.creatorCtrl.valueChanges.pipe(
         // tslint:disable-next-line:deprecation
         startWith(null),
-        map((creator: string | null) => creator ? this._filter(creator) : this.creators.slice()));
+        map((creator: string | null) => creator ? this._filter(creator) : this.authors.slice()));
     });
     this.publicationFilter = (d: Date | null): boolean => {
       return this.table.tempDataSource.data.some(e => {
@@ -119,20 +119,20 @@ export class DocumentsComponent implements OnInit {
   }
 
   remove(creator: string): void {
-    const index = this.selectedCreators.indexOf(creator);
+    const index = this.selectedAuthors.indexOf(creator);
 
     if (index >= 0) {
-      this.creators.push(this.selectedCreators[index]);
-      this.selectedCreators.splice(index, 1);
+      this.authors.push(this.selectedAuthors[index]);
+      this.selectedAuthors.splice(index, 1);
     }
     this.creatorInput.nativeElement.value = '';
     this.creatorCtrl.setValue(null);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    const index = this.creators.indexOf(event.option.viewValue);
-    this.creators.splice(index, 1);
-    this.selectedCreators.push(event.option.viewValue);
+    const index = this.authors.indexOf(event.option.viewValue);
+    this.authors.splice(index, 1);
+    this.selectedAuthors.push(event.option.viewValue);
     this.creatorInput.nativeElement.value = '';
     this.creatorCtrl.setValue(null);
   }
@@ -140,6 +140,6 @@ export class DocumentsComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.creators.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
+    return this.authors.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
   }
 }

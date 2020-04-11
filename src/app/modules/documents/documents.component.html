@@ -33,19 +33,19 @@
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="side">
-      <mat-chip-list #chipList aria-label="Creator selection">
+      <mat-chip-list #chipList aria-label="Author selection">
         <mat-chip
-          *ngFor="let creator of selectedCreators"
+          *ngFor="let author of selectedAuthors"
           [selectable]="selectable"
           [removable]="removable"
-          (removed)="remove(creator);
-           documentsTableComponent.selectionEvent(selectedCreators, 'creator');
+          (removed)="remove(author);
+           documentsTableComponent.selectionEvent(selectedAuthors, 'authors');
            documentsTableComponent.applyFilter()">
-          {{creator}}
+          {{author}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
         <input
-          placeholder="Creators"
+          placeholder="Authors"
           #creatorInput
           [formControl]="creatorCtrl"
           [matAutocomplete]="auto"
@@ -54,9 +54,9 @@
           >
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);
-       documentsTableComponent.selectionEvent(selectedCreators, 'creator'); documentsTableComponent.applyFilter()">
-        <mat-option *ngFor="let creator of filteredCreators | async" [value]="creator">
-          {{creator}}
+       documentsTableComponent.selectionEvent(selectedAuthors, 'authors'); documentsTableComponent.applyFilter()">
+        <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
+          {{author}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
