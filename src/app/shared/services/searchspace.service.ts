@@ -14,9 +14,8 @@ import {Observable, of} from 'rxjs';
 })
 export class SearchSpaceService {
 
-  constructor(private http: HttpClient) { }
 
-  fakeBackend = 'http://localhost:4200/api';
+  fakeBackend = 'http://localhost:8080/api';
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
@@ -25,21 +24,25 @@ export class SearchSpaceService {
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
   private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
-
-  setBehaviorViewX(behaveX: Object) {
-    this.behaveX.next(behaveX);
+  private behaveCS = new BehaviorSubject<Object>({textVal: 'hello'});
+  constructor(private http: HttpClient) { }
+  setBehaviorViewX(behaveX: Object) { 
+    this.behaveX.next(behaveX); 
+  } 
+  getBehaviorViewX(): Observable<any> { 
+      return this.behaveX.asObservable(); 
   }
-  getBehaviorViewX(): Observable<any> {
-      return this.behaveX.asObservable();
+  setBehaviorViewCS(behaveCS: Object) { 
+    this.behaveCS.next(behaveCS); 
   }
-  setBehaviorViewY(behaveY: Object) {
-    this.behaveY.next(behaveY);
+  getBehaviorViewCS(): Observable<any> { 
+    return this.behaveCS.asObservable(); 
   }
-  getBehaviorViewY(): Observable<any> {
-      return this.behaveY.asObservable();
+  setBehaviorViewY(behaveY: Object) { 
+    this.behaveY.next(behaveY); 
+  } 
+  getBehaviorViewY(): Observable<any> { 
+      return this.behaveY.asObservable(); 
   }
   collabRequest() {
     /**

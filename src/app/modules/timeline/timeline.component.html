@@ -1,0 +1,71 @@
+<div class="timeline-graph">
+    <h1 style="padding: 0em 2em;"><b>Timeline View</b></h1>
+    <p style="padding: 0px 2em;">
+      Select a Case Study to see its Timeline. The graph represents the timeline of the selected
+      Case Study, which each block represents an event within the Case Study. The table below 
+      illustrate the title of the event, the start date, and the end date of each event.
+
+    </p>
+    <p>
+      <i style="padding-left: 2em;">Note: The default view of the graph and table is the first case study in the list, select another Case Study to view its timeline.</i>
+    </p>
+  
+  <div fxFill>
+    <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
+      <div fxFlex="1">
+        <mat-form-field class="side">
+            <mat-label>Case Studies</mat-label>
+            <mat-select  [formControl]= "timeTitle" (selectionChange)="updateCaseStudy()" (keyup)="sendValueCS(subjectCS.value)" #subjectCS placeholder="Damage" >
+              <mat-option  *ngFor="let caseStudy of timelineTitles" [value]="caseStudy">{{caseStudy}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+
+        <!-- <mat-form-field class="side">
+            <mat-label>Category X</mat-label>
+            <mat-select  [formControl]= "category_x"  (selectionChange)="updateCatX()" (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
+              <mat-option  *ngFor="let catX of categoryX" [value]="catX">{{catX}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="side">
+            <mat-label>Category Y</mat-label>
+            <mat-select [formControl]= "category_y"  (selectionChange)="updateCatY()" (keyup)="sendValueY(subjectValue.value)" #subjectValue placeholder="Publication Date" >
+              <mat-option  *ngFor="let catY of categoryY" [value]="catY">{{catY}}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          
+     
+    </div>
+    </div>
+    <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 5em; padding-top: 1em;">
+        <google-chart #chart
+            [title]="title"
+            [type]="type"
+            [data]="data"
+            [columnNames]="columnNames"
+            [options]="options"
+            [width]="width"
+            [height]="height"
+            (select)="onSelect($event)"
+        ></google-chart>
+    </div>
+    <div style="padding-left: 10em; padding-top: 10em;">
+
+        <google-chart #chart
+        [title]="titleT"
+        [type]="typeT"
+        [data]="dataT"
+        [columnNames]="columnNamesT"
+        [options]="optionsT"
+        [width]="widthT"
+        [height]="heightT"
+        (select)="onSelectT($event)"
+    ></google-chart>
+    </div>
+    
+ </div>
+ </div>
+
+
+
+

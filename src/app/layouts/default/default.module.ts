@@ -29,6 +29,9 @@ import {XyComponent} from 'src/app/modules/xy/xy.component';
 import {GoogleChartsModule} from 'angular-google-charts';
 import {MapComponent} from 'src/app/modules/map/map.component';
 import {environment} from 'src/environments/environment';
+import { TimelineModule } from 'src/app/modules/timeline/timeline.module';
+import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
+
 
 
 @NgModule({
@@ -39,7 +42,8 @@ import {environment} from 'src/environments/environment';
     AboutComponent,
     HomeComponent,
     XyComponent,
-    MapComponent
+    MapComponent,
+    TimelineComponent
   ],
   imports: [
     CommonModule,
@@ -66,6 +70,7 @@ import {environment} from 'src/environments/environment';
     GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null),
     MatChipsModule,
     MatAutocompleteModule,
+    TimelineModule
   ],
       providers: [
         DatePipe
