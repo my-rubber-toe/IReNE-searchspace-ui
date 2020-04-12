@@ -98,11 +98,11 @@ export class FakebackendService implements HttpInterceptor {
           return getFilters();
         case url.endsWith('/api/documents/view') && method === 'GET':
           return getDocument();
-        case url.endsWith('/documents/visualize/map') && method === 'GET':
+        case url.endsWith('/visualize/map') && method === 'GET':
           return docMap();
-        case url.endsWith('/documents/visualize/comparison-graph') && method === 'GET':
+        case url.endsWith('/visualize/comparison-graph') && method === 'GET':
           return docXY();
-        case url.endsWith('/documents/visualize/timeline') && method === 'GET':
+        case url.endsWith('/visualize/timeline') && method === 'GET':
           return docTimeline();
         default:
           return next.handle(request);
