@@ -11,7 +11,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Authors </th>
     <td mat-cell *matCellDef="let element">
       <mat-select class="items" placeholder="{{element.authors[0]}}..." >
-        <mat-option disabled="true" *ngFor="let author of element.authors" value={{damage}}> {{author}}</mat-option>
+        <mat-option disabled="true" *ngFor="let author of element.authors" value={{author}}> {{author}}</mat-option>
       </mat-select>
     </td>
   </ng-container>
