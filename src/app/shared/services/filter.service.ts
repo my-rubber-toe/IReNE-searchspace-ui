@@ -25,14 +25,18 @@ export class FilterService {
       if (filter.length !== 0) {
         const iter = filteringDataSource.data.values();
         for (const value of iter) {
-          for (const x of filter) {
-            if (value[key].includes(x)) {
-              tempFilterData.data.push(value);
-              break;
+          if (value[key] !== undefined) {
+            for (const x of filter) {
+              if (value[key].includes(x)) {
+                tempFilterData.data.push(value);
+                break;
+              }
             }
           }
         }
-        filteringDataSource.data = tempFilterData.data;
+        if (tempFilterData.data.length !== 0 ) {
+          filteringDataSource.data = tempFilterData.data;
+        }
       }
     }
   }
