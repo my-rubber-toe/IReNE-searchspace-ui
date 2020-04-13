@@ -19,6 +19,7 @@ export class FilterService {
 
   private filterBySelection(filteringDataSource: MatTableDataSource<DocumentMetadata>, filterSelection: Map<string, any>) {
     const ite = filterSelection.keys();
+    let invalidKey = false;
     for (const key of ite) {
       const tempFilterData = new MatTableDataSource<DocumentMetadata>();
       const filter = filterSelection.get(key);
@@ -32,9 +33,11 @@ export class FilterService {
                 break;
               }
             }
+          } else {
+            invalidKey = true;
           }
         }
-        if (tempFilterData.data.length !== 0 ) {
+        if (!invalidKey) {
           filteringDataSource.data = tempFilterData.data;
         }
       }
