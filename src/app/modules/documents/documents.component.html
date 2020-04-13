@@ -13,8 +13,9 @@
   <div fxFlex="10">
     <mat-form-field class="side">
       <mat-label>Enter publication date</mat-label>
-      <input matInput [matDatepicker]="picker"
-             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent($event.value, 'publication_date');
+      <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="publicationFilter"
+             [matDatepicker]="picker"
+             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent([$event.value], 'publication_date');
               documentsTableComponent.applyFilter()" [formControl]="date1" value=null
       >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -22,70 +23,71 @@
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Enter incident date</mat-label>
-      <input matInput [matDatepicker]="picker2"
-             (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent($event.value, 'incident_date');
+      <input matInput [max]="maxDate" [min]="minDate"  [matDatepickerFilter]="incidentFilter"
+             [matDatepicker]="picker2"
+             (dateChange)="checkEvent($event);
+              documentsTableComponent.selectionEvent([$event.value], 'incident_date');
               documentsTableComponent.applyFilter()" [formControl]="date2" value="=null"
       >
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
-    <!--<mat-form-field class="side">
-      <mat-label>Locations</mat-label>
-      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'location');
-      documentsTableComponent.applyFilter()">
-        <mat-option *ngFor="let location of locationList" [value]="location">{{location}}</mat-option>
-      </mat-select>
-    </mat-form-field>-->
     <mat-form-field class="side">
-      <mat-chip-list #chipList aria-label="Creator selection">
+      <mat-chip-list #chipList aria-label="Author selection">
         <mat-chip
-          *ngFor="let creator of selectedCreators"
+          *ngFor="let author of selectedAuthors"
           [selectable]="selectable"
           [removable]="removable"
-          (removed)="remove(creator)">
-          {{creator}}
+          (removed)="remove(author);
+           documentsTableComponent.selectionEvent(selectedAuthors, 'authors');
+           documentsTableComponent.applyFilter()">
+          {{author}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
         <input
-          placeholder="Creators"
+          placeholder="Authors"
           #creatorInput
           [formControl]="creatorCtrl"
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          (matChipInputTokenEnd)="add($event)">
+          >
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);
-       documentsTableComponent.selectionEvent(selectedCreators, 'creators'); documentsTableComponent.applyFilter()">
-        <mat-option *ngFor="let creator of filteredCreators | async" [value]="creator">
-          {{creator}}
+       documentsTableComponent.selectionEvent(selectedAuthors, 'authors'); documentsTableComponent.applyFilter()">
+        <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
+          {{author}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Infrastructure</mat-label>
-      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'infrastructure_type');
+      <mat-select [formControl]="formControl" multiple
+                  (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'infrastructure_type');
       documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let structure of structureList" [value]="structure">{{structure}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Damages</mat-label>
-      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'damage_type');
+      <mat-select [formControl]="formControl" multiple
+                  (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'damage_type');
       documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let dmg of dmgList" [value]="dmg">{{dmg}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Language</mat-label>
-      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'language');
+      <mat-select [formControl]="formControl" multiple
+                  (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'language');
       documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let language of languageList" [value]="language">{{language}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Tags</mat-label>
-      <mat-select [formControl]="formControl" multiple (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'tag');
+      <mat-select [formControl]="formControl" multiple
+                  (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'tag');
       documentsTableComponent.applyFilter()">
         <mat-option *ngFor="let tag of tagList" [value]="tag">{{tag}}</mat-option>
       </mat-select>

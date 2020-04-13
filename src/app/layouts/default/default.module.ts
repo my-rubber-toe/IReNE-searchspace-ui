@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { DefaultComponent } from './default.component';
-import { RouterModule } from '@angular/router';
-import {  SharedModule } from '../../shared/shared.module';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatDividerModule } from '@angular/material/divider';
+import {NgModule} from '@angular/core';
+import {CommonModule, DatePipe} from '@angular/common';
+import {DefaultComponent} from './default.component';
+import {RouterModule} from '@angular/router';
+import {SharedModule} from '../../shared/shared.module';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {DocumentsComponent} from '../../modules/documents/documents.component';
 import {CollabRequestComponent} from '../../modules/collab-request/collab-request.component';
@@ -20,15 +20,17 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { XyModule } from 'src/app/modules/xy/xy.module';
-import { XyComponent } from 'src/app/modules/xy/xy.component';
-import { GoogleChartsModule } from 'angular-google-charts';
-import { MapComponent } from 'src/app/modules/map/map.component';
+import {XyModule} from 'src/app/modules/xy/xy.module';
+import {XyComponent} from 'src/app/modules/xy/xy.component';
+import {GoogleChartsModule} from 'angular-google-charts';
+import {MapComponent} from 'src/app/modules/map/map.component';
 import {environment} from 'src/environments/environment';
+import { TimelineModule } from 'src/app/modules/timeline/timeline.module';
+import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
 
 
 
@@ -40,7 +42,8 @@ import {environment} from 'src/environments/environment';
     AboutComponent,
     HomeComponent,
     XyComponent,
-    MapComponent
+    MapComponent,
+    TimelineComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +69,8 @@ import {environment} from 'src/environments/environment';
     FormsModule,
     GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null),
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    TimelineModule
   ],
       providers: [
         DatePipe

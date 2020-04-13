@@ -14,9 +14,8 @@ import {Observable, of} from 'rxjs';
 })
 export class SearchSpaceService {
 
-  constructor(private http: HttpClient) { }
 
-  fakeBackend = 'http://localhost:4200/api';
+  fakeBackend = 'http://localhost:8080/api';
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
@@ -25,15 +24,19 @@ export class SearchSpaceService {
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
   private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
-
+  private behaveCS = new BehaviorSubject<Object>({textVal: 'hello'});
+  constructor(private http: HttpClient) { }
   setBehaviorViewX(behaveX: Object) {
     this.behaveX.next(behaveX);
   }
   getBehaviorViewX(): Observable<any> {
       return this.behaveX.asObservable();
+  }
+  setBehaviorViewCS(behaveCS: Object) {
+    this.behaveCS.next(behaveCS);
+  }
+  getBehaviorViewCS(): Observable<any> {
+    return this.behaveCS.asObservable();
   }
   setBehaviorViewY(behaveY: Object) {
     this.behaveY.next(behaveY);
@@ -77,7 +80,7 @@ export class SearchSpaceService {
     /**
      * Get all documents  from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/documents/visualize/map`).subscribe(
+    return this.http.get(`${this.fakeBackend}/visualize/map`).subscribe(
       (response: Map[]) => {
         this.maps = response;
       });
@@ -86,7 +89,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
+    return this.http.get(`${this.fakeBackend}/visualize/comparison-graph`).subscribe(
       (response: XY[]) => {
         this.comparison = response;
       });
@@ -97,7 +100,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
+    return this.http.get(`${this.fakeBackend}/visualize/timeline`).subscribe(
       (response: Timeline[]) => {
         this.timeline = response;
       });

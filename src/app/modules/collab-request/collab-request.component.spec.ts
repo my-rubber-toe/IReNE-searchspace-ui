@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CollabRequestComponent } from './collab-request.component';
+import {CollabRequestComponent} from './collab-request.component';
 
 describe('CollabRequestComponent', () => {
   let component: CollabRequestComponent;

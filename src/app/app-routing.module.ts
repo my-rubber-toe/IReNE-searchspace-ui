@@ -9,13 +9,18 @@ import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.com
 import { XyComponent } from './modules/xy/xy.component';
 import { MapComponent } from './modules/map/map.component';
 import { PreviewComponent } from './layouts/preview/preview.component';
+import { TimelineComponent } from './modules/timeline/timeline.component';
 
 const routes: Routes = [
   {
     path: '',
     component: DefaultComponent,
     children: [
-      {path: '', component: HomeComponent},
+      {path: '', pathMatch: 'full', redirectTo: 'home'},
+      {
+        path: 'home',
+        component: HomeComponent,
+      },
       {
       path: 'about',
       component: AboutComponent,
@@ -35,13 +40,18 @@ const routes: Routes = [
       {
         path: 'xy',
         component: XyComponent
-      }],
+      },
+      {
+        path: 'timeline',
+        component: TimelineComponent
+      },
+      {
+        path: 'preview/:docId',
+        component: PreviewComponent,
+      },
+      { path: '**', component: PageNotFoundComponent },
+      ],
   },
-  {
-    path: 'preview/:docId',
-    component: PreviewComponent,
-  },
-  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
