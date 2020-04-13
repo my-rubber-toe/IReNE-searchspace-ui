@@ -10,6 +10,7 @@ import { DocumentMetadata } from 'src/app/shared/models/searchspace.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
+import { FilterService } from 'src/app/shared/services/filter.service';
 
 
 
@@ -25,11 +26,12 @@ interface SearchValues {
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
 
   constructor(
+    private filterService: FilterService,
     private datePipe: DatePipe,
     private searchSpaceService: SearchSpaceService,
     private router: Router
@@ -42,15 +44,12 @@ export class MapComponent implements OnInit {
 
   documents: DocumentMetadata[]
 
+  tempEvent: Event;
+
   // Google Map Data Setup
   title = '';
   type = 'Map';
-  data = [
-    ["Fajardo, PR", "title", "1"],
-    ["Rincon, PR","title", "2"],
-    ["Arecibo, PR","title", "3"],
-    ["Ponce, PR","title", "4"]
-  ];
+  data = [];
   columnNames = ["location","title", "docId"];
   options = {
     showTip: true,
@@ -108,7 +107,6 @@ export class MapComponent implements OnInit {
     this.searchSpaceService.getDocuments().add(() => {
       this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
       this.tempDataSource = this.dataSource;
-      this.updateMap()
     });
   }
 
@@ -124,19 +122,21 @@ export class MapComponent implements OnInit {
    * [location, title, docId]
    */
   updateMap(){
-    if(this.dataSource.data === []){
-      alert('Filter did not yield any data.')
-    }else {
-      this.data = []
-      this.dataSource.data.forEach(e => {
-        this.data.push([e.location, e.title, e.id])
-      });
-      this.dirtyFields = false;
-    }
+    this.applyFilter()
+    console.log(this.tempDataSource.data)
+    // if(this.dataSource.data === []){
+    //   alert('Filter did not yield any data.')
+    // }else {
+    //   this.data = []
+    //   this.dataSource.data.forEach(e => {
+    //     this.data.push([e.location, e.title, e.id])
+    //   });
+    //   this.dirtyFields = false;
+    // }
   }
 
   /**
-   * Retrieve the information from the selected map marker.
+   * Retrieve the information from the selected map marker and redirect the user to the correspoinding document.
    * @param e The event that holds the information of the selected marker in the map.
    */
   markerSelect(e: ChartEvent) {
@@ -150,13 +150,8 @@ export class MapComponent implements OnInit {
    * @param type the type of filter.
    */
   selectionEvent(selection: any, type: string) {
-    if (selection.length === 0) {
-      this.dataSource = this.tempDataSource;
-    }
     this.filterSelection.set(type, selection);
-    this.applyFilter()
-    this.setDirty()
-    console.log(this.data)
+    this.dirtyFields = true;
   }
 
   /////////////////////HELPERS//////////////////////////////////////
@@ -166,111 +161,39 @@ export class MapComponent implements OnInit {
    * Applies the filter on the data based on the selected filters. Use MatTableDataSource for easier filtering operations.
    */
   applyFilter() {
-    const filteringDataSource = new MatTableDataSource<DocumentMetadata>();
-    this.filterByLanguage(this.filterSelection.get('language'), filteringDataSource);
-    this.filterBySelection(this.filterSelection.get('tag'), filteringDataSource, 'tag');
-    this.filterBySelection(this.filterSelection.get('damage_type'), filteringDataSource, 'damage_type');
-    this.filterBySelection(this.filterSelection.get('infrastructure_type'), filteringDataSource, 'infrastructure_type');
-    this.filterBySelection(this.filterSelection.get('publication_date'), filteringDataSource, 'publication_date');
-    this.filterBySelection(this.filterSelection.get('incident_date'), filteringDataSource, 'incident_date');
-    this.dataSource = filteringDataSource;
-  }
-
-  /**
-   * Filters the given data source by the selected languages.
-   *
-   * @param language the selected language values
-   * @param filteringDataSource the filtered data source
-   */
-  filterByLanguage(language: string[], filteringDataSource: MatTableDataSource<DocumentMetadata>) {
-    if (language.length !== 0) {
-      this.tempDataSource.data.forEach(e => {
-        language.forEach(s => {
-          if (e.language === s) {
-            filteringDataSource.data.push(e);
-          }
-        });
-      });
-    } else {
-      filteringDataSource.data = this.tempDataSource.data;
+    this.dataSource = this.filterService.applyFilter(this.filterSelection, this.tempDataSource);
+    if (this.tempEvent) {
+      this.searchFilter(this.tempEvent);
     }
   }
 
   /**
-   *
-   * @param filter the values of the given filter
-   * @param filteringDataSource the datasource to filter from
-   * @param selection the filter field
+   * 
+   * @param event 
    */
-  filterBySelection(filter: string[], filteringDataSource: MatTableDataSource<DocumentMetadata>, selection: string) {
-    const tempFilterData = new MatTableDataSource<DocumentMetadata>();
-    if (filter.length !== 0 || selection === 'language') {
-      switch (selection) {
-        case 'damage_type':
-          filteringDataSource.data.forEach(e => {
-            for (const value of filter) {
-              if (e.damage_type.includes(value)) {
-                tempFilterData.data.push(e);
-                break;
-              }
-            }
-          });
-          break;
-        case 'infrastructure_type':
-          filteringDataSource.data.forEach(e => {
-            for (const value of filter) {
-              if (e.infrastructure_type.includes(value)) {
-                tempFilterData.data.push(e);
-                break;
-              }
-            }
-          });
-          break;
-        case 'tag':
-          filteringDataSource.data.forEach(e => {
-            for (const value of filter) {
-              if (e.tag.includes(value)) {
-                tempFilterData.data.push(e);
-                break;
-              }
-            }
-          });
-          break;
-        case 'publication_date':
-          filteringDataSource.data.forEach(e => {
-              if (e.publication_date.includes(filter.toString())) {
-                tempFilterData.data.push(e);
-              }
-          });
-          break;
-        case 'incident_date':
-          filteringDataSource.data.forEach(e => {
-            if (e.incident_date.includes(filter.toString())) {
-              tempFilterData.data.push(e);
-            }
-          });
-          break;
-        case 'creators':
-          filteringDataSource.data.forEach(e => {
-            for (const value of filter) {
-              if (e.authors.includes(value)) {
-                tempFilterData.data.push(e);
-                break;
-              }
-            }
-          });
-          break;
+  searchFilter(event: Event) {
+    if (event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.tempEvent = event;
+      if (filterValue === '') {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+      } else {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
       }
-      filteringDataSource.data = tempFilterData.data;
     }
   }
 
-  checkEvent(event: MatDatepickerInputEvent<any>) {
+
+  /**
+   * Converts the selected date from the date
+   * 
+   * @param event the event when the date picker is used
+   */
+  datePreCheck(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
       event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
     } else {
       event.value = '';
     }
   }
-
 }

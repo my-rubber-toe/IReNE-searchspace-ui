@@ -42,7 +42,9 @@ const dbDocuments: DocumentMetadata[] = [
 const filters: Filters[] = [
   { creators: ['Roberto Guzman', 'Alejandro Vasquez', 'Alberto Canela', 'Jainel Torres', 'Yomar Ruiz'],
     infrastructure_type: ['Building', 'Bridge'],
-    damage_type: ['Flooding', 'Fire', 'Broken Sewer'], tag: ['Flood', 'Hurricane', 'Earthquake'] },
+    damage_type: ['Flooding', 'Fire', 'Broken Sewer'], 
+    tag: ['Flood', 'Hurricane', 'Earthquake'] 
+  },
 ];
 
 const mapDocument: Map[] = [

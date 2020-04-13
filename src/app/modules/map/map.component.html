@@ -1,85 +1,77 @@
+<div class="map-container">
 
-<div class="map-information">
-  <h1><b>Map View</b></h1>
-  <p>
-    Filter the case studies by selecting the multiple options based on infrastrucutre and damage types as
-    well as the tags present on those case studies. The locations will be loaded automatically on the map depending on the selected options.
-  </p>
-  <p>
-    <i>Note: Some documents may not have their locations properly placed. If the case study that you are looking for doesn't 
-      show on the map, the creator of said case study might have not set the locations properly.</i>
-  </p>
-</div>
+  <div fxFill>
+    <h1><b>Map View</b></h1>
+    <p>
+      Filter the case studies by selecting the multiple options based on infrastrucutre and damage types as
+      well as the tags present on those case studies. The locations will be loaded automatically on the map depending on
+      the
+      selected options.
+    </p>
+    <p>
+      <i>Note: Some documents may not have their locations properly placed. If the case study that you are looking for
+        doesn't
+        show on the map, the creator of said case study might have not set the locations properly.</i>
+    </p>
+  </div>
 
-<div fxFill>
-  <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 2em; padding-top: 2em;">
-    <div fxFlex="8">
-      <mat-form-field>
-        <mat-label>Publication date</mat-label>
-        <input matInput [matDatepicker]="picker" [max]="todayDate"
-          [formControl]="publicationDate" 
-          (dateChange)="checkEvent($event); selectionEvent($event.value, 'publication_date')">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>Incident date</mat-label>
-        <input matInput [matDatepicker]="picker2" [max]="todayDate"
-          [formControl]="incidentDate"
-          (dateChange)="checkEvent($event); selectionEvent($event.value, 'incident_date')">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Infrastructure</mat-label>
-        <mat-select [formControl]="infrastructure" multiple (selectionChange)="selectionEvent($event.value, 'infrastructure_type')">
-          <mat-option *ngFor="let element of infrastructureList" [value]="element">{{element}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Damages</mat-label>
-        <mat-select [formControl]="damage" multiple (selectionChange)="selectionEvent($event.value, 'damage_type')">
-          <mat-option *ngFor="let element of damageList" [value]="element">{{element}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Language</mat-label>
-        <mat-select [formControl]="language" multiple (selectionChange)="selectionEvent($event.value, 'language')">
-          <mat-option *ngFor="let element of languageList" [value]="element">{{element}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Tags</mat-label>
-        <mat-select [formControl]="tags" multiple (selectionChange)="selectionEvent($event.value, 'tag')">
-          <mat-option *ngFor="let element of tagsList" [value]="element">{{element}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    
-      <br>
-      <br>
-      
-      <p *ngIf="!dirtyFields" style="color: red;">Select fields</p>
-      <p *ngIf="dirtyFields" style="color: forestgreen;">Please click to update the map.</p>
-      <button mat-raised-button 
-        color="primary" 
-        style="width: 10em;" 
-        [disabled]="!dirtyFields"
-        (click)="updateMap()"> 
-        Update Map
-      </button>
-    </div>
-    <div fxFlex="1" style="padding-left: 7em;">
-      <google-chart #map
-        [title]="title"
-        [type]="type"
-        [data]="data"
-        [columnNames]="columnNames"
-        [options]="options"
-        [width]="width"
-        [height]="height"
-        (select)="markerSelect($event)"
-        >
-      </google-chart>
+  <div fxFill>
+    <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 2em; padding-top: 2em;">
+      <div fxFlex="8">
+        <mat-form-field>
+          <mat-label>Publication date</mat-label>
+          <input matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"
+            (dateChange)="datePreCheck($event); selectionEvent($event.value, 'publication_date')">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Incident date</mat-label>
+          <input matInput [matDatepicker]="picker2" [max]="todayDate" [formControl]="incidentDate"
+            (dateChange)="datePreCheck($event); selectionEvent($event.value, 'incident_date')">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Infrastructure</mat-label>
+          <mat-select [formControl]="infrastructure" multiple
+            (selectionChange)="selectionEvent($event.value, 'infrastructure_type')">
+            <mat-option *ngFor="let element of infrastructureList" [value]="element">{{element}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Damages</mat-label>
+          <mat-select [formControl]="damage" multiple (selectionChange)="selectionEvent($event.value, 'damage_type')">
+            <mat-option *ngFor="let element of damageList" [value]="element">{{element}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Language</mat-label>
+          <mat-select [formControl]="language" multiple (selectionChange)="selectionEvent($event.value, 'language')">
+            <mat-option *ngFor="let element of languageList" [value]="element">{{element}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Tags</mat-label>
+          <mat-select [formControl]="tags" multiple (selectionChange)="selectionEvent($event.value, 'tag')">
+            <mat-option *ngFor="let element of tagsList" [value]="element">{{element}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+        <br>
+
+        <p *ngIf="!dirtyFields" style="color: red;">Select fields</p>
+        <p *ngIf="dirtyFields" style="color: forestgreen;">Please click to update the map.</p>
+        <button mat-raised-button color="primary" style="width: 10em;" [disabled]="!dirtyFields" (click)="updateMap()">
+          Update Map
+        </button>
+      </div>
+      <div fxFlex="1" style="padding-left: 7em;">
+        <google-chart #map [title]="title" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options"
+          [width]="width" [height]="height" (select)="markerSelect($event)">
+        </google-chart>
+      </div>
     </div>
   </div>
 </div>

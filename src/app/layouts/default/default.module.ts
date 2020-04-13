@@ -67,7 +67,7 @@ import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
     XyModule,
     GoogleChartsModule,
     FormsModule,
-    GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null),
+    GoogleChartsModule.forRoot(null),
     MatChipsModule,
     MatAutocompleteModule,
     TimelineModule

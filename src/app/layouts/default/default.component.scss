@@ -6,7 +6,7 @@
 
 mat-sidenav-container {
   min-height: 100vh; /* will cover the 95% of viewport */
-  overflow: hidden;
+  overflow: auto;
   display: block;
   position: relative;
 }

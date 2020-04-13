@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {SearchSpaceService} from '../../../shared/services/searchspace.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {DocumentMetadata} from '../../../shared/models/searchspace.model';
-import {Router} from '@angular/router';
-import {FilterService} from '../../../shared/services/filter.service';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { SearchSpaceService } from '../../../shared/services/searchspace.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { DocumentMetadata } from '../../../shared/models/searchspace.model';
+import { Router } from '@angular/router';
+import { FilterService } from '../../../shared/services/filter.service';
 
 @Component({
   selector: 'app-documents-table',
@@ -16,8 +16,8 @@ import {FilterService} from '../../../shared/services/filter.service';
 
 export class DocumentsTableComponent implements OnInit {
   @Input() show: boolean;
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
@@ -40,6 +40,7 @@ export class DocumentsTableComponent implements OnInit {
     private router: Router
   ) {
   }
+
   applyFilter() {
     this.dataSource = this.filter.applyFilter(this.filterSelection, this.tempDataSource);
     if (this.tempEvent) {
@@ -58,7 +59,7 @@ export class DocumentsTableComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
       }
     }
-    }
+  }
 
   paginateSort(table: MatTableDataSource<DocumentMetadata>) {
     table.sort = this.sort;
@@ -70,14 +71,14 @@ export class DocumentsTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentService.getDocuments().add(() => {
-      this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.documentService.documents);
+      this.dataSource = new MatTableDataSource<DocumentMetadata>(this.documentService.documents);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate =
         (data: DocumentMetadata, filters: string, ) => {
           const matchFilter = [];
           const filterArray = filters.split(' ');
-          const columns = ( Object as any).values(data);
+          const columns = (Object as any).values(data);
           filterArray.forEach(filter => {
             const customFilter = [];
             columns.forEach(column => customFilter.push(column.toString().toLowerCase().includes(filter)));
