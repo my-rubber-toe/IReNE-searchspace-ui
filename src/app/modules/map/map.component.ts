@@ -9,6 +9,7 @@ import { SearchSpaceService } from 'src/app/shared/services/searchspace.service'
 import { DocumentMetadata } from 'src/app/shared/models/searchspace.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Router } from '@angular/router';
 
 
 
@@ -27,6 +28,12 @@ interface SearchValues {
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+
+  constructor(
+    private datePipe: DatePipe,
+    private searchSpaceService: SearchSpaceService,
+    private router: Router
+    ){}
 
   @ViewChild('map')
   map: GoogleChartComponent;
@@ -88,12 +95,6 @@ export class MapComponent implements OnInit {
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
 
-
-  constructor(
-    private datePipe: DatePipe,
-    private searchSpaceService: SearchSpaceService
-    ){}
-
   ngOnInit(){
     let scrollToTop = window.setInterval(() => {
     let pos = window.pageYOffset;
@@ -139,8 +140,8 @@ export class MapComponent implements OnInit {
    * @param e The event that holds the information of the selected marker in the map.
    */
   markerSelect(e: ChartEvent) {
-    console.log(this.data[e[0].row][2])
-    console.log(this.infrastructure.value)
+    const docId = this.data[e[0].row][2]
+    this.router.navigate([`/preview/${docId}`])
   }
 
   /**
