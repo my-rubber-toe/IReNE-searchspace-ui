@@ -124,15 +124,15 @@ export class MapComponent implements OnInit {
   updateMap(){
     this.applyFilter()
     console.log(this.tempDataSource.data)
-    // if(this.dataSource.data === []){
-    //   alert('Filter did not yield any data.')
-    // }else {
-    //   this.data = []
-    //   this.dataSource.data.forEach(e => {
-    //     this.data.push([e.location, e.title, e.id])
-    //   });
-    //   this.dirtyFields = false;
-    // }
+    if(this.dataSource.data === []){
+      alert('Filter did not yield any data.')
+    }else {
+      this.data = []
+      this.dataSource.data.forEach(e => {
+        this.data.push([e.location, e.title, e.id])
+      });
+      this.dirtyFields = false;
+    }
   }
 
   /**
