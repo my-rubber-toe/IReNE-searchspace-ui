@@ -25,7 +25,7 @@ export class DocumentsTableComponent implements OnInit {
     'publication_date', 'incident_date', 'modification_date', 'infrastructure_type',
     'damage_type', 'language', 'tag', 'actions'];
   filterSelection: Map<string, any> = new Map<string, any>([
-    ['author', ''],
+    ['authors', ''],
     ['infrastructure_type', ''],
     ['damage_type', ''],
     ['language', ''],
