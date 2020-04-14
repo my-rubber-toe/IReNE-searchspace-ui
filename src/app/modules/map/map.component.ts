@@ -45,7 +45,7 @@ export class MapComponent implements OnInit {
     ["Ponce, PR","title", "4"]
   ];
   columnNames = ["location","title", "docId"];
-  options = {   
+  options = {
     showTip: true,
     enableScrollWheel: true
   };
@@ -160,7 +160,7 @@ export class MapComponent implements OnInit {
 
   /////////////////////HELPERS//////////////////////////////////////
 
-  
+
   /**
    * Applies the filter on the data based on the selected filters. Use MatTableDataSource for easier filtering operations.
    */
@@ -177,7 +177,7 @@ export class MapComponent implements OnInit {
 
   /**
    * Filters the given data source by the selected languages.
-   * 
+   *
    * @param language the selected language values
    * @param filteringDataSource the filtered data source
    */
@@ -196,7 +196,7 @@ export class MapComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    * @param filter the values of the given filter
    * @param filteringDataSource the datasource to filter from
    * @param selection the filter field
@@ -252,7 +252,7 @@ export class MapComponent implements OnInit {
         case 'creators':
           filteringDataSource.data.forEach(e => {
             for (const value of filter) {
-              if (e.creator.includes(value)) {
+              if (e.authors.includes(value)) {
                 tempFilterData.data.push(e);
                 break;
               }

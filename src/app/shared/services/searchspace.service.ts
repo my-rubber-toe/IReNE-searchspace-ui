@@ -26,23 +26,23 @@ export class SearchSpaceService {
   private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
   private behaveCS = new BehaviorSubject<Object>({textVal: 'hello'});
   constructor(private http: HttpClient) { }
-  setBehaviorViewX(behaveX: Object) { 
-    this.behaveX.next(behaveX); 
-  } 
-  getBehaviorViewX(): Observable<any> { 
-      return this.behaveX.asObservable(); 
+  setBehaviorViewX(behaveX: Object) {
+    this.behaveX.next(behaveX);
   }
-  setBehaviorViewCS(behaveCS: Object) { 
-    this.behaveCS.next(behaveCS); 
+  getBehaviorViewX(): Observable<any> {
+      return this.behaveX.asObservable();
   }
-  getBehaviorViewCS(): Observable<any> { 
-    return this.behaveCS.asObservable(); 
+  setBehaviorViewCS(behaveCS: Object) {
+    this.behaveCS.next(behaveCS);
   }
-  setBehaviorViewY(behaveY: Object) { 
-    this.behaveY.next(behaveY); 
-  } 
-  getBehaviorViewY(): Observable<any> { 
-      return this.behaveY.asObservable(); 
+  getBehaviorViewCS(): Observable<any> {
+    return this.behaveCS.asObservable();
+  }
+  setBehaviorViewY(behaveY: Object) {
+    this.behaveY.next(behaveY);
+  }
+  getBehaviorViewY(): Observable<any> {
+      return this.behaveY.asObservable();
   }
   collabRequest() {
     /**
@@ -80,7 +80,7 @@ export class SearchSpaceService {
     /**
      * Get all documents  from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/documents/visualize/map`).subscribe(
+    return this.http.get(`${this.fakeBackend}/visualize/map`).subscribe(
       (response: Map[]) => {
         this.maps = response;
       });
@@ -89,7 +89,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/documents/visualize/comparison-graph`).subscribe(
+    return this.http.get(`${this.fakeBackend}/visualize/comparison-graph`).subscribe(
       (response: XY[]) => {
         this.comparison = response;
       });
@@ -100,7 +100,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/documents/visualize/timeline`).subscribe(
+    return this.http.get(`${this.fakeBackend}/visualize/timeline`).subscribe(
       (response: Timeline[]) => {
         this.timeline = response;
       });

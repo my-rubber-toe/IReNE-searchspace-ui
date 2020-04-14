@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {SearchSpaceService} from '../../../shared/services/searchspace.service';
 import {MatPaginator} from '@angular/material/paginator';
@@ -10,7 +10,8 @@ import {FilterService} from '../../../shared/services/filter.service';
 @Component({
   selector: 'app-documents-table',
   templateUrl: './documents-table.component.html',
-  styleUrls: ['./documents-table.component.css'],
+  styleUrls: ['./documents-table.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class DocumentsTableComponent implements OnInit {
@@ -20,11 +21,11 @@ export class DocumentsTableComponent implements OnInit {
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
-  displayedColumns: string[] = ['title', 'creator', 'location',
+  displayedColumns: string[] = ['title', 'authors', 'location',
     'publication_date', 'incident_date', 'modification_date', 'infrastructure_type',
     'damage_type', 'language', 'tag', 'actions'];
   filterSelection: Map<string, any> = new Map<string, any>([
-    ['creator', ''],
+    ['authors', ''],
     ['infrastructure_type', ''],
     ['damage_type', ''],
     ['language', ''],
@@ -39,7 +40,6 @@ export class DocumentsTableComponent implements OnInit {
     private router: Router
   ) {
   }
-
   applyFilter() {
     this.dataSource = this.filter.applyFilter(this.filterSelection, this.tempDataSource);
     if (this.tempEvent) {
