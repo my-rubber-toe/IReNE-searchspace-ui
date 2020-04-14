@@ -86,24 +86,17 @@ export class PreviewComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.doc.fromHTML(atob(sample_html), 15, 15, {
-    //   'width': 190,
-    //   'elementHandlers': specialElementsHandler
-    // })
-
-    // this.doc.save('test.pdf')
-
-    // this.route.params.subscribe(params => {
-    //   // use params['docId] to get the docID
-    //   this.http.get(this.fakeBackend).subscribe(
-    //     (response: string) => {
-    //       this.base64Src = response;
-    //       // Simulate long respone
-    //       setTimeout(() => {
-    //         this.loadingDocument = !this.loadingDocument;
-    //       }, 2000);
-    //     }
-    //   );
-    // });
+    this.route.params.subscribe(params => {
+      // use params['docId] to get the docID
+      this.http.get(this.fakeBackend).subscribe(
+        (response: string) => {
+          this.base64Src = response;
+          // Simulate long respone
+          setTimeout(() => {
+            this.loadingDocument = !this.loadingDocument;
+          }, 2000);
+        }
+      );
+    });
   }
 }
