@@ -20,7 +20,7 @@ const googleLoginOptions: LoginOpt = {
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('1069038586130-dovumgiu7070m7aimktgps3b95vv0ved.apps.googleusercontent.com',
+    provider: new GoogleLoginProvider('209439887125-id2acbns7n6ne7aoko5e6su20oqnk300.apps.googleusercontent.com',
       googleLoginOptions)
   },
 ]);
