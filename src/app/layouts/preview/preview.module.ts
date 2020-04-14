@@ -1,9 +1,12 @@
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {PreviewComponent} from './preview.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -14,7 +17,13 @@ import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
     CommonModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    NgxExtendedPdfViewerModule
+    MatDividerModule,
+    MatCardModule,
+    MatButtonModule,
+    // NgxExtendedPdfViewerModule
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class PreviewModule { }

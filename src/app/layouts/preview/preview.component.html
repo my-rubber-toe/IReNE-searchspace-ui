@@ -1,4 +1,4 @@
-<div class="spinner-container" *ngIf="loadingDocument">
+<!-- <div class="spinner-container" *ngIf="loadingDocument">
   <mat-spinner></mat-spinner>
 </div>
 
@@ -13,4 +13,85 @@
     [showHandToolButton]="true"
   >
   </ngx-extended-pdf-viewer>
+</div> -->
+
+<div class="preview-container">
+  <div style="padding: 2em;">
+    <mat-card class="preview-card">
+      <mat-card-header style="padding-top: 3em;">
+        <mat-card-title style="font-size: xx-large;">Title: Test Title</mat-card-title>
+        <mat-card-subtitle>
+          <br>
+          <div *ngIf="description">
+            <h2>Description</h2>
+            <div>{{description}}</div>
+          </div>
+          <br>
+          <p><b>Creator: </b>{{creatorFullName}}</p>
+          <p><b>Publication date: </b>{{publicationDate}}</p>
+          <p><b>Last Modified: </b>{{lastModifiedDate}}</p>
+          <div>
+            <p><b>Infrastructures:</b></p>
+            <ul>
+              <li *ngFor="let infra of infraList">
+                {{infra}}
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p><b>Damages:</b></p>
+            <ul>
+              <li *ngFor="let damage of damageList">
+                {{damage}}
+              </li>
+            </ul>
+          </div>
+          <br>
+          <div>
+            <p><b>Authors:</b></p>
+            <div class="title-section">
+              <div class="title-box" *ngFor="let author of authorList">
+                <p>{{author.firstName}} {{author.lastName}}</p>
+                <p>{{author.email}}</p>
+                <p>{{author.faculty}}</p>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div>
+            <p><b>Actors:</b></p>
+            <div class="title-section">
+              <div class="title-box" *ngFor="let actor of actorList">
+                <p>{{actor.firstName}} {{actor.lastName}}</p> 
+                <p>{{actor.role}}</p>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div>
+            <p><b>Tags:</b></p>
+            <div class="title-section">
+              <div class="title-box" *ngFor="let tag of tagList">
+                <p>{{tag}}</p>
+              </div>
+            </div>
+          </div>
+          
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+  
+  <div style="padding: 2em;" *ngFor="let section of sectionList">
+    <mat-card class="preview-card">
+      <mat-card-content>
+        <div>
+          <h1>{{section.title}}</h1>
+          <div [innerHTML]="section.content"></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

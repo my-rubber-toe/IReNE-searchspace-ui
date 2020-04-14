@@ -72,8 +72,8 @@ import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
     MatAutocompleteModule,
     TimelineModule
   ],
-      providers: [
-        DatePipe
-      ]
+    providers: [
+      DatePipe
+    ]
 })
 export class DefaultModule { }
