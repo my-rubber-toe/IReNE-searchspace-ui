@@ -1,7 +1,7 @@
 <div style="overflow: hidden;">
-  <div class="spinner-container" *ngIf="loadingDocument">
+  <!-- <div class="spinner-container" *ngIf="loadingDocument">
     <mat-spinner></mat-spinner>
-  </div>
+  </div> -->
   
   
   <!-- <div *ngIf="!loadingDocument">
@@ -23,13 +23,12 @@
           <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{title}}</mat-card-title>
           <mat-card-subtitle>
             <br>
-            <!-- If Description is empty dont show -->
             <div *ngIf="description != '' or description != null">
               <h2>Description</h2>
               <div>{{description}}</div>
             </div>
             <br>
-            <p><b>Creator: </b>{{creatorFullName}}</p>
+            <p><b>Creator: </b>{{creatorFullName}} | {{creatorEmail}}</p>
             <p><b>Publication date: </b>{{publicationDate}}</p>
             <p><b>Last Modified: </b>{{lastModifiedDate}}</p>
 
@@ -96,8 +95,8 @@
       <mat-card class="preview-card">
         <mat-card-content>
           <div>
-            <h1 style="font-weight: bolder;">Section with Complex Inner HTML</h1>
-            <div [innerHTML]="complexHtml"></div>
+            <h1 style="font-weight: bolder;">Section 1: CKEditor5 innerHTML and ck-content.</h1>
+            <div class="ck-content" [innerHTML]="ckeditorData"></div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -109,10 +108,16 @@
         <mat-card-content>
           <div>
             <h1 style="font-weight: bolder;">{{section.title}}</h1>
-            <div [innerHTML]="section.content"></div>
+            <div class="ck-content" [innerHTML]="section.content"></div>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
+
+  <!-- <ckeditor 
+    [editor]="editor" 
+    [config]="editorConfig"
+    [(ngModel)]="editorData">
+  </ckeditor> -->
 </div>

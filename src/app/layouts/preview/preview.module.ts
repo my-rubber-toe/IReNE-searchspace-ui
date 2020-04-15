@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
-// import { CKEditorModule } from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -23,9 +23,7 @@ import { FormsModule } from '@angular/forms';
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
-    // CKEditorModule
-
-    // NgxExtendedPdfViewerModule
+    CKEditorModule
   ],
   providers: [
     DatePipe

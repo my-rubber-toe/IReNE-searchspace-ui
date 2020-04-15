@@ -1,6 +1,8 @@
 export const sample_document = {
   title:"Test Title",
   description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?",
+  creatorFullName: 'Some Creator',
+  creatorEmail: 'some.creator@upr.edu',
   publicationDate: new Date(),
   lastModifiedDate: new Date(),
   infraList: ["Infra1", "Infra2"],
@@ -45,15 +47,15 @@ export const sample_document = {
   ],
   sectionList: [
     {
-      title: "Section 1",
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
-    },
-    {
       title: "Section 2",
       content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
     },
     {
       title: "Section 3",
+      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
+    },
+    {
+      title: "Section 4",
       content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
     }
   ]

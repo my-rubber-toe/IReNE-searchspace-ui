@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {encoded_html} from './test_encoded_html';
 
+// Import CKEditor5-build-classic
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
@@ -51,9 +52,7 @@ export class PreviewComponent implements OnInit {
   fakeBackend = 'http://localhost:4200/api/documents/view';
   loadingDocument = true;
 
-  public Editor = ClassicEditor;
-
-  
+    
   title: string = '';
   description: string = '';
   creatorFullName: string = '';
@@ -66,14 +65,23 @@ export class PreviewComponent implements OnInit {
   authorList: Array<Author> = [];
   actorList: Array<Actor> = [];
   sectionList: Array<Section> = [];
-  complexHtml: SafeHtml = '';
+  ckeditorData: SafeHtml = '';
+
+  public editor = ClassicEditor;
+  public editorData = '';
+  public editorConfig = {
+    // width: 768,
+    toolbar: [ 'heading', '|', 'bold', 'italic' ],
+  };
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {
+    
+  }
 
   ngOnInit(): void {
 
@@ -86,8 +94,8 @@ export class PreviewComponent implements OnInit {
           this.description = response.description
           this.creatorFullName = response.creatorFullName;
           this.creatorEmail = response.creatorEmail;
-          this.publicationDate = this.datePipe.transform(response.publicationDate, 'YYYY-MM-DD')
-          this.lastModifiedDate = this.datePipe.transform(response.lastModifiedDate, 'YYYY-MM-DD')
+          this.publicationDate = this.datePipe.transform(response.publicationDate, 'yyyy-MM-dd');
+          this.lastModifiedDate = this.datePipe.transform(response.lastModifiedDate, 'yyyy-MM-dd')
           this.infraList = response.infraList;
           this.damageList = response.damageList;
           this.tagList = response.tagList;
@@ -95,7 +103,12 @@ export class PreviewComponent implements OnInit {
           this.actorList = response.actorList;
           this.sectionList = response.sectionList
 
-          this.complexHtml = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
+          // this.editorData += `<h1>${response.title}</h1>`;
+          // this.editorData += `<h2>Description:</h2><p>${response.description}</p>`
+
+          // console.log(this.editorData)
+
+          this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
 
           // Simulate long respone
           setTimeout(() => {
