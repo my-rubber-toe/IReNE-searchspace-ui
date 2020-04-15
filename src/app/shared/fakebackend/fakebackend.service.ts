@@ -1,4 +1,3 @@
-import { base64PDF } from './sample-document';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
@@ -9,6 +8,7 @@ import { Map } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
 import {Filters} from '../models/searchspace.model';
+import { sample_document } from './sample_preview';
 
 const collaborators: CollaboratorRequest[] = [
   {id: 'aq9zI01ORNE9Okyziblp', first_name: 'Roberto', last_name: 'Guzman', email: 'roberto.guzman3@upr.edu'},
@@ -131,7 +131,7 @@ export class FakebackendService implements HttpInterceptor {
       return ok(filters);
     }
     function getDocument() {
-      return ok(base64PDF);
+      return ok(sample_document);
     }
     function docMap() {
       console.log(mapDocument);

@@ -21,14 +21,14 @@
         <mat-form-field>
           <mat-label>Publication date</mat-label>
           <input matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"
-            (dateChange)="datePreCheck($event); selectionEvent($event.value, 'publication_date')">
+            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'publication_date')">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Incident date</mat-label>
           <input matInput [matDatepicker]="picker2" [max]="todayDate" [formControl]="incidentDate"
-            (dateChange)="datePreCheck($event); selectionEvent($event.value, 'incident_date')">
+            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incident_date')">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>

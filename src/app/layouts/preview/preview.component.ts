@@ -2,6 +2,44 @@ import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {encoded_html} from './test_encoded_html';
+
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
+interface Author {
+  firstName: string;
+  lastName: string;
+  email: string;
+  faculty: string;
+}
+
+interface Actor{
+  firstName: string;
+  lastName: string;
+  role: string;
+}
+
+interface Section{
+  title: string;
+  content: string;
+}
+
+interface Document{
+  title: string;
+  description: string;
+  creatorFullName: string;
+  creatorEmail: string;
+  publicationDate: string;
+  lastModifiedDate: string;
+  infraList: Array<string>;
+  damageList: Array<string>;
+  tagList: Array<string>;
+  authorList: Array<Author>;
+  actorList: Array<Actor>;
+  sectionList: Array<Section>;
+}
 
 @Component({
   selector: 'app-preview',
@@ -13,75 +51,28 @@ export class PreviewComponent implements OnInit {
   fakeBackend = 'http://localhost:4200/api/documents/view';
   loadingDocument = true;
 
-  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
-  creatorFullName = 'Pepito Fulano';
-  publicationDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-  lastModifiedDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-  infraList = ["Infra1", "Infra2"]
-  damageList = ["Damage1", "Damage2"]
-  tagList = ["Tag1", "Tag2", "Tag3"]
-  authorList = [
-    {
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      email: 'email@email.com',
-      faculty: 'ININ'
-    },
-    {
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      email: 'email@email.com',
-      faculty: 'ININ'
-    },
-    {
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      email: 'email@email.com',
-      faculty: 'ININ'
-    },
-  ]
+  public Editor = ClassicEditor;
 
-  actorList = [
-    {
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      role: 'somerole'
-    },
-    {
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      role: 'somerole'
-    },
-    {
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      role: 'somerole'
-    },
-  ]
-
-  sectionList = [
-    {
-      title: "Section Title",
-      content: "<h1>This is a text with inner html of H1<h1>"
-    },
-    {
-      title: "Section Title",
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
-    },
-    {
-      title: "Section Title",
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
-    },
-    {
-      title: "Section Title",
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"
-    }
-  ]
+  
+  title: string = '';
+  description: string = '';
+  creatorFullName: string = '';
+  creatorEmail: string = '';
+  publicationDate: string = '';
+  lastModifiedDate: string = '';
+  infraList: Array<String> = [];
+  damageList: Array<String> = [];
+  tagList: Array<String> = [];
+  authorList: Array<Author> = [];
+  actorList: Array<Actor> = [];
+  sectionList: Array<Section> = [];
+  complexHtml: SafeHtml = '';
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -89,11 +80,26 @@ export class PreviewComponent implements OnInit {
     this.route.params.subscribe(params => {
       // use params['docId] to get the docID
       this.http.get(this.fakeBackend).subscribe(
-        (response: string) => {
-          this.base64Src = response;
+        (response: Document) => {
+          console.log(response)
+          this.title = response.title;
+          this.description = response.description
+          this.creatorFullName = response.creatorFullName;
+          this.creatorEmail = response.creatorEmail;
+          this.publicationDate = this.datePipe.transform(response.publicationDate, 'YYYY-MM-DD')
+          this.lastModifiedDate = this.datePipe.transform(response.lastModifiedDate, 'YYYY-MM-DD')
+          this.infraList = response.infraList;
+          this.damageList = response.damageList;
+          this.tagList = response.tagList;
+          this.authorList = response.authorList;
+          this.actorList = response.actorList;
+          this.sectionList = response.sectionList
+
+          this.complexHtml = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
+
           // Simulate long respone
           setTimeout(() => {
-            this.loadingDocument = !this.loadingDocument;
+            this.loadingDocument = false;
           }, 2000);
         }
       );

@@ -7,7 +7,9 @@ import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 
+// import { CKEditorModule } from '@ckeditor/ckeditor5-build-classic';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,14 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     HttpClientModule,
     MatProgressSpinnerModule,
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
+    // CKEditorModule
+
     // NgxExtendedPdfViewerModule
   ],
   providers: [

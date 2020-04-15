@@ -20,7 +20,7 @@ interface SearchValues {
   infras: string;
   damage: string;
   tags: string;
-  language:string;
+  language: string;
 }
 
 @Component({
@@ -35,14 +35,14 @@ export class MapComponent implements OnInit {
     private datePipe: DatePipe,
     private searchSpaceService: SearchSpaceService,
     private router: Router
-    ){}
+    ) {}
 
   @ViewChild('map')
   map: GoogleChartComponent;
 
   dirtyFields = false;
 
-  documents: DocumentMetadata[]
+  documents: DocumentMetadata[];
 
   tempEvent: Event;
 
@@ -50,7 +50,7 @@ export class MapComponent implements OnInit {
   title = '';
   type = 'Map';
   data = [];
-  columnNames = ["location","title", "docId"];
+  columnNames = ['location', 'title', 'docId'];
   options = {
     showTip: true,
     enableScrollWheel: true
@@ -79,10 +79,10 @@ export class MapComponent implements OnInit {
   infrastructureList: string[] = ['Building', 'Bridge'];
 
   damage = new FormControl();
-  damageList: string[] = ['Flooding','Fire','Broken Sewer'];
+  damageList: string[] = ['Flooding', 'Fire', 'Broken Sewer'];
 
   tags = new FormControl();
-  tagsList: string[] = ['Flood', 'Huracaine', 'Earthquake'];
+  tagsList: string[] = ['Flood', 'Hurricane', 'Earthquake'];
 
   language = new FormControl();
   languageList: string[] = ['English', 'Spanish'];
@@ -94,9 +94,9 @@ export class MapComponent implements OnInit {
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
 
-  ngOnInit(){
-    let scrollToTop = window.setInterval(() => {
-    let pos = window.pageYOffset;
+  ngOnInit() {
+    const scrollToTop = window.setInterval(() => {
+    const pos = window.pageYOffset;
     if (pos > 0) {
         window.scrollTo(0, pos - 30); // how far to scroll on each step
     } else {
@@ -113,7 +113,7 @@ export class MapComponent implements OnInit {
   /**
    * Set the fields to be dirty and disable the button
    */
-  setDirty(){
+  setDirty() {
     this.dirtyFields = true;
   }
 
@@ -121,18 +121,18 @@ export class MapComponent implements OnInit {
    * Update the map with the new values based on the selected search criteria. Marker on the map is treated as a 3 item array
    * [location, title, docId]
    */
-  updateMap(){
-    this.applyFilter()
-    console.log(this.tempDataSource.data)
-    if(this.dataSource.data === []){
-      alert('Filter did not yield any data.')
-    }else {
-      this.data = []
+  updateMap() {
+    this.applyFilter();
+    console.log(this.dataSource.data);
+    if (this.dataSource.data === []) {
+      alert('Filter did not yield any data.');
+    } else {
+      this.data = [];
       this.dataSource.data.forEach(e => {
-        this.data.push([e.location, e.title, e.id])
+        this.data.push([e.location, e.title, e.id])  ;
       });
       this.dirtyFields = false;
-    }
+     }
   }
 
   /**
@@ -140,8 +140,8 @@ export class MapComponent implements OnInit {
    * @param e The event that holds the information of the selected marker in the map.
    */
   markerSelect(e: ChartEvent) {
-    const docId = this.data[e[0].row][2]
-    this.router.navigate([`/preview/${docId}`])
+    const docId = this.data[e[0].row][2];
+    this.router.navigate([`/preview/${docId}`]);
   }
 
   /**
@@ -152,9 +152,10 @@ export class MapComponent implements OnInit {
   selectionEvent(selection: any, type: string) {
     this.filterSelection.set(type, selection);
     this.dirtyFields = true;
+    console.log(this.filterSelection);
   }
 
-  /////////////////////HELPERS//////////////////////////////////////
+  ///////////////////// HELPERS//////////////////////////////////////
 
 
   /**
@@ -162,31 +163,11 @@ export class MapComponent implements OnInit {
    */
   applyFilter() {
     this.dataSource = this.filterService.applyFilter(this.filterSelection, this.tempDataSource);
-    if (this.tempEvent) {
-      this.searchFilter(this.tempEvent);
-    }
   }
-
-  /**
-   * 
-   * @param event 
-   */
-  searchFilter(event: Event) {
-    if (event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.tempEvent = event;
-      if (filterValue === '') {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-      } else {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-      }
-    }
-  }
-
 
   /**
    * Converts the selected date from the date
-   * 
+   *
    * @param event the event when the date picker is used
    */
   datePreCheck(event: MatDatepickerInputEvent<any>) {
