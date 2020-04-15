@@ -67,6 +67,7 @@ export class PreviewComponent implements OnInit {
   sectionList: Array<Section> = [];
   ckeditorData: SafeHtml = '';
 
+    
   public editor = ClassicEditor;
   public editorData = '';
   public editorConfig = {
@@ -102,11 +103,6 @@ export class PreviewComponent implements OnInit {
           this.authorList = response.authorList;
           this.actorList = response.actorList;
           this.sectionList = response.sectionList
-
-          // this.editorData += `<h1>${response.title}</h1>`;
-          // this.editorData += `<h2>Description:</h2><p>${response.description}</p>`
-
-          // console.log(this.editorData)
 
           this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
 

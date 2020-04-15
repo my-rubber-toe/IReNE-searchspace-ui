@@ -31,6 +31,8 @@ import {MapComponent} from 'src/app/modules/map/map.component';
 import {environment} from 'src/environments/environment';
 import { TimelineModule } from 'src/app/modules/timeline/timeline.module';
 import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 
@@ -64,6 +66,7 @@ import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatSnackBarModule,
     XyModule,
     GoogleChartsModule,
     FormsModule,

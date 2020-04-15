@@ -87,9 +87,6 @@ export class MapComponent implements OnInit {
   language = new FormControl();
   languageList: string[] = ['English', 'Spanish'];
 
-  // Search Values
-  searchValues: SearchValues;
-
   // The data source for the documents
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
@@ -123,15 +120,16 @@ export class MapComponent implements OnInit {
    */
   updateMap() {
     this.applyFilter();
-    console.log(this.dataSource.data);
-    if (this.dataSource.data === []) {
-      alert('Filter did not yield any data.');
+    console.log(this.dataSource.data.length);
+     
+    if (this.dataSource.data.length === 0) {
+      throw Error('Filter did not yield results.')
     } else {
-      this.data = [];
-      this.dataSource.data.forEach(e => {
-        this.data.push([e.location, e.title, e.id])  ;
-      });
-      this.dirtyFields = false;
+      // this.data = [];
+      // this.dataSource.data.forEach(e => {
+      //   this.data.push([e.location, e.title, e.id])  ;
+      // });
+      // this.dirtyFields = false;
      }
   }
 
@@ -166,9 +164,9 @@ export class MapComponent implements OnInit {
   }
 
   /**
-   * Converts the selected date from the date
+   * Converts the selected date from Date object to sting with format YYYY-MM-DD.
    *
-   * @param event the event when the date picker is used
+   * @param event the event when the date picker is used.
    */
   datePreCheck(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
