@@ -71,8 +71,10 @@ export class PreviewComponent implements OnInit {
   public editor = ClassicEditor;
   public editorData = '';
   public editorConfig = {
-    // width: 768,
-    toolbar: [ 'heading', '|', 'bold', 'italic' ],
+    autosave: {
+      // The minimum amount of time the Autosave plugin is waiting after the last data change.
+      save: (editor) => this.saveData(editor.getData()),
+    },
   };
 
   constructor(
@@ -113,5 +115,9 @@ export class PreviewComponent implements OnInit {
         }
       );
     });
+  }
+
+  saveData(data: string) {
+    console.log(data);
   }
 }

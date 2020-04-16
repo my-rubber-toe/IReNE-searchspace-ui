@@ -95,7 +95,7 @@
       <mat-card class="preview-card">
         <mat-card-content>
           <div>
-            <h1 style="font-weight: bolder;">Section 1: CKEditor5 innerHTML and ck-content.</h1>
+            <h1 style="font-weight: bolder;">CKEditor5 innerHTML with CSS class "ck-content". Created using TellSpace Editor</h1>
             <div class="ck-content" [innerHTML]="ckeditorData"></div>
           </div>
         </mat-card-content>
@@ -114,10 +114,4 @@
       </mat-card>
     </div>
   </div>
-
-  <ckeditor 
-    [editor]="editor" 
-    [config]="editorConfig"
-    [(ngModel)]="editorData">
-  </ckeditor>
 </div>
