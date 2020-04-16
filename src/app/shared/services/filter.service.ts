@@ -19,20 +19,27 @@ export class FilterService {
 
   private filterBySelection(filteringDataSource: MatTableDataSource<DocumentMetadata>, filterSelection: Map<string, any>) {
     const ite = filterSelection.keys();
+    let invalidKey = false;
     for (const key of ite) {
       const tempFilterData = new MatTableDataSource<DocumentMetadata>();
       const filter = filterSelection.get(key);
       if (filter.length !== 0) {
         const iter = filteringDataSource.data.values();
         for (const value of iter) {
-          for (const x of filter) {
-            if (value[key].includes(x)) {
-              tempFilterData.data.push(value);
-              break;
+          if (value[key] !== undefined) {
+            for (const x of filter) {
+              if (value[key].includes(x)) {
+                tempFilterData.data.push(value);
+                break;
+              }
             }
+          } else {
+            invalidKey = true;
           }
         }
-        filteringDataSource.data = tempFilterData.data;
+        if (!invalidKey) {
+          filteringDataSource.data = tempFilterData.data;
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl} from '@angular/forms';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
 import { ChartEvent } from 'angular-google-charts';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,7 +19,6 @@ interface CatYValues {
   styleUrls: ['./xy.component.scss']
 })
 export class XyComponent implements OnInit {
-  @Input() show: boolean;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   tempEvent: Event;
@@ -29,13 +28,10 @@ export class XyComponent implements OnInit {
   category_x = new FormControl();
   categoryX: string[] = ['Infrastructure', 'Damage', 'Tag'];
 
-  // structureList: string[] = ['Transportation', 'Energy', 'Water', 'Security', 'Ports', 'Structure', 'Construction'];
-  // dmgList: string[] = ['Fire', 'Flooding', 'Broken Sewer'];
   category_y = new FormControl();
   categoryY: string[] = ['Number of Cases', 'Incident Date', 'Publication Date'];
-  //char
 
-
+  //title and columnNames is filled in ngonInit()
   title = '';
   type = 'BarChart';
    columnNames = [];
@@ -45,17 +41,19 @@ export class XyComponent implements OnInit {
     isStacked:true,
     
    };
+   //data is filled in ngonInit()
    data = [];
    width = 750;
    height = 550;
  
-   
+   //sends the value to use in ngoninit()
    sendValueX(value) {
     this.docservice.setBehaviorViewX({textVal: value});
     }
    sendValueY(value) {
     this.docservice.setBehaviorViewY({textVal: value});
     }
+    //gets the value from html
     updateCatX(){
       const catxVal : CatXValues = {
        cat_x: this.category_x.value
@@ -74,20 +72,16 @@ export class XyComponent implements OnInit {
    onSelect(e: ChartEvent){
      console.log(this.data[e[0].row[2]]);
    }
-  constructor(private docservice:SearchSpaceService, private fb: FormBuilder) { }
+  constructor(private docservice:SearchSpaceService) { }
 
   ngOnInit(): void {
     this.docservice.getBehaviorViewX().subscribe(vx => {
     this.docservice.getBehaviorViewY().subscribe(vy => {
     this.docservice.docXY().add(() => {
-      console.log(vx['textVal']);
-      console.log(vy['textVal']);
       this.dataSource =  new MatTableDataSource<XY>(this.docservice.comparison);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      
-      // var x = this.selected;
-      // console.log(x);
+      //values from the selection of category x & y
       const x = vx['textVal'];
       const y = vy['textVal'];
       
@@ -112,6 +106,7 @@ export class XyComponent implements OnInit {
                 map.get(String(this.dataSource.filteredData[i].damage_type[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
               }
             }
+            //gets the distinct category y
             if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
             } 
@@ -130,6 +125,7 @@ export class XyComponent implements OnInit {
                 map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
               }
             }
+            //gets the distinct category y
             if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
             } 
@@ -148,6 +144,7 @@ export class XyComponent implements OnInit {
                 map.get(String(this.dataSource.filteredData[i].tag[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
               }
             }
+            //gets the distinct category y
             if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
             } 
@@ -167,6 +164,7 @@ export class XyComponent implements OnInit {
                 map.get(String(this.dataSource.filteredData[i].damage_type[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
               }
             }
+            //gets the distinct category y
             if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
             } 
@@ -186,6 +184,7 @@ export class XyComponent implements OnInit {
                 map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
               }
             }
+            //gets the distinct category y
             if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
             } 
@@ -204,6 +203,7 @@ export class XyComponent implements OnInit {
                 map.get(String(this.dataSource.filteredData[i].tag[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
               }
             }
+            //gets the distinct category y
             if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
               rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
             } 
@@ -214,22 +214,24 @@ export class XyComponent implements OnInit {
         let countsy = []; 
         map.forEach((value: string, key: string) => {
               let countValue = [];
-              console.log(key,value);
               for(let i = 0; i < value.length; i++){
+                //fills an array with length of the year
+                //this is to have a sort of count per year
                 countValue[value[i]] = 1 + (countValue[value[i]] || 0); 
               }
+              //the category x that doesn't have a certain value from category y is put a 0
+              //this way that year will have a count of 0 documents
               for(let i = 0; i < rowy.length; i++){
                 if(countValue[rowy[i]] == null){
                   countValue[rowy[i]] = 0;
                 }
 
               }
+              //returns an array with no null values
               let filteredArr = countValue.filter(function(value){ return value != null;});
-              console.log(filteredArr);
               countsy.push(filteredArr);
               
         });
-        console.log(countsy);
         //sets the data table for the chart
         for(let i = 0; i < rowx.length; i++){
           
@@ -239,11 +241,13 @@ export class XyComponent implements OnInit {
         
         this.columnNames = rowy;
         this.columnNames.unshift(x);
-        console.log(this.columnNames);
         this.data = row;
+        console.log('x: ',x,'y:',y);
+        console.log('data:\n',this.data);
         this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
       }
       else {
+          //the hash map here is built with category x as key and value as ocurrecences of catX 
           if(x == "Damage"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
               for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
@@ -292,6 +296,8 @@ export class XyComponent implements OnInit {
          });
         this.columnNames = [x,y];
         this.data = row;
+        console.log('x: ',x,'y:',y);
+        console.log('data:\n',this.data);
         this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
       }    
     });
