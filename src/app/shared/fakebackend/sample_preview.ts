@@ -5,6 +5,7 @@ export const sample_document = {
   creatorEmail: 'some.creator@upr.edu',
   publicationDate: new Date(),
   lastModifiedDate: new Date(),
+  incidentDate: new Date(),
   infraList: ["Infra1", "Infra2"],
   damageList: ["Damage1", "Damage2"],
   tagList: ["Tag1", "Tag2", "Tag3"],

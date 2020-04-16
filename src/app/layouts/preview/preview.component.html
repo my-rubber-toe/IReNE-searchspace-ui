@@ -1,21 +1,8 @@
-<div style="overflow: hidden;">
-  <!-- <div class="spinner-container" *ngIf="loadingDocument">
+<div style="overflow: hidden;" *ngIf="!notFound">
+  <div class="spinner-container" *ngIf="loadingDocument">
     <mat-spinner></mat-spinner>
-  </div> -->
-  
-  
-  <!-- <div *ngIf="!loadingDocument">
-    <ngx-extended-pdf-viewer
-      [base64Src]="base64Src"
-      backgroundColor="#ffffff"
-      [height]="'90vh'"
-      [useBrowserLocale]="true"
-      [handTool]="false"
-      [showHandToolButton]="true"
-    >
-    </ngx-extended-pdf-viewer>
-  </div> -->
-  
+  </div>
+
   <div class="preview-container">
     <div style="padding: 2em;">
       <mat-card class="preview-card">
@@ -23,36 +10,21 @@
           <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{title}}</mat-card-title>
           <mat-card-subtitle>
             <br>
-            <div *ngIf="description != '' or description != null">
+            <div *ngIf="description.length > 0">
               <h2>Description</h2>
               <div>{{description}}</div>
             </div>
             <br>
-            <p><b>Creator: </b>{{creatorFullName}} | {{creatorEmail}}</p>
-            <p><b>Publication date: </b>{{publicationDate}}</p>
-            <p><b>Last Modified: </b>{{lastModifiedDate}}</p>
 
-            <div *ngIf="infraList.length != 0 || infraList != null">
-              <p><b>Infrastructures:</b></p>
-              <ul>
-                <li *ngFor="let infra of infraList">
-                  {{infra}}
-                </li>
-              </ul>
-            </div>
-  
-            <div *ngIf="damageList.length != 0 || damageList != null">
-              <p><b>Damages:</b></p>
-              <ul>
-                <li *ngFor="let damage of damageList">
-                  {{damage}}
-                </li>
-              </ul>
-            </div>
-            
+            <p><b>Publication Date: </b>{{publicationDate}}</p>
+            <p><b>Last Modified: </b>{{lastModifiedDate}}</p>
+            <p><b>Incident Date: </b>{{incidentDate}}</p>
+
             <br>
-            
-            <div *ngIf="authorList.length != 0 || authorList != null">
+
+            <p><b>Creator: </b>{{creatorFullName}} | {{creatorEmail}}</p>
+
+            <div *ngIf="authorList.length > 0">
               <p><b>Authors:</b></p>
               <div class="title-section">
                 <div class="title-box" *ngFor="let author of authorList">
@@ -62,22 +34,41 @@
                 </div>
               </div>
             </div>
-            
+
+
+            <div *ngIf="infraList.length > 0">
+              <p><b>Infrastructures:</b></p>
+              <ul>
+                <li *ngFor="let infra of infraList">
+                  {{infra}}
+                </li>
+              </ul>
+            </div>
+
+            <div *ngIf="damageList.length > 0">
+              <p><b>Damages:</b></p>
+              <ul>
+                <li *ngFor="let damage of damageList">
+                  {{damage}}
+                </li>
+              </ul>
+            </div>
+
             <br>
 
-            <div *ngIf="actorList.length != 0 || actorList != null">
+            <div *ngIf="actorList.length > 0">
               <p><b>Actors:</b></p>
               <div class="title-section">
                 <div class="title-box" *ngFor="let actor of actorList">
-                  <p>{{actor.firstName}} {{actor.lastName}}</p> 
+                  <p>{{actor.firstName}} {{actor.lastName}}</p>
                   <p>{{actor.role}}</p>
                 </div>
               </div>
             </div>
-            
+
             <br>
-            
-            <div *ngIf="tagList.length != 0 || tagList != null">
+
+            <div *ngIf="tagList.length > 0">
               <p><b>Tags:</b></p>
               <div class="title-section">
                 <div class="title-box" *ngFor="let tag of tagList">
@@ -85,23 +76,24 @@
                 </div>
               </div>
             </div>
-            
+
           </mat-card-subtitle>
         </mat-card-header>
       </mat-card>
-    </div>  
-    
+    </div>
+
     <div style="padding: 2em;">
       <mat-card class="preview-card">
         <mat-card-content>
           <div>
-            <h1 style="font-weight: bolder;">CKEditor5 innerHTML with CSS class "ck-content". Created using TellSpace Editor</h1>
+            <h1 style="font-weight: bolder;">CKEditor5 innerHTML with CSS class "ck-content". Created using TellSpace
+              Editor</h1>
             <div class="ck-content" [innerHTML]="ckeditorData"></div>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
-  
+
 
     <div style="padding: 2em;" *ngFor="let section of sectionList">
       <mat-card class="preview-card">
@@ -115,3 +107,29 @@
     </div>
   </div>
 </div>
+
+
+<!-- Document is not found -->
+<div class="preview-container" style="padding: 2em;" *ngIf="notFound">
+  <mat-card class="preview-card">
+    <mat-card-content style="align-items: center; justify-content: center; text-align: center;">
+      <h1>Document Not Found</h1>
+      <p>Please try searching again</p>
+      <button mat-raised-button color="primary" style="width: 50em;" routerLink="/documents">RETURN</button>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<!-- PDF Preview -->
+<!-- <div *ngIf="!loadingDocument">
+    <ngx-extended-pdf-viewer
+      [base64Src]="base64Src"
+      backgroundColor="#ffffff"
+      [height]="'90vh'"
+      [useBrowserLocale]="true"
+      [handTool]="false"
+      [showHandToolButton]="true"
+    >
+    </ngx-extended-pdf-viewer>
+  </div> -->
