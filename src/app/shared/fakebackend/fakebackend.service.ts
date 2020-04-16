@@ -61,11 +61,11 @@ const xyDocument: XY[] = [
     {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', publication_date: '2019-10-02', incident_date:'2010-08-13',infrastructure_type:['Building', 'Water'], damage_type:['Flooding', 'Fire'], tag:['Flood'] },
     {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', publication_date: '2020-02-03', incident_date:'2018-07-03',infrastructure_type:['Energy'], damage_type:['Flooding'], tag:['Hurricane']  },
     {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Story', publication_date:'2018-02-02',incident_date:'2016-08-20',infrastructure_type:['Building'], damage_type:['Fallen Structure'], tag:['Tornado']  },
-    {id: 'VzunBKHhBSl5mpj0U9pP', title: 'The great Mind', publication_date:'2016-09-02',incident_date:'2014-08-10',infrastructure_type:['Water', 'Energy'], damage_type:['Burn'], tag:['Tsunami', 'Fire']  },
-    {id: 'VzunaoihBS05mpsgU9pP', title: 'The great Place', publication_date:'2017-02-02',incident_date:'2015-07-19',infrastructure_type:['Water'], damage_type:['Burn'], tag:['Fire']  },
-    {id: 'VzunBYihBS05mpsJW9pP', title: 'The great Fall', publication_date:'2019-02-02',incident_date:'2012-01-03',infrastructure_type:['Building', 'Water'], damage_type:['Burn', 'Flooding'], tag:['Fire', 'Tornado']  },
-    {id: 'Vzun980hBS05mpj0U9pP', title: 'The great Structure', publication_date:'2015-02-02',incident_date:'2011-04-12',infrastructure_type:['Structure'], damage_type:['Burn'], tag:['Fire']  },
-    {id: 'HHkwBYihBS05mpj0U9pP', title: 'The great Port', publication_date:'2017-02-02',incident_date:'2015-05-11',infrastructure_type:['Energy'], damage_type:['Fallen Structure', 'Crack'], tag:['Fire', 'Earthquake']  },
+    {id: 'VzunBKHhBSl5npj0U9pP', title: 'The great Mind', publication_date:'2016-09-02',incident_date:'2014-08-10',infrastructure_type:['Water', 'Energy'], damage_type:['Burn'], tag:['Tsunami', 'Fire']  },
+    {id: 'VzunaoihBS05hpsgU9pP', title: 'The great Place', publication_date:'2017-02-02',incident_date:'2015-07-19',infrastructure_type:['Water'], damage_type:['Burn'], tag:['Fire']  },
+    {id: 'VzunBYihBS05kpsJW9pP', title: 'The great Fall', publication_date:'2019-02-02',incident_date:'2012-01-03',infrastructure_type:['Building', 'Water'], damage_type:['Burn', 'Flooding'], tag:['Fire', 'Tornado']  },
+    {id: 'Vzun980hBS05lpj0U9pP', title: 'The great Structure', publication_date:'2015-02-02',incident_date:'2011-04-12',infrastructure_type:['Structure'], damage_type:['Burn'], tag:['Fire']  },
+    {id: 'HHkwBYihBS05qpj0U9pP', title: 'The great Port', publication_date:'2017-02-02',incident_date:'2015-05-11',infrastructure_type:['Energy'], damage_type:['Fallen Structure', 'Crack'], tag:['Fire', 'Earthquake']  },
 ];
 
 const timelineDocument: Timeline[] = [
@@ -98,7 +98,7 @@ export class FakebackendService implements HttpInterceptor {
           return getDocuments();
         case url.endsWith('/api/filters') && method === 'GET':
           return getFilters();
-        case url.endsWith('/api/documents/view') && method === 'GET':
+        case url.endsWith('/api/documents/view') && method === 'POST':
           return getDocument();
         case url.endsWith('/visualize/map') && method === 'GET':
           return docMap();
@@ -131,7 +131,14 @@ export class FakebackendService implements HttpInterceptor {
       return ok(filters);
     }
     function getDocument() {
-      return ok(sample_document);
+      const { id } = body;
+      for (let x = 0 ; x < dbDocuments.length; x ++){
+        if(dbDocuments[x].id === id){
+          return ok(sample_document);
+        }
+      }
+
+      return throwError({ status: 500, error: { message: 'Document not found.' } })
     }
     function docMap() {
       console.log(mapDocument);
