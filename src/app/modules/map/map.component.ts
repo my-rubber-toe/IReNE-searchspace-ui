@@ -11,6 +11,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { FilterService } from 'src/app/shared/services/filter.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 
 
 
@@ -34,17 +37,44 @@ export class MapComponent implements OnInit {
     private filterService: FilterService,
     private datePipe: DatePipe,
     private searchSpaceService: SearchSpaceService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
     ) {}
 
   @ViewChild('map')
   map: GoogleChartComponent;
 
+  @ViewChild('inputToDate1', {
+    read: MatInput
+  }) inputToDate1: MatInput;
+  
+  @ViewChild('inputToDate2', {
+    read: MatInput
+  }) inputToDate2: MatInput;
+
+  @ViewChild('someSelect1', {
+    read: MatSelect
+  }) someSelect1: MatSelect;
+
+  @ViewChild('someSelect2', {
+    read: MatSelect
+  }) someSelect2: MatSelect;
+
+  @ViewChild('someSelect3', {
+    read: MatSelect
+  }) someSelect3: MatSelect;
+
+  @ViewChild('someSelect4', {
+    read: MatSelect
+  }) someSelect4: MatSelect;
+
   dirtyFields = false;
 
   documents: DocumentMetadata[];
 
-  tempEvent: Event;
+  tempDate1: Date = null;
+  tempDate2: Date = null;
+
 
   // Google Map Data Setup
   title = '';
@@ -53,10 +83,10 @@ export class MapComponent implements OnInit {
   columnNames = ['location', 'title', 'docId'];
   options = {
     showTip: true,
-    enableScrollWheel: true
+    // enableScrollWheel: true
   };
   width = 1250;
-  height = 600;
+  height = 500;
 
   // The available filters that will be used for the data
   filterSelection: Map<string, any> = new Map<string, any>([
@@ -119,11 +149,17 @@ export class MapComponent implements OnInit {
    * [location, title, docId]
    */
   updateMap() {
+    if(this.tempDate1 != null || this.tempDate2 != null){
+
+    }
+
     this.applyFilter();
-    console.log(this.dataSource.data.length);
+    console.log(this.dataSource.data);
      
     if (this.dataSource.data.length === 0) {
-      throw Error('Filter did not yield results.')
+      this.snackBar.open('Unable to yield results.', null, {
+        duration: 3000
+      });
     } else {
       // this.data = [];
       // this.dataSource.data.forEach(e => {
@@ -164,15 +200,33 @@ export class MapComponent implements OnInit {
   }
 
   /**
-   * Converts the selected date from Date object to sting with format YYYY-MM-DD.
+   * Converts the selected date from Date object to string with format YYYY-MM-DD.
    *
-   * @param event the event when the date picker is used.
+   * @param event the event Object when the date picker changes value. 
    */
   datePreCheck(event: MatDatepickerInputEvent<any>) {
-    if (event.value !== null) {
-      event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
-    } else {
-      event.value = '';
-    }
+    event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+  }
+
+  resetFilters(){
+    this.filterSelection = new Map<string, any>([
+      ['location', ''],
+      ['infrastructure_type', ''],
+      ['damage_type', ''],
+      ['language', ''],
+      ['tag', ''],
+      ['incident_date', ''],
+      ['publication_date', '']
+    ]);
+
+    this.inputToDate1.value = '';
+    this.inputToDate2.value = '';
+    this.someSelect1.value = null;
+    this.someSelect2.value = null;
+    this.someSelect3.value = null;
+    this.someSelect4.value = null;
+
+    this.incidentDate.clearValidators();
+    this.publicationDate.clearValidators();
   }
 }

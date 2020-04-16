@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DocumentMetadata, Filters} from '../models/searchspace.model';
 import { CollaboratorRequest } from '../models/searchspace.model';
-import { Map } from '../models/searchspace.model';
+import { MapMetadata } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
 import { BehaviorSubject} from 'rxjs';
@@ -19,7 +19,7 @@ export class SearchSpaceService {
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
-  maps: Map[];
+  maps: MapMetadata[];
   comparison: XY[];
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
@@ -81,7 +81,7 @@ export class SearchSpaceService {
      * Get all documents  from the fake server.
      */
     return this.http.get(`${this.fakeBackend}/visualize/map`).subscribe(
-      (response: Map[]) => {
+      (response: MapMetadata[]) => {
         this.maps = response;
       });
   }

@@ -4,7 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { CollaboratorRequest } from '../models/searchspace.model';
 import { DocumentMetadata } from '../models/searchspace.model';
-import { Map } from '../models/searchspace.model';
+import { MapMetadata } from '../models/searchspace.model';
 import { XY } from '../models/searchspace.model';
 import { Timeline } from '../models/searchspace.model';
 import {Filters} from '../models/searchspace.model';
@@ -20,23 +20,23 @@ const collaborators: CollaboratorRequest[] = [
 ];
 
 const dbDocuments: DocumentMetadata[] = [
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman', 'Yomar Ruiz'], title: 'The Caguas Title', published: false, location: 'Caguas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'], language:'English', tag:['Flood', 'Hurricane'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'The Mayaüez Title', published: true, location: 'Mayagüez, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'The Cabo Rojo Title', published: false, location: 'Cabo Rojo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'RYTSBZAiwlAG0t8EOb6B', authors: ['Alejandro Vasquez'], title: 'The San Juan Title', published: true, location:'San Juan, PR', publication_date: '2020-02-03', incident_date:'2017-07-03',modification_date:'2020-03-05',infrastructure_type:['Building'], damage_type:['Flooding'], language:'English', tag:['Hurricane']  },
-  {id: 'VzunBYihBS05mpj0U9pP', authors: ['Jainel Torres'], title: 'The Ponce Title', published: true, location: 'Ponce, PR',publication_date:'2019-02-02',incident_date:'2016-08-03',modification_date:'2019-12-01',infrastructure_type:['Building'], damage_type:['Burn'], language:'Spanish', tag:['Fire'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'The Aguas Buenas Title', published: false, location: 'Aguas Buenas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'The Guanica Title', published: true, location: 'Guanica, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'The Fajardo Title', published: false, location: 'Fajardo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'The Utuado Title', published: false, location: 'Utuado, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'The Vieques Title', published: true, location: 'Vieques, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'The Yabucoa Title', published: false, location: 'Yabucoa, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Bridge'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'The Bayamón Title', published: false, location: 'Bayamón, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'The Peñuelas Title', published: true, location: 'Peñuelas, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'The Ceiba Title', published: false, location: 'Ceiba, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'The Añasco Title', published: false, location: 'Añasco, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'The Moca Title', published: true, location: 'Moca, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'The Arroyo Title', published: false, location: 'Arroyo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman', 'Yomar Ruiz'], title: 'Title 1', published: false, location: 'Caguas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'], language:'English', tag:['Flood', 'Hurricane'] },
+  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Mayagüez, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Cabo Rojo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+  {id: 'RYTSBZAiwlAG0t8EOb6B', authors: ['Alejandro Vasquez'], title: 'Title 4', published: true, location:'San Juan, PR', publication_date: '2020-02-03', incident_date:'2017-07-03',modification_date:'2020-03-05',infrastructure_type:['Building'], damage_type:['Flooding'], language:'English', tag:['Hurricane']  },
+  {id: 'VzunBYihBS05mpj0U9pP', authors: ['Jainel Torres'], title: 'Title 5', published: true, location: 'Ponce, PR',publication_date:'2019-02-02',incident_date:'2016-08-03',modification_date:'2019-12-01',infrastructure_type:['Building'], damage_type:['Burn'], language:'Spanish', tag:['Fire'] },
+  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Aguas Buenas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Guanica, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Fajardo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Utuado, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Vieques, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Yabucoa, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Bridge'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Bayamón, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Peñuelas, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Ceiba, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Añasco, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Moca, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Arroyo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
 
 ];
 const filters: Filters[] = [
@@ -47,12 +47,14 @@ const filters: Filters[] = [
   },
 ];
 
-const mapDocument: Map[] = [
-  {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', location: 'Caguas',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', location: 'Mayagüez', infrastructure_type:['Building'], damage_type:['broken sewer'], tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', location: 'Cabo Rojo',infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Flood'] },
-  {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', location:'San Juan', infrastructure_type:['Building'], damage_type:['Flooding'], tag:['Hurricane']  },
-  {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', location: 'Ponce', infrastructure_type:['Building'], damage_type:['Burn'], tag:['Fire'] },
+const mapDocument: MapMetadata[] = [
+  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 1', location: ['Caguas, PR', 'Maricao, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 2', location: ['Ponce, PR', 'Rio Pierdas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+  {id: 'tPbl1DyxToy1FUHpfcqn', title: 'Title 3', location: ['Aguas Buenas, PR', 'Las Marias, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 4', location: ['San Juan, PR', 'Vieques, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 5', location: ['Playa Sucia, Cabo Rojo, PR', 'Playita Azul, Fajardo PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 6', location: ['Utuado, PR', 'Salinas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+  
 ];
 
 const xyDocument: XY[] = [
@@ -141,7 +143,6 @@ export class FakebackendService implements HttpInterceptor {
       return throwError({ status: 500, error: { message: 'Document not found.' } })
     }
     function docMap() {
-      console.log(mapDocument);
       return ok(mapDocument);
     }
 
