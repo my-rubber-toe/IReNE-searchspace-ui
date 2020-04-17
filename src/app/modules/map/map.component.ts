@@ -92,7 +92,9 @@ export class MapComponent implements OnInit {
   width = 1250;
   height = 500;
 
-  // The available filters that will be used for the data
+  /**
+   * The available filters that will be used for the data.
+   */
   filterSelection: Map<string, any> = new Map<string, any>([
     ['location', ''],
     ['infrastructure_type', ''],
@@ -110,21 +112,24 @@ export class MapComponent implements OnInit {
   incidentDate = new FormControl(moment(''));
 
   infrastructure = new FormControl();
-  infrastructureList: string[] = ['Building', 'Bridge'];
+  infrastructureList: string[];
 
   damage = new FormControl();
-  damageList: string[] = ['Flooding', 'Fire', 'Broken Sewer'];
+  damageList: string[]
 
   tags = new FormControl();
-  tagsList: string[] = ['Flood', 'Hurricane', 'Earthquake'];
+  tagsList: string[];
 
   language = new FormControl();
   languageList: string[] = ['English', 'Spanish'];
 
-  // The data source for the documents
+  /**
+   * The data source to be used.
+   */
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
 
+  /**@ignore */
   ngOnInit() {
     const scrollToTop = window.setInterval(() => {
     const pos = window.pageYOffset;
@@ -139,6 +144,13 @@ export class MapComponent implements OnInit {
       this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
       this.tempDataSource = this.dataSource;
     });
+
+    // Retrieve all the available filters in the database.
+    this.searchSpaceService.getMapFilters().add(() =>{
+      this.infrastructureList = this.searchSpaceService.mapFilters.infrastructure_type
+      this.damageList = this.searchSpaceService.mapFilters.damage_type
+      this.tagsList = this.searchSpaceService.mapFilters.tag
+    })
   }
 
   /**
@@ -153,23 +165,25 @@ export class MapComponent implements OnInit {
    * [location, title, docId]
    */
   updateMap() {
-    if(this.tempDate1 != null || this.tempDate2 != null){
-
-    }
 
     this.applyFilter();
     console.log(this.dataSource.data);
      
     if (this.dataSource.data.length === 0) {
-      this.snackBar.open('Unable to yield results.', null, {
+      this.snackBar.open('Total results: 0', null, {
         duration: 3000
       });
+      this.data = [];
     } else {
       this.data = [];
       this.dataSource.data.forEach(e => {
-        this.data.push([e.location, e.title, e.id])  ;
+        this.data.push([e.location, e.title, e.id]);
       });
       this.dirtyFields = false;
+      this.snackBar.open(`Total results: ${this.data.length}`, null, {
+        duration: 3000
+      });
+
      }
   }
 
@@ -183,7 +197,7 @@ export class MapComponent implements OnInit {
       this.data[e[0].row][2] === 'Ponce, PR' ||
       this.data[e[0].row][2] === 'Rio Piedras, PR'
     ){
-      this.snackBar.open('Selected placeholder data', null, {duration: 3000})
+      this.snackBar.open('ERROR: Placeholder data selected.', null, {duration: 3000})
     
     }else {
       const docId = this.data[e[0].row][2];
@@ -221,6 +235,9 @@ export class MapComponent implements OnInit {
     event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
   }
 
+  /**
+   * Reset the filter values.
+   */
   resetFilters(){
     this.filterSelection = new Map<string, any>([
       ['location', ''],
@@ -241,7 +258,19 @@ export class MapComponent implements OnInit {
 
     this.incidentDate.clearValidators();
     this.publicationDate.clearValidators();
-    this.dirtyFields = true;
-    this.applyFilter();
+    this.dirtyFields = false;
+    this.applyFilter();  
+  }
+
+  getAll(){
+    if(this.data.length < this.dataSource.data.length){
+      this.resetFilters();
+      this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
+      this.tempDataSource = this.dataSource;
+      this.dirtyFields = false;
+      this.updateMap();
+    }else{
+      this.snackBar.open('All items are being displayed.',null,{duration: 3000})
+    }
   }
 }

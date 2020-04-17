@@ -24,6 +24,11 @@
         </button>
         <br>
         <br>
+        <button mat-raised-button color="primary" style="width: 10em;" (click)="getAll()">
+          Get All
+        </button>
+        <br>
+        <br>
         <mat-form-field>
           <mat-label>Publication date</mat-label>
           <input #inputToDate1 matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"

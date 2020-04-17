@@ -102,8 +102,8 @@ export class FakebackendService implements HttpInterceptor {
           return getFilters();
         case url.endsWith('/api/documents/view') && method === 'POST':
           return getDocument();
-        case url.endsWith('/visualize/map') && method === 'GET':
-          return docMap();
+        case url.endsWith('/api/map/filters') && method === 'GET':
+          return mapFilters();
         case url.endsWith('/visualize/comparison-graph') && method === 'GET':
           return docXY();
         case url.endsWith('/visualize/timeline') && method === 'GET':
@@ -142,8 +142,12 @@ export class FakebackendService implements HttpInterceptor {
 
       return throwError({ status: 500, error: { message: 'Document not found.' } })
     }
-    function docMap() {
-      return ok(mapDocument);
+    function mapFilters() {
+      return ok({
+        infrastructure_type: ['Building', 'Bridge', 'Port'],
+        damage_type: ['Flooding', 'Fire', 'Broken Sewer', 'Tornado'], 
+        tag: ['Flood', 'Hurricane', 'Earthquake', 'Volcano']
+      });
     }
 
     function docXY() {

@@ -20,6 +20,7 @@ export class SearchSpaceService {
   documents: DocumentMetadata[];
   filters: Filters[];
   maps: MapMetadata[];
+  mapFilters: Filters;
   comparison: XY[];
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
@@ -76,14 +77,12 @@ export class SearchSpaceService {
     );
   }
 
-  docMap() {
-    /**
-     * Get all documents  from the fake server.
-     */
-    return this.http.get(`${this.fakeBackend}/visualize/map`).subscribe(
-      (response: MapMetadata[]) => {
-        this.maps = response;
-      });
+  getMapFilters() {
+    return this.http.get(`${this.fakeBackend}/api/map/filters`).subscribe(
+      (filters: Filters) =>{
+        this.mapFilters = filters;
+      }
+    )
   }
   docXY() {
       /**
