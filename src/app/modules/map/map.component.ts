@@ -79,7 +79,11 @@ export class MapComponent implements OnInit {
   // Google Map Data Setup
   title = '';
   type = 'Map';
-  data = [];
+  data = [
+    ['Mayaguez, PR', 'Mayaguez, PR', 'Mayaguez, PR'],
+    ['Ponce, PR', 'Ponce, PR', 'Ponce, PR'],
+    ['Rio Piedras, PR', 'Rio Piedras, PR', 'Rio Piedras, PR']
+  ];
   columnNames = ['location', 'title', 'docId'];
   options = {
     showTip: true,
@@ -161,11 +165,11 @@ export class MapComponent implements OnInit {
         duration: 3000
       });
     } else {
-      // this.data = [];
-      // this.dataSource.data.forEach(e => {
-      //   this.data.push([e.location, e.title, e.id])  ;
-      // });
-      // this.dirtyFields = false;
+      this.data = [];
+      this.dataSource.data.forEach(e => {
+        this.data.push([e.location, e.title, e.id])  ;
+      });
+      this.dirtyFields = false;
      }
   }
 
@@ -174,8 +178,17 @@ export class MapComponent implements OnInit {
    * @param e The event that holds the information of the selected marker in the map.
    */
   markerSelect(e: ChartEvent) {
-    const docId = this.data[e[0].row][2];
-    this.router.navigate([`/preview/${docId}`]);
+    if(
+      this.data[e[0].row][2] === 'Mayaguez, PR' || 
+      this.data[e[0].row][2] === 'Ponce, PR' ||
+      this.data[e[0].row][2] === 'Rio Piedras, PR'
+    ){
+      this.snackBar.open('Selected placeholder data', null, {duration: 3000})
+    
+    }else {
+      const docId = this.data[e[0].row][2];
+      this.router.navigate([`/preview/${docId}`]);
+    }
   }
 
   /**
@@ -228,5 +241,7 @@ export class MapComponent implements OnInit {
 
     this.incidentDate.clearValidators();
     this.publicationDate.clearValidators();
+    this.dirtyFields = true;
+    this.applyFilter();
   }
 }

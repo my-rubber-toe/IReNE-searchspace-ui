@@ -70,7 +70,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     XyModule,
     GoogleChartsModule,
     FormsModule,
-    GoogleChartsModule.forRoot(null),
+    GoogleChartsModule.forRoot( environment.GOOGLE_MAPS_API_KEY || null),
     MatChipsModule,
     MatAutocompleteModule,
     TimelineModule
