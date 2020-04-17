@@ -228,5 +228,6 @@ export class MapComponent implements OnInit {
 
     this.incidentDate.clearValidators();
     this.publicationDate.clearValidators();
+    this.setDirty = false;
   }
 }
