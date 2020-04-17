@@ -53,10 +53,9 @@ export class PreviewComponent implements OnInit {
   loadingDocument = true;
   notFound = false;
 
-  // Forces the CSS to load the Classic editor CSS
+  // Force the CSS to load the Classic editor CSS values.
   public editor = ClassicEditor;
 
-    
   title: string = '';
   description: string = '';
   creatorFullName: string = '';

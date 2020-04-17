@@ -262,6 +262,9 @@ export class MapComponent implements OnInit {
     this.applyFilter();  
   }
 
+  /**
+   * Retrieve all available markers and reset filters.
+   */
   getAll(){
     if(this.data.length < this.dataSource.data.length){
       this.resetFilters();
