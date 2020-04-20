@@ -27,13 +27,16 @@ export interface DocumentMetadata {
     tag: Array<string>;
 }
 
-export interface Map {
+export interface MapMetadata{
     id: string;
-    location: string;
     title: string;
+    location: Array<string>;
+    publication_date: string;
+    incident_date: string;
     infrastructure_type: Array<string>;
     damage_type: Array<string>;
     tag: Array<string>;
+    language: string;
 }
 
 export interface XY {

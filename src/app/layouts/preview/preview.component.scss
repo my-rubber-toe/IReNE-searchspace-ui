@@ -22,13 +22,13 @@
 
 .title-section{
   display: flex; 
-  justify-content: flex-start space-between; 
+  justify-content: space-around; 
   align-items: center;
   flex-wrap: wrap;
 }
 
 .title-box{
-  padding-left: 4em;
+  padding-left: 20px;
 }
 
 :root {

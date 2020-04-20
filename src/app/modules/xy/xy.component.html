@@ -1,47 +1,38 @@
 <div class="comparison-graph">
-    <h1 style="padding: 0em 2em;"><b>Comparison View</b></h1>
-    <p style="padding: 0px 2em;">
-      Do a comparision with the case studies available by selecting categories like Infrastructure type, Damage type and
-      Tags for the X axis. There are also categories like Publication Date, Incident Date, and Number of Cases
-      for the Y axis. Depending on the categories chosen, the graph will change in order to satisfy the categories chosen.
-    </p>
-    <p>
-      <i style="padding-left: 2em;">Note: The graph has the Categories "Damage"(X) & "Publication Date"(Y) as a default.</i>
-    </p>
-  
+  <h1 style="padding: 0em 2em;"><b>Comparison View</b></h1>
+  <p style="padding: 0px 2em;">
+    Do a comparision with the case studies available by selecting categories like Infrastructure type, Damage type and
+    Tags for the X axis. There are also categories like Publication Date, Incident Date, and Number of Cases
+    for the Y axis. Depending on the categories chosen, the graph will change in order to satisfy the categories chosen.
+  </p>
+  <p>
+    <i style="padding-left: 2em;">Note: The graph has the Categories "Damage"(X) & "Publication Date"(Y) as a
+      default.</i>
+  </p>
+
   <div fxFill>
     <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
       <div fxFlex="50">
         <mat-form-field class="side">
-            <mat-label>Category X</mat-label>
-            <mat-select  [formControl]= "category_x"  (selectionChange)="updateCatX()" (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
-              <mat-option  *ngFor="let catX of categoryX" [value]="catX">{{catX}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="side">
-            <mat-label>Category Y</mat-label>
-            <mat-select [formControl]= "category_y"  (selectionChange)="updateCatY()" (keyup)="sendValueY(subjectValue.value)" #subjectValue placeholder="Publication Date" >
-              <mat-option  *ngFor="let catY of categoryY" [value]="catY">{{catY}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-     
-    </div>
+          <mat-label>Category X</mat-label>
+          <mat-select [formControl]="category_x" (selectionChange)="updateCatX()"
+            (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
+            <mat-option *ngFor="let catX of categoryX" [value]="catX">{{catX}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="side">
+          <mat-label>Category Y</mat-label>
+          <mat-select [formControl]="category_y" (selectionChange)="updateCatY()"
+            (keyup)="sendValueY(subjectValue.value)" #subjectValue placeholder="Publication Date">
+            <mat-option *ngFor="let catY of categoryY" [value]="catY">{{catY}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
     </div>
     <div fxFlex="1" fxLayoutAlign="center center" style="padding-left: 33em;">
-        <google-chart #chart
-            [title]="title"
-            [type]="type"
-            [data]="data"
-            [columnNames]="columnNames"
-            [options]="options"
-            [width]="width"
-            [height]="height"
-            (select)="onSelect($event)"
-        ></google-chart>
+      <google-chart #chart [title]="title" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options"
+        [width]="width" [height]="height" (select)="onSelect($event)"></google-chart>
     </div>
-  </div>    
+  </div>
 </div>
-
-
-
-
