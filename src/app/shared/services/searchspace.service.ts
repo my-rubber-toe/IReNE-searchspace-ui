@@ -91,7 +91,7 @@ export class SearchSpaceService {
       (filters: Filters) =>{
         this.mapFilters = filters;
       }
-    )}
+    ); }
 
   /**
    * Get the possibles filters of tags category to use
