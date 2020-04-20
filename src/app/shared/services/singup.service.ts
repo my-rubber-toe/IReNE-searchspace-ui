@@ -18,6 +18,9 @@ export class SingupService {
     private http: HttpClient,
   ) {}
 
+  /**
+   * Use google sing in to retrive the information to create a Collaborator Request
+   */
   public signUp() {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
@@ -44,13 +47,16 @@ export class SingupService {
       }
     );
   }
+  /**
+   *  Send the info for creating a  Collaborator request
+   */
   private  collabRequest(firstName: string, lastName: string, email: string) {
-    /**
-     *  Send the info for creating a  Collaborator request
-     */
     return this.http.post(`${this.fakeBackend}/collabrequest/create`, {firstName , lastName, email }, this.httpOptions);
   }
 
+  /**
+   * Sign outs the user after retrieving the information
+   */
   signOut(): void {
     this.socialAuthService.signOut();
   }
