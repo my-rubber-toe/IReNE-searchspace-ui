@@ -88,7 +88,7 @@ export class SearchSpaceService {
 
   getMapFilters() {
     return this.http.get(`${this.fakeBackend}/api/map/filters`).subscribe(
-      (filters: Filters) =>{
+      (filters: Filters) => {
         this.mapFilters = filters;
       }
     ); }
@@ -135,16 +135,6 @@ export class SearchSpaceService {
         this.filters = response;
       }
     );
-  }
-
-  docMap() {
-    /**
-     * Get all documents  from the fake server.
-     */
-    return this.http.get(`${this.fakeBackend}/visualize/map`).subscribe(
-      (response: Map[]) => {
-        this.maps = response;
-      });
   }
 
   docXY() {
