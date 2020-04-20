@@ -97,11 +97,19 @@ export class DocumentsComponent implements OnInit {
         startWith(null),
         map((creator: string | null) => creator ? this._filter(creator) : this.authors.slice()));
     });
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
     this.publicationFilter = (d: Date | null): boolean => {
       return this.table.tempDataSource.data.some(e => {
         return e.publication_date === moment(d).format('YYYY-MM-DD');
       });
     };
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
     this.incidentFilter = (d: Date | null): boolean => {
       return this.table.tempDataSource.data.some(e => {
         return e.incident_date === moment(d).format('YYYY-MM-DD');
@@ -109,6 +117,10 @@ export class DocumentsComponent implements OnInit {
     };
   }
 
+  /**
+   * Check that the value selected in the calendar is not null and then format it
+   * @param event - date selected in the calendar
+   */
   checkEvent(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
       event.value = event.value.format('Y-MM-DD');
@@ -117,8 +129,12 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
-  remove(creator: string): void {
-    const index = this.selectedAuthors.indexOf(creator);
+  /**
+   * Removes creator from the selected options and add it back to the possible options
+   * @param author - author to remove from the selected options
+   */
+  remove(author: string): void {
+    const index = this.selectedAuthors.indexOf(author);
 
     if (index >= 0) {
       this.authors.push(this.selectedAuthors[index]);
@@ -128,6 +144,10 @@ export class DocumentsComponent implements OnInit {
     this.creatorCtrl.setValue(null);
   }
 
+  /**
+   * Add the author to the selected options and remove it from the possible options to select
+   * @param event author to be added
+   */
   selected(event: MatAutocompleteSelectedEvent): void {
     const index = this.authors.indexOf(event.option.viewValue);
     this.authors.splice(index, 1);
@@ -136,6 +156,11 @@ export class DocumentsComponent implements OnInit {
     this.creatorCtrl.setValue(null);
   }
 
+  /**
+   * filter for the autocomplete of the authors field
+   * @param value author to filter
+   *
+   */
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 

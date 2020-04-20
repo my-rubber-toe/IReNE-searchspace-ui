@@ -15,15 +15,24 @@ import {FilterService} from '../../../shared/services/filter.service';
 })
 
 export class DocumentsTableComponent implements OnInit {
+  /**
+   * To show and hide the table
+   */
   @Input() show: boolean;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  /**
+   * Event produced by the search bar with the words to use as filters
+   */
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
   displayedColumns: string[] = ['title', 'authors', 'location',
     'publication_date', 'incident_date', 'modification_date', 'infrastructure_type',
     'damage_type', 'language', 'tag', 'actions'];
+  /**
+   * Map of the categories to filter and what values to use as filters
+   */
   filterSelection: Map<string, any> = new Map<string, any>([
     ['authors', ''],
     ['infrastructure_type', ''],
@@ -40,6 +49,12 @@ export class DocumentsTableComponent implements OnInit {
     private router: Router
   ) {
   }
+
+  /**
+   * Filter the data calling the service function with the selection of the filters to use and with the datasource that have
+   * all the documents. Then will filter with the words in the searchbar using searchFilter(). After filtering calls paginateSort for
+   * sorting and pagination.
+   */
   applyFilter() {
     this.dataSource = this.filter.applyFilter(this.filterSelection, this.tempDataSource);
     if (this.tempEvent) {
@@ -48,6 +63,10 @@ export class DocumentsTableComponent implements OnInit {
     this.paginateSort(this.dataSource);
   }
 
+  /**\
+   * Filter the datasource with value of the event.
+   * @param event words to filter, the event is send it by the searchbar.
+   */
   searchFilter(event: Event) {
     if (event) {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -60,6 +79,10 @@ export class DocumentsTableComponent implements OnInit {
     }
     }
 
+  /**
+   * Paginates and sorts the datasource.
+   * @param table datasource to paginate and sort
+   */
   paginateSort(table: MatTableDataSource<DocumentMetadata>) {
     table.sort = this.sort;
     table.paginator = this.paginator;
@@ -89,13 +112,27 @@ export class DocumentsTableComponent implements OnInit {
     });
   }
 
+  /**
+   * Set the values of the filters in the Map filterSelection.
+   * @param selection value or values to use to filter.
+   * @param type category of the filter.
+   */
   selectionEvent(selection: any, type: string) {
     this.filterSelection.set(type, selection);
   }
 
+  /**
+   * Updates the event to filter using the searchbar
+   * @param event words to filter by the searchbar.
+   */
   searchEvent(event: Event) {
     this.tempEvent = event;
   }
+
+  /**
+   * Calls the view of a document by the id.
+   * @param docId - Id of document to view.
+   */
   previewDoc(docId: string) {
     this.router.navigate([`/preview/${docId}`]);
   }

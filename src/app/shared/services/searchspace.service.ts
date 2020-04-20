@@ -53,23 +53,76 @@ export class SearchSpaceService {
         this.collaboratorsReq = response;
       });
   }
+  /**
+   * Get all documents metadata from the fake server.
+   */
   getDocuments() {
-    /**
-     * Get all documents from the fake server.
-     */
     return this.http.get(`${this.fakeBackend}/documents`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
   }
+
+  /**
+   * Get the document that has the corresponding id
+   * @param id Id of the document to get
+   */
   getDocumentById(id: string) {
     this.http.get(`${this.fakeBackend}/documents/{{doc_id}}`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
   }
+
+  /**
+   * Get the possibles filters of every category to use
+   */
   getFilters() {
     return this.http.get(`${this.fakeBackend}/api/filters`).subscribe(
+      (response: Filters[]) => {
+        this.filters = response;
+      }
+    );
+  }
+
+  /**
+   * Get the possibles filters of tags category to use
+   */
+  getTagFilters() {
+    return this.http.get(`${this.fakeBackend}/api/filters/tags`).subscribe(
+      (response: Filters[]) => {
+        this.filters = response;
+      }
+    );
+  }
+
+  /**
+   * Get the possibles filters of infrastructures category to use
+   */
+  getInfraFilters() {
+    return this.http.get(`${this.fakeBackend}/api/filters/infrastructures`).subscribe(
+      (response: Filters[]) => {
+        this.filters = response;
+      }
+    );
+  }
+
+  /**
+   * Get the possibles filters of Damages category to use
+   */
+  getDamageFilters() {
+    return this.http.get(`${this.fakeBackend}/api/filters/damages`).subscribe(
+      (response: Filters[]) => {
+        this.filters = response;
+      }
+    );
+  }
+
+  /**
+   * Get the possibles filters of Authors category to use
+   */
+  getAuthorFilters() {
+    return this.http.get(`${this.fakeBackend}/api/filters/authors`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
