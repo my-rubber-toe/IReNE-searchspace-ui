@@ -2,11 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 //Middleware for CORS
-// app.use(cors());
+//Middleware for CORS
+const corsOptions = {
+    origin: '*'
+}
+app.use(cors(corsOptions));
 
 // Parsers
 app.use(bodyParser.json());

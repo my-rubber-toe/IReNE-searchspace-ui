@@ -4,11 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build --output-path dist  --aot --prod",
+    "build": "ng build --base-href /searchspace/ --output-path dist --aot --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-path dist  --aot --prod",
     "compodoc": "npx compodoc -p tsconfig.json -w -s"
   },
   "private": true,
@@ -32,6 +31,7 @@
     "angular-google-charts": "^0.1.6",
     "angularx-social-login": "^2.2.1",
     "commitizen": "^4.0.4",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jspdf": "^1.5.3",
     "moment": "^2.24.0",
