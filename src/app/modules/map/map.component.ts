@@ -177,7 +177,7 @@ export class MapComponent implements OnInit {
     } else {
       this.data = [];
       this.dataSource.data.forEach(e => {
-        this.data.push([e.location[0], e.title, e._id.$oid]);
+        this.data.push([e.location[0], e.title, e._id[`$oid`]]);
         console.log(this.data);
       });
       this.dirtyFields = false;
