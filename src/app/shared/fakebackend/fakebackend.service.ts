@@ -19,33 +19,33 @@ const collaborators: CollaboratorRequest[] = [
   {id: '1XIu1jTk6A5qz1Kplp0R', first_name: 'Don', last_name: 'Quijote', email: 'don.quijote@upr.edu'},
 ];
 
-const dbDocuments: DocumentMetadata[] = [
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman', 'Yomar Ruiz'], title: 'Title 1', published: false, location: 'Caguas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'], language:'English', tag:['Flood', 'Hurricane'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Mayagüez, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Cabo Rojo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'RYTSBZAiwlAG0t8EOb6B', authors: ['Alejandro Vasquez'], title: 'Title 4', published: true, location:'San Juan, PR', publication_date: '2020-02-03', incident_date:'2017-07-03',modification_date:'2020-03-05',infrastructure_type:['Building'], damage_type:['Flooding'], language:'English', tag:['Hurricane']  },
-  {id: 'VzunBYihBS05mpj0U9pP', authors: ['Jainel Torres'], title: 'Title 5', published: true, location: 'Ponce, PR',publication_date:'2019-02-02',incident_date:'2016-08-03',modification_date:'2019-12-01',infrastructure_type:['Building'], damage_type:['Burn'], language:'Spanish', tag:['Fire'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Aguas Buenas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Guanica, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Fajardo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Utuado, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Vieques, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Yabucoa, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Bridge'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Bayamón, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Peñuelas, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Ceiba, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Añasco, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
-  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Moca, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
-  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Arroyo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
-
-];
-const filters: Filters[] = [
-  { creators: ['Roberto Guzman', 'Alejandro Vasquez', 'Alberto Canela', 'Jainel Torres', 'Yomar Ruiz'],
-    infrastructure_type: ['Building', 'Bridge'],
-    damage_type: ['Flooding', 'Fire', 'Broken Sewer'], 
-    tag: ['Flood', 'Hurricane', 'Earthquake'] 
-  },
-];
+// const dbDocuments: DocumentMetadata[] = [
+//  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman', 'Yomar Ruiz'], title: 'Title 1', published: false, location: 'Caguas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'], language:'English', tag:['Flood', 'Hurricane'] },
+//  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Mayagüez, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+//  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Cabo Rojo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+//  {id: 'RYTSBZAiwlAG0t8EOb6B', authors: ['Alejandro Vasquez'], title: 'Title 4', published: true, location:'San Juan, PR', publication_date: '2020-02-03', incident_date:'2017-07-03',modification_date:'2020-03-05',infrastructure_type:['Building'], damage_type:['Flooding'], language:'English', tag:['Hurricane']  },
+//  {id: 'VzunBYihBS05mpj0U9pP', authors: ['Jainel Torres'], title: 'Title 5', published: true, location: 'Ponce, PR',publication_date:'2019-02-02',incident_date:'2016-08-03',modification_date:'2019-12-01',infrastructure_type:['Building'], damage_type:['Burn'], language:'Spanish', tag:['Fire'] },
+//  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Aguas Buenas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+//  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Guanica, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+//  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Fajardo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+//  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Utuado, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+//  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Vieques, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+//  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Yabucoa, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Bridge'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+//  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Bayamón, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+//  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Peñuelas, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+//  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Ceiba, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+//  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman'], title: 'Title 1', published: false, location: 'Añasco, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire'], language:'English', tag:['Flood'] },
+//  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Moca, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
+//  {id: 'qkdQoXSmnNeMISTmMP4f', authors: ['Alberto Canela'], title: 'Title 3', published: false, location: 'Arroyo, PR',publication_date: '2019-10-02', incident_date:'2017-08-13',modification_date:'2020-03-03',infrastructure_type:['Building'], damage_type: ['Flooding'], language:'Mandarin', tag:['Flood'] },
+//
+// ];
+// const filters: Filters[] = [
+//   { creators: ['Roberto Guzman', 'Alejandro Vasquez', 'Alberto Canela', 'Jainel Torres', 'Yomar Ruiz'],
+//     infrastructure_type: ['Building', 'Bridge'],
+//     damage_type: ['Flooding', 'Fire', 'Broken Sewer'],
+//     tag: ['Flood', 'Hurricane', 'Earthquake']
+//   },
+// ];
 
 const mapDocument: MapMetadata[] = [
   {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 1', location: ['Caguas, PR', 'Maricao, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
@@ -54,7 +54,7 @@ const mapDocument: MapMetadata[] = [
   {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 4', location: ['San Juan, PR', 'Vieques, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
   {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 5', location: ['Playa Sucia, Cabo Rojo, PR', 'Playita Azul, Fajardo PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
   {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 6', location: ['Utuado, PR', 'Salinas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
-  
+
 ];
 
 const xyDocument: XY[] = [
@@ -70,13 +70,13 @@ const xyDocument: XY[] = [
     {id: 'HHkwBYihBS05qpj0U9pP', title: 'The great Port', publication_date:'2017-02-02',incident_date:'2015-05-11',infrastructure_type:['Energy'], damage_type:['Fallen Structure', 'Crack'], tag:['Fire', 'Earthquake']  },
 ];
 
-const timelineDocument: Timeline[] = [
-    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', timeline: [ {event:'it flooded', startDate:'2017-07-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2018-01-09', endDate: '2018-02-10'}] },
-    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', timeline: [{event:'the ground shake', startDate:'2016-01-09', endDate: '2016-09-10'}, {event:'started Case Study', startDate:'2017-03-09', endDate: '2017-04-10'}, {event:'ended Case Study', startDate:'2020-01-09', endDate: '2020-02-10'}, {event:'aftermath crisis', startDate:'2016-10-01', endDate: '2017-02-12'}]  },
-    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', timeline: [{event:'it rained', startDate:'2017-09-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2019-07-09', endDate: '2019-07-10'}]  },
-    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', timeline: [{event:'it rained with wind', startDate:'2017-07-10', endDate: '2017-09-10'}]   },
-    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', timeline: [{event:'it burned a lot', startDate:'2018-07-09', endDate: '2019-09-10'}, {event:'started Case Study', startDate:'2019-11-09', endDate: '2019-12-10'}, {event:'ended Case Study', startDate:'2020-01-09', endDate: '2020-02-10'}]},
-];
+// const timelineDocument: Timeline[] = [
+//     {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', timeline: [ {event:'it flooded', startDate:'2017-07-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2018-01-09', endDate: '2018-02-10'}] },
+//     {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake', timeline: [{event:'the ground shake', startDate:'2016-01-09', endDate: '2016-09-10'}, {event:'started Case Study', startDate:'2017-03-09', endDate: '2017-04-10'}, {event:'ended Case Study', startDate:'2020-01-09', endDate: '2020-02-10'}, {event:'aftermath crisis', startDate:'2016-10-01', endDate: '2017-02-12'}]  },
+//     {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', timeline: [{event:'it rained', startDate:'2017-09-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2019-07-09', endDate: '2019-07-10'}]  },
+//     {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', timeline: [{event:'it rained with wind', startDate:'2017-07-10', endDate: '2017-09-10'}]   },
+//     {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Fire', timeline: [{event:'it burned a lot', startDate:'2018-07-09', endDate: '2019-09-10'}, {event:'started Case Study', startDate:'2019-11-09', endDate: '2019-12-10'}, {event:'ended Case Study', startDate:'2020-01-09', endDate: '2020-02-10'}]},
+// ];
 
 
 
@@ -94,58 +94,59 @@ export class FakebackendService implements HttpInterceptor {
 
     function handleRoute() {
       switch (true) {
-        case url.endsWith('/api/collabrequest/create') && method === 'POST':
-          return collabRequest();
-        case url.endsWith('/api/documents') && method === 'GET':
-          return getDocuments();
-        case url.endsWith('/api/filters') && method === 'GET':
-          return getFilters();
-        case url.endsWith('/api/documents/view') && method === 'POST':
-          return getDocument();
+    //    case url.endsWith('/api/collabrequest/create') && method === 'POST':
+    //      return collabRequest();
+      //  case url.endsWith('/api/documents') && method === 'GET':
+      //    return getDocuments();
+      //  case url.endsWith('/api/filters') && method === 'GET':
+      //    return getFilters();
+  //     case url.endsWith('/api/documents/view') && method === 'POST':
+  //       return getDocument();
         case url.endsWith('/api/map/filters') && method === 'GET':
           return mapFilters();
         case url.endsWith('/visualize/comparison-graph') && method === 'GET':
           return docXY();
-        case url.endsWith('/visualize/timeline') && method === 'GET':
-          return docTimeline();
+//        case url.endsWith('/visualize/timeline') && method === 'GET':
+//          return docTimeline();
         default:
           return next.handle(request);
       }
     }
 
     // Collaborators
-    function collabRequest() {
-      if (checkEmail(body.email)) {
-        collaborators.push(
-          {id: 'aq9zI01ORNE9Okyziyup', first_name: body.firstName, last_name: body.lastName, email: body.email}
-        );
-        console.log(collaborators);
-        return ok();
-    } else {
-        return collaboratorExist();
-      }
-    }
+//   function collabRequest() {
+//     if (checkEmail(body.email)) {
+//       collaborators.push(
+//         {id: 'aq9zI01ORNE9Okyziyup', first_name: body.firstName, last_name: body.lastName, email: body.email}
+//       );
+//       console.log(collaborators);
+//       return ok();
+//   } else {
+//       return collaboratorExist();
+//     }
+//   }
     // documents
-    function getDocuments() {
-      return ok(dbDocuments);
-    }
-    function getFilters() {
-      return ok(filters);
-    }
-    function getDocument() {
-      const { id } = body;
-      for (let x = 0 ; x < dbDocuments.length; x ++){
-        if(dbDocuments[x].id === id){
-          return ok(sample_document);
-        }
-      }
+//    function getDocuments() {
+//      return ok(dbDocuments);
+//    }
+    // function getFilters() {
+    // return ok(filters);
+   // }
+ //  function getDocument() {
+ //    const { id } = body;
+ //    for (let x = 0 ; x < dbDocuments.length; x ++){
+ //      if(dbDocuments[x].id === id){
+ //        return ok(sample_document);
+ //      }
+ //    }
 
-      return throwError({ status: 500, error: { message: 'Document not found.' } })
-    }
+ //     return throwError({ status: 500, error: { message: 'Document not found.' } })
+  //  }
+
     function mapFilters() {
       return ok({
         infrastructure_type: ['Building', 'Bridge', 'Port'],
-        damage_type: ['Flooding', 'Fire', 'Broken Sewer', 'Tornado'], 
+        damage_type: ['Flooding', 'Fire', 'Broken Sewer', 'Tornado'],
         tag: ['Flood', 'Hurricane', 'Earthquake', 'Volcano']
       });
     }
@@ -155,10 +156,10 @@ export class FakebackendService implements HttpInterceptor {
       return ok(xyDocument);
     }
 
-    function docTimeline() {
-      console.log(timelineDocument);
-      return ok(timelineDocument);
-    }
+//    function docTimeline() {
+//      console.log(timelineDocument);
+//      return ok(timelineDocument);
+//    }
 
     // helper functions
 
@@ -166,9 +167,9 @@ export class FakebackendService implements HttpInterceptor {
       return of(new HttpResponse({ status: 200, body }));
     }
 
-    function collaboratorExist() {
-      return throwError({ status: 401, error: { message: 'Collaborator Request already creasted' } });
-    }
+ //   function collaboratorExist() {
+ //     return throwError({ status: 401, error: { message: 'Collaborator Request already creasted' } });
+ //   }
 
     function checkEmail(email: string) {
       let valid = true;

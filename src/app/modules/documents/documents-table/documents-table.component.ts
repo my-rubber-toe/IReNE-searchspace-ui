@@ -27,20 +27,20 @@ export class DocumentsTableComponent implements OnInit {
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
-  displayedColumns: string[] = ['title', 'authors', 'location',
-    'publication_date', 'incident_date', 'modification_date', 'infrastructure_type',
-    'damage_type', 'language', 'tag', 'actions'];
+  displayedColumns: string[] = ['title', 'authorFullName', 'location',
+    'creationDate', 'incidentDate', 'lastModificationDate', 'infrasDocList',
+    'damageDocList', 'language', 'tagsDoc', 'actions'];
   /**
    * Map of the categories to filter and what values to use as filters
    */
   filterSelection: Map<string, any> = new Map<string, any>([
-    ['authors', ''],
-    ['infrastructure_type', ''],
-    ['damage_type', ''],
+    ['authorFullName', ''],
+    ['infrasDocList', ''],
+    ['damageDocList', ''],
     ['language', ''],
-    ['tag', ''],
-    ['incident_date', ''],
-    ['publication_date', '']
+    ['tagsDoc', ''],
+    ['incidentDate', ''],
+    ['creationDate', '']
   ]);
 
   constructor(
@@ -118,6 +118,7 @@ export class DocumentsTableComponent implements OnInit {
    * @param type category of the filter.
    */
   selectionEvent(selection: any, type: string) {
+    console.log(selection);
     this.filterSelection.set(type, selection);
   }
 

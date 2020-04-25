@@ -88,10 +88,10 @@ export class DocumentsComponent implements OnInit {
     }, 16);
     this.filtersService.getFilters().add(() => {
       this.filters = this.filtersService.filters;
-      this.authors = this.filters[0].creators;
-      this.dmgList = this.filters[0].damage_type;
-      this.structureList = this.filters[0].infrastructure_type;
-      this.tagList = this.filters[0].tag;
+      this.authors = this.filters[`authors`];
+      this.dmgList = this.filters[`damages`];
+      this.structureList = this.filters[`infrastructures`];
+      this.tagList = this.filters[`tags`];
       this.filteredAuthors = this.creatorCtrl.valueChanges.pipe(
         // tslint:disable-next-line:deprecation
         startWith(null),
@@ -102,8 +102,8 @@ export class DocumentsComponent implements OnInit {
      * @param d date to check
      */
     this.publicationFilter = (d: Date | null): boolean => {
-      return this.table.tempDataSource.data.some(e => {
-        return e.publication_date === moment(d).format('YYYY-MM-DD');
+      return this.table.dataSource.data.some(e => {
+        return e.creationDate === moment(d).format('YYYY-MM-DD');
       });
     };
     /**
@@ -111,8 +111,8 @@ export class DocumentsComponent implements OnInit {
      * @param d date to check
      */
     this.incidentFilter = (d: Date | null): boolean => {
-      return this.table.tempDataSource.data.some(e => {
-        return e.incident_date === moment(d).format('YYYY-MM-DD');
+      return this.table.dataSource.data.some(e => {
+        return e.incidentDate === moment(d).format('YYYY-MM-DD');
       });
     };
   }

@@ -51,7 +51,7 @@ export class SingupService {
    *  Send the info for creating a  Collaborator request
    */
   private  collabRequest(firstName: string, lastName: string, email: string) {
-    return this.http.post(`${this.fakeBackend}/collabrequest/create`, {firstName , lastName, email }, this.httpOptions);
+    return this.http.post(`http://localhost:5000/api/collab-request/`, {firstName , lastName, email }, this.httpOptions);
   }
 
   /**

@@ -7,11 +7,11 @@
   </ng-container>
 
   <!-- creator Column -->
-  <ng-container matColumnDef="authors">
+  <ng-container matColumnDef="authorFullName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Authors </th>
     <td mat-cell *matCellDef="let element">
-      <mat-select class="items" placeholder="{{element.authors[0]}}..." >
-        <mat-option disabled="true" *ngFor="let author of element.authors" value={{author}}> {{author}}</mat-option>
+      <mat-select class="items" placeholder="{{element.authorFullName[0]}}..." >
+        <mat-option disabled="true" *ngFor="let author of element.authorFullName" value={{author}}> {{author}}</mat-option>
       </mat-select>
     </td>
   </ng-container>
@@ -23,39 +23,39 @@
   </ng-container>
 
   <!-- Publication Date Column -->
-  <ng-container matColumnDef="publication_date">
+  <ng-container matColumnDef="creationDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Publication Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.publication_date}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.creationDate}} </td>
   </ng-container>
 
   <!-- Incident Date Column -->
-  <ng-container matColumnDef="incident_date">
+  <ng-container matColumnDef="incidentDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Incident Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.incident_date}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.incidentDate}} </td>
   </ng-container>
 
   <!-- Modification Date Column -->
-  <ng-container matColumnDef="modification_date">
+  <ng-container matColumnDef="lastModificationDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Modification Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.modification_date}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.lastModificationDate}} </td>
   </ng-container>
 
   <!-- Infrastructure Type Column -->
-  <ng-container matColumnDef="infrastructure_type">
+  <ng-container matColumnDef="infrasDocList">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Infrastructure Type </th>
     <td mat-cell *matCellDef="let element">
-      <mat-select class="items" placeholder="{{element.infrastructure_type[0]}}..." >
-      <mat-option disabled="true" *ngFor="let infra of element.infrastructure_type" value={{infra}}> {{infra}}</mat-option>
+      <mat-select class="items" placeholder="{{element.infrasDocList[0]}}..." >
+      <mat-option disabled="true" *ngFor="let infra of element.infrasDocList" value={{infra}}> {{infra}}</mat-option>
     </mat-select>
     </td>
   </ng-container>
 
   <!-- Damage Type Column -->
-  <ng-container matColumnDef="damage_type">
+  <ng-container matColumnDef="damageDocList">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Damage Type </th>
     <td mat-cell *matCellDef="let element">
-      <mat-select class="items" placeholder="{{element.damage_type[0]}}..." >
-      <mat-option disabled="true" *ngFor="let damage of element.damage_type" value={{damage}}> {{damage}}</mat-option>
+      <mat-select class="items" placeholder="{{element.damageDocList[0]}}..." >
+      <mat-option disabled="true" *ngFor="let damage of element.damageDocList" value={{damage}}> {{damage}}</mat-option>
     </mat-select>
     </td>
   </ng-container>
@@ -67,11 +67,11 @@
   </ng-container>
 
   <!-- Tags Column -->
-  <ng-container matColumnDef="tag">
+  <ng-container matColumnDef="tagsDoc">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Tags </th>
     <td mat-cell *matCellDef="let element">
-      <mat-select class="items" placeholder="{{element.tag[0]}}..."  >
-      <mat-option disabled="true" *ngFor="let tags of element.tag" value={{tags}}> {{tags}}</mat-option>
+      <mat-select class="items" placeholder="{{element.tagsDoc[0]}}..."  >
+      <mat-option disabled="true" *ngFor="let tags of element.tagsDoc" value={{tags}}> {{tags}}</mat-option>
     </mat-select>
     </td>
   </ng-container>

@@ -16,6 +16,12 @@ export class SearchSpaceService {
 
 
   fakeBackend = 'http://localhost:8080/api';
+  /**
+   * Initial Headers for http requests from this service
+   */
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json; charset-utf-8', Accept: 'application/json'}),
+  };
   collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
@@ -58,9 +64,9 @@ export class SearchSpaceService {
    * Get all documents metadata from the fake server.
    */
   getDocuments() {
-    return this.http.get(`${this.fakeBackend}/documents`).subscribe(
+    return this.http.get(`http://localhost:5000/api/documents/`, this.httpOptions).subscribe(
       (response: DocumentMetadata[]) => {
-        this.documents = response;
+        this.documents = response[`message`];
       });
   }
 
@@ -69,7 +75,7 @@ export class SearchSpaceService {
    * @param id Id of the document to get
    */
   getDocumentById(id: string) {
-    this.http.get(`${this.fakeBackend}/documents/{{doc_id}}`).subscribe(
+    this.http.get<DocumentMetadata[]>(`${this.fakeBackend}/documents/{{doc_id}}`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
@@ -79,9 +85,9 @@ export class SearchSpaceService {
    * Get the possibles filters of every category to use
    */
   getFilters() {
-    return this.http.get(`${this.fakeBackend}/api/filters`).subscribe(
+    return this.http.get(`http://localhost:5000/api/filters`).subscribe(
       (response: Filters[]) => {
-        this.filters = response;
+        this.filters = response[`message`];
       }
     );
   }
@@ -152,9 +158,9 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/visualize/timeline`).subscribe(
+    return this.http.get(`http://localhost:5000/api/visualize/timeline`).subscribe(
       (response: Timeline[]) => {
-        this.timeline = response;
+        this.timeline = response[`message`];
       });
   }
 

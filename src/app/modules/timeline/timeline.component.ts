@@ -33,7 +33,7 @@ export class TimelineComponent implements OnInit {
     enableScrollWheel:true,
     colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
     enableInteractivity: false
-    
+
   };
   data = [];
   width = 750;
@@ -48,7 +48,7 @@ export class TimelineComponent implements OnInit {
     enableScrollWheel:true,
     colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
     enableInteractivity: false
-    
+
   };
   dataT = [ ];
   widthT = 550;
@@ -90,6 +90,7 @@ export class TimelineComponent implements OnInit {
     //subscribe to service method getbehavior, in order to get a constant look of selected title
     this.docservice.getBehaviorViewCS().subscribe(cs => {
     this.docservice.docTimeline().add(() => {
+      console.log(this.docservice.timeline);
       this.dataSource =  new MatTableDataSource<Timeline>(this.docservice.timeline);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -116,16 +117,16 @@ export class TimelineComponent implements OnInit {
       //prepares the data for the table & the graph
       for(let i = 0; i < this.dataSource.filteredData[index].timeline.length; i++){
         //for the graph
-        start = this.dataSource.filteredData[index].timeline[i]['startDate'];
-        end = this.dataSource.filteredData[index].timeline[i]['endDate'];
-        timelineGraph[i] = [this.dataSource.filteredData[index].title,'', 
+        start = this.dataSource.filteredData[index].timeline[i]['eventStartDate'];
+        end = this.dataSource.filteredData[index].timeline[i]['eventEndDate'];
+        timelineGraph[i] = [this.dataSource.filteredData[index].title,'',
         new Date(+start.substring(0,4), +start.substring(5,7), +start.substring(8,start.length)),
         new Date(+end.substring(0,4), +end.substring(5,7), +end.substring(8,start.length))];
-        
+
         //for the table
         console.log(+start.substring(0,4), +start.substring(5,7), +start.substring(8,start.length));
         titleEvent = this.dataSource.filteredData[index].timeline[i]['event'];
-        timelineTable[i] = [titleEvent, 
+        timelineTable[i] = [titleEvent,
           new Date(+start.substring(0,4), +start.substring(5,7), +start.substring(8,start.length)),
           new Date(+end.substring(0,4), +end.substring(5,7), +end.substring(8,start.length))];
       }
