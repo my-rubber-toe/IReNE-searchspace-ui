@@ -1,9 +1,6 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
-import * as _moment from 'moment';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
@@ -11,36 +8,13 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {DocumentsTableComponent} from './documents-table/documents-table.component';
-
-
-const moment = _moment;
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'Y-MM-DD',
-  },
-  display: {
-    dateInput: 'Y-MM-DD',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'Y-MM-DD',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-
-
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
   providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
 export class DocumentsComponent implements OnInit {
@@ -49,8 +23,8 @@ export class DocumentsComponent implements OnInit {
   @ViewChild('creatorInput') creatorInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
-  date1 = new FormControl(moment(''));
-  date2 = new FormControl(moment(''));
+  date1 = new FormControl('');
+  date2 = new FormControl('');
   maxDate: Date;
   minDate: Date = new Date(1970, 0, 1);
   selectable = true;
@@ -71,21 +45,13 @@ export class DocumentsComponent implements OnInit {
   incidentFilter;
 
   constructor(
-    private filtersService: SearchSpaceService
+    private filtersService: SearchSpaceService,
+    private datePipe: DatePipe
   ) {
     this.maxDate = new Date();
   }
 
   ngOnInit(): void {
-    // Smooth scroll up
-    let scrollToTop = window.setInterval(() => {
-      let pos = window.pageYOffset;
-      if (pos > 0) {
-        window.scrollTo(0, pos - 20); // how far to scroll on each step
-      } else {
-        window.clearInterval(scrollToTop);
-      }
-    }, 16);
     this.filtersService.getFilters().add(() => {
       this.filters = this.filtersService.filters;
       this.authors = this.filters[`authors`];
@@ -103,7 +69,7 @@ export class DocumentsComponent implements OnInit {
      */
     this.publicationFilter = (d: Date | null): boolean => {
       return this.table.dataSource.data.some(e => {
-        return e.creationDate === moment(d).format('YYYY-MM-DD');
+        return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
     };
     /**
@@ -112,7 +78,7 @@ export class DocumentsComponent implements OnInit {
      */
     this.incidentFilter = (d: Date | null): boolean => {
       return this.table.dataSource.data.some(e => {
-        return e.incidentDate === moment(d).format('YYYY-MM-DD');
+        return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
     };
   }
@@ -123,7 +89,7 @@ export class DocumentsComponent implements OnInit {
    */
   checkEvent(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
-      event.value = event.value.format('Y-MM-DD');
+      event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
     } else {
       event.value = '';
     }

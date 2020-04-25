@@ -12,7 +12,7 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="5px">
   <div fxFlex="10">
     <mat-form-field class="side">
-      <mat-label>Enter publication date</mat-label>
+      <mat-label>Select publication date</mat-label>
       <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="publicationFilter"
              [matDatepicker]="picker"
              (dateChange)="checkEvent($event); documentsTableComponent.selectionEvent([$event.value], 'creationDate');
@@ -22,7 +22,7 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="side">
-      <mat-label>Enter incident date</mat-label>
+      <mat-label>Select incident date</mat-label>
       <input matInput [max]="maxDate" [min]="minDate"  [matDatepickerFilter]="incidentFilter"
              [matDatepicker]="picker2"
              (dateChange)="checkEvent($event);
