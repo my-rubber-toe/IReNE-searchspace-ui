@@ -10,37 +10,37 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 interface Author {
-  firstName: string;
-  lastName: string;
-  email: string;
-  faculty: string;
+  author_FN: string;
+  author_LN: string;
+  author_email: string;
+  author_faculty: string;
 }
 
-interface Actor{
-  firstName: string;
-  lastName: string;
+interface Actor {
+  actor_FN: string;
+  actor_LN: string;
   role: string;
 }
 
-interface Section{
-  title: string;
+interface Section {
+  secTitle: string;
   content: string;
 }
 
-interface Document{
+interface Document {
   title: string;
   description: string;
   creatorFullName: string;
   creatorEmail: string;
-  publicationDate: string;
-  lastModifiedDate: string;
+  creationDate: string;
+  lastModificationDate: string;
   incidentDate: string;
-  infraList: Array<string>;
-  damageList: Array<string>;
-  tagList: Array<string>;
-  authorList: Array<Author>;
-  actorList: Array<Actor>;
-  sectionList: Array<Section>;
+  infrasDocList: Array<string>;
+  damageDocList: Array<string>;
+  tagsDoc: Array<string>;
+  author: Array<Author>;
+  actor: Array<Actor>;
+  section: Array<Section>;
 }
 
 @Component({
@@ -60,15 +60,15 @@ export class PreviewComponent implements OnInit {
   description: string = '';
   creatorFullName: string = '';
   creatorEmail: string = '';
-  publicationDate: string = '';
-  lastModifiedDate: string = '';
+  creationDate: string = '';
+  lastModificationDate: string = '';
   incidentDate: string = '';
-  infraList: Array<String> = [];
-  damageList: Array<String> = [];
-  tagList: Array<String> = [];
-  authorList: Array<Author> = [];
-  actorList: Array<Actor> = [];
-  sectionList: Array<Section> = [];
+  infrasDocList: Array<String> = [];
+  damageDocList: Array<String> = [];
+  tagsDoc: Array<String> = [];
+  author: Array<Author> = [];
+  actor: Array<Actor> = [];
+  section: Array<Section> = [];
 
   ckeditorData: SafeHtml = '';
 
@@ -79,46 +79,41 @@ export class PreviewComponent implements OnInit {
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) {
-    
+
   }
 
   ngOnInit(): void {
-
     this.activatedRoute.params.subscribe(params => {
-
-      // use params['docId] to get the docID
-      let body = {
-        id: params['docId']
-      }
-      
-      this.http.post(this.fakeBackend, body).subscribe(
+      const id = params[`docId`];
+      this.http.get(`http://localhost:5000/api/documents/view/` + id).subscribe(
         (response: Document) => {
-          
-          this.title = response.title;
-          this.description = response.description
-          this.creatorFullName = response.creatorFullName;
-          this.creatorEmail = response.creatorEmail;
-          this.publicationDate = this.datePipe.transform(response.publicationDate, 'yyyy-MM-dd');
-          this.lastModifiedDate = this.datePipe.transform(response.lastModifiedDate, 'yyyy-MM-dd')
-          this.incidentDate = this.datePipe.transform(response.incidentDate, 'yyyy-MM-dd')
-          this.infraList = response.infraList;
-          this.damageList = response.damageList;
-          this.tagList = response.tagList;
-          this.authorList = response.authorList;
-          this.actorList = response.actorList;
-          this.sectionList = response.sectionList
+          const doc = response[`message`];
+          this.title = doc.title;
+          this.description = doc.description;
+          this.creatorFullName = doc.creatorFullName;
+          this.creatorEmail = doc.creatorEmail;
+          this.creationDate = this.datePipe.transform(doc.creationDate, 'yyyy-MM-dd');
+          this.lastModificationDate = this.datePipe.transform(doc.lastModificationDate, 'yyyy-MM-dd');
+          this.incidentDate = this.datePipe.transform(doc.incidentDate, 'yyyy-MM-dd');
+          this.infrasDocList = doc.infrasDocList;
+          this.damageDocList = doc.damageDocList;
+          this.tagsDoc = doc.tagsDoc;
+          this.author = doc.author;
+          this.actor = doc.actor;
+          this.section = doc.section;
 
           this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
 
           // Simulate long respone
-          setTimeout(() => {
-            this.loadingDocument = false;
-          }, 1500);
+//         setTimeout(() => {
+//           this.loadingDocument = false;
+//         }, 1500);
+          this.loadingDocument = false;
         },
-        (error) =>{
-          setTimeout(() => {
-            this.loadingDocument = false;
-          }, 1500);
+        (error) => {
+//          setTimeout(() => {
+//            this.loadingDocument = false;
+//          }, 1500);
           this.loadingDocument = false;
           this.notFound = true;
         }
