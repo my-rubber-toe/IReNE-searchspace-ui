@@ -10,15 +10,15 @@ import { Timeline } from '../models/searchspace.model';
 import {Filters} from '../models/searchspace.model';
 import { sample_document } from './sample_preview';
 
-const collaborators: CollaboratorRequest[] = [
-  {id: 'aq9zI01ORNE9Okyziblp', first_name: 'Roberto', last_name: 'Guzman', email: 'roberto.guzman3@upr.edu'},
-  {id: '66BuIJ0kNTYPDGz405qb', first_name: 'Yomar', last_name: 'Ruiz', email: 'yomar.ruiz@upr.edu'},
-  {id: 'W0SUHONPhPrkrvL3ruxj', first_name: 'Jainel', last_name: 'Torres', email: 'jainel.torrer@upr.edu'},
-  {id: 'zOHEzUyIKZB3LsAiu2Kb', first_name: 'Alberto', last_name: 'Canela', email: 'alberto.canela@upr.edu'},
-  {id: '9XIu1jT96A5qz1Kpl90R', first_name: 'Alejandro', last_name: 'Vasquez', email: 'alejandro.vasquez@upr.edu'},
-  {id: '1XIu1jTk6A5qz1Kplp0R', first_name: 'Don', last_name: 'Quijote', email: 'don.quijote@upr.edu'},
-];
-
+//const collaborators: CollaboratorRequest[] = [
+//  {id: 'aq9zI01ORNE9Okyziblp', first_name: 'Roberto', last_name: 'Guzman', email: 'roberto.guzman3@upr.edu'},
+//  {id: '66BuIJ0kNTYPDGz405qb', first_name: 'Yomar', last_name: 'Ruiz', email: 'yomar.ruiz@upr.edu'},
+//  {id: 'W0SUHONPhPrkrvL3ruxj', first_name: 'Jainel', last_name: 'Torres', email: 'jainel.torrer@upr.edu'},
+//  {id: 'zOHEzUyIKZB3LsAiu2Kb', first_name: 'Alberto', last_name: 'Canela', email: 'alberto.canela@upr.edu'},
+//  {id: '9XIu1jT96A5qz1Kpl90R', first_name: 'Alejandro', last_name: 'Vasquez', email: 'alejandro.vasquez@upr.edu'},
+//  {id: '1XIu1jTk6A5qz1Kplp0R', first_name: 'Don', last_name: 'Quijote', email: 'don.quijote@upr.edu'},
+//];
+//
 // const dbDocuments: DocumentMetadata[] = [
 //  {id: 'tPbl1DyxToy1FUHpfcqn', authors: ['Roberto Guzman', 'Yomar Ruiz'], title: 'Title 1', published: false, location: 'Caguas, PR', publication_date: '2020-01-02',incident_date:'2017-08-03',modification_date:'2020-03-01',infrastructure_type:['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'], language:'English', tag:['Flood', 'Hurricane'] },
 //  {id: 'iO0PxjKJY0FwezeVq943', authors: ['Yomar Ruiz'], title: 'Title 2', published: true, location: 'Mayagüez, PR', publication_date:'2020-02-01',incident_date:'2017-07-03',modification_date:'2020-03-02',infrastructure_type:['Building'], damage_type: ['Broken Sewer'], language:'Spanish', tag:['Earthquake'] },
@@ -47,28 +47,28 @@ const collaborators: CollaboratorRequest[] = [
 //   },
 // ];
 
-const mapDocument: MapMetadata[] = [
-  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 1', location: ['Caguas, PR', 'Maricao, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
-  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 2', location: ['Ponce, PR', 'Rio Pierdas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
-  {id: 'tPbl1DyxToy1FUHpfcqn', title: 'Title 3', location: ['Aguas Buenas, PR', 'Las Marias, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
-  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 4', location: ['San Juan, PR', 'Vieques, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
-  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 5', location: ['Playa Sucia, Cabo Rojo, PR', 'Playita Azul, Fajardo PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
-  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 6', location: ['Utuado, PR', 'Salinas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//const mapDocument: MapMetadata[] = [
+//  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 1', location: ['Caguas, PR', 'Maricao, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 2', location: ['Ponce, PR', 'Rio Pierdas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//  {id: 'tPbl1DyxToy1FUHpfcqn', title: 'Title 3', location: ['Aguas Buenas, PR', 'Las Marias, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//  {id: 'qkdQoXSmnNeMISTmMP4f', title: 'Title 4', location: ['San Juan, PR', 'Vieques, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 5', location: ['Playa Sucia, Cabo Rojo, PR', 'Playita Azul, Fajardo PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//  {id: 'iO0PxjKJY0FwezeVq943', title: 'Title 6', location: ['Utuado, PR', 'Salinas, PR'], publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type: ['Building'], damage_type: ['Flooding', 'Fire', 'Flooding', 'Fire'],tag:['Flood', 'Hurricane'], language:'English' },
+//
+//];
 
-];
-
-const xyDocument: XY[] = [
-    {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type:['Building', 'Energy'], damage_type:['Flooding', 'broken sewer'], tag:['Flood'] },
-    {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake',  publication_date:'2020-02-01',incident_date:'2017-07-03',infrastructure_type:['Transportation', 'Building'], damage_type:['broken sewer'],tag:['Earthquake', 'Tsunami'] },
-    {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', publication_date: '2019-10-02', incident_date:'2010-08-13',infrastructure_type:['Building', 'Water'], damage_type:['Flooding', 'Fire'], tag:['Flood'] },
-    {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', publication_date: '2020-02-03', incident_date:'2018-07-03',infrastructure_type:['Energy'], damage_type:['Flooding'], tag:['Hurricane']  },
-    {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Story', publication_date:'2018-02-02',incident_date:'2016-08-20',infrastructure_type:['Building'], damage_type:['Fallen Structure'], tag:['Tornado']  },
-    {id: 'VzunBKHhBSl5npj0U9pP', title: 'The great Mind', publication_date:'2016-09-02',incident_date:'2014-08-10',infrastructure_type:['Water', 'Energy'], damage_type:['Burn'], tag:['Tsunami', 'Fire']  },
-    {id: 'VzunaoihBS05hpsgU9pP', title: 'The great Place', publication_date:'2017-02-02',incident_date:'2015-07-19',infrastructure_type:['Water'], damage_type:['Burn'], tag:['Fire']  },
-    {id: 'VzunBYihBS05kpsJW9pP', title: 'The great Fall', publication_date:'2019-02-02',incident_date:'2012-01-03',infrastructure_type:['Building', 'Water'], damage_type:['Burn', 'Flooding'], tag:['Fire', 'Tornado']  },
-    {id: 'Vzun980hBS05lpj0U9pP', title: 'The great Structure', publication_date:'2015-02-02',incident_date:'2011-04-12',infrastructure_type:['Structure'], damage_type:['Burn'], tag:['Fire']  },
-    {id: 'HHkwBYihBS05qpj0U9pP', title: 'The great Port', publication_date:'2017-02-02',incident_date:'2015-05-11',infrastructure_type:['Energy'], damage_type:['Fallen Structure', 'Crack'], tag:['Fire', 'Earthquake']  },
-];
+// const xyDocument: XY[] = [
+//     {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', publication_date: '2020-01-02',incident_date:'2017-08-03',infrastructure_type:['Building', 'Energy'], damage_type:['Flooding', 'broken sewer'], tag:['Flood'] },
+//     {id: 'iO0PxjKJY0FwezeVq943', title: 'The great Shake',  publication_date:'2020-02-01',incident_date:'2017-07-03',infrastructure_type:['Transportation', 'Building'], damage_type:['broken sewer'],tag:['Earthquake', 'Tsunami'] },
+//     {id: 'qkdQoXSmnNeMISTmMP4f', title: 'The great Rain', publication_date: '2019-10-02', incident_date:'2010-08-13',infrastructure_type:['Building', 'Water'], damage_type:['Flooding', 'Fire'], tag:['Flood'] },
+//     {id: 'RYTSBZAiwlAG0t8EOb6B', title: 'The great Wind', publication_date: '2020-02-03', incident_date:'2018-07-03',infrastructure_type:['Energy'], damage_type:['Flooding'], tag:['Hurricane']  },
+//     {id: 'VzunBYihBS05mpj0U9pP', title: 'The great Story', publication_date:'2018-02-02',incident_date:'2016-08-20',infrastructure_type:['Building'], damage_type:['Fallen Structure'], tag:['Tornado']  },
+//     {id: 'VzunBKHhBSl5npj0U9pP', title: 'The great Mind', publication_date:'2016-09-02',incident_date:'2014-08-10',infrastructure_type:['Water', 'Energy'], damage_type:['Burn'], tag:['Tsunami', 'Fire']  },
+//     {id: 'VzunaoihBS05hpsgU9pP', title: 'The great Place', publication_date:'2017-02-02',incident_date:'2015-07-19',infrastructure_type:['Water'], damage_type:['Burn'], tag:['Fire']  },
+//     {id: 'VzunBYihBS05kpsJW9pP', title: 'The great Fall', publication_date:'2019-02-02',incident_date:'2012-01-03',infrastructure_type:['Building', 'Water'], damage_type:['Burn', 'Flooding'], tag:['Fire', 'Tornado']  },
+//     {id: 'Vzun980hBS05lpj0U9pP', title: 'The great Structure', publication_date:'2015-02-02',incident_date:'2011-04-12',infrastructure_type:['Structure'], damage_type:['Burn'], tag:['Fire']  },
+//     {id: 'HHkwBYihBS05qpj0U9pP', title: 'The great Port', publication_date:'2017-02-02',incident_date:'2015-05-11',infrastructure_type:['Energy'], damage_type:['Fallen Structure', 'Crack'], tag:['Fire', 'Earthquake']  },
+// ];
 
 // const timelineDocument: Timeline[] = [
 //     {id: 'tPbl1DyxToy1FUHpfcqn', title: 'The great Flooding', timeline: [ {event:'it flooded', startDate:'2017-07-09', endDate: '2017-09-10'}, {event:'started Case Study', startDate:'2018-01-09', endDate: '2018-02-10'}] },
@@ -102,10 +102,10 @@ export class FakebackendService implements HttpInterceptor {
       //    return getFilters();
   //     case url.endsWith('/api/documents/view') && method === 'POST':
   //       return getDocument();
-        case url.endsWith('/api/map/filters') && method === 'GET':
-          return mapFilters();
-        case url.endsWith('/visualize/comparison-graph') && method === 'GET':
-          return docXY();
+   //     case url.endsWith('/api/map/filters') && method === 'GET':
+   //       return mapFilters();
+//        case url.endsWith('/visualize/comparison-graph') && method === 'GET':
+//          return docXY();
 //        case url.endsWith('/visualize/timeline') && method === 'GET':
 //          return docTimeline();
         default:
@@ -143,18 +143,18 @@ export class FakebackendService implements HttpInterceptor {
  //     return throwError({ status: 500, error: { message: 'Document not found.' } })
   //  }
 
-    function mapFilters() {
-      return ok({
-        infrastructure_type: ['Building', 'Bridge', 'Port'],
-        damage_type: ['Flooding', 'Fire', 'Broken Sewer', 'Tornado'],
-        tag: ['Flood', 'Hurricane', 'Earthquake', 'Volcano']
-      });
-    }
-
-    function docXY() {
-      console.log(xyDocument);
-      return ok(xyDocument);
-    }
+//   function mapFilters() {
+//     return ok({
+//       infrastructure_type: ['Building', 'Bridge', 'Port'],
+//       damage_type: ['Flooding', 'Fire', 'Broken Sewer', 'Tornado'],
+//       tag: ['Flood', 'Hurricane', 'Earthquake', 'Volcano']
+//     });
+//   }
+//
+   //function docXY() {
+   //  console.log(xyDocument);
+   //  return ok(xyDocument);
+   //}
 
 //    function docTimeline() {
 //      console.log(timelineDocument);
@@ -163,30 +163,30 @@ export class FakebackendService implements HttpInterceptor {
 
     // helper functions
 
-    function ok(body?) {
-      return of(new HttpResponse({ status: 200, body }));
-    }
-
+ //   function ok(body?) {
+ //     return of(new HttpResponse({ status: 200, body }));
+ //   }
+ //
  //   function collaboratorExist() {
  //     return throwError({ status: 401, error: { message: 'Collaborator Request already creasted' } });
  //   }
 
-    function checkEmail(email: string) {
-      let valid = true;
-      collaborators.forEach(e => {
-        if (e.email === email) {
-          console.log('found');
-          valid = false;
-        }
-      });
-      return valid;
-    }
-  }
-}
+//    function checkEmail(email: string) {
+//      let valid = true;
+//      collaborators.forEach(e => {
+//        if (e.email === email) {
+//          console.log('found');
+//          valid = false;
+//        }
+//      });
+//      return valid;
+//    }
+//  }
+//}
 
-export const fakeBackendProvider = {
-  // use fake backend in place of Http service for backend-less development
-  provide: HTTP_INTERCEPTORS,
-  useClass: FakebackendService,
-  multi: true
-} ;
+//export const fakeBackendProvider = {
+//  // use fake backend in place of Http service for backend-less development
+//  provide: HTTP_INTERCEPTORS,
+//  useClass: FakebackendService,
+//  multi: true
+//} ;

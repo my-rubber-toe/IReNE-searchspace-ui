@@ -39,13 +39,13 @@ export class XyComponent implements OnInit {
     enableScrollWheel:true,
     showTip:true,
     isStacked:true,
-    
+
    };
    //data is filled in ngonInit()
    data = [];
    width = 750;
    height = 550;
- 
+
    //sends the value to use in ngoninit()
    sendValueX(value) {
     this.docservice.setBehaviorViewX({textVal: value});
@@ -84,7 +84,7 @@ export class XyComponent implements OnInit {
       //values from the selection of category x & y
       const x = vx['textVal'];
       const y = vy['textVal'];
-      
+
       let map = new Map();
       let key = '';
       let value = '';
@@ -95,129 +95,129 @@ export class XyComponent implements OnInit {
       if(y != 'Number of Cases'){
         if(x == 'Damage' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].damage_type[j]))){
-                key = String(this.dataSource.filteredData[i].damage_type[j]);
+            for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].damageDocList[j]))){
+                key = String(this.dataSource.filteredData[i].damageDocList[j]);
                 rowx.push(key);
-                value = this.dataSource.filteredData[i].publication_date.substr(0,4);
+                value = this.dataSource.filteredData[i].creationDate.substr(0,4);
                 map.set(key,new Array(value));
               }
               else{
-                map.get(String(this.dataSource.filteredData[i].damage_type[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+                map.get(String(this.dataSource.filteredData[i].damageDocList[j])).push(this.dataSource.filteredData[i].creationDate.substr(0,4));
               }
             }
             //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
-            } 
+            if(!rowy.includes(this.dataSource.filteredData[i].creationDate.substr(0,4))){
+              rowy.unshift(this.dataSource.filteredData[i].creationDate.substr(0,4));
+            }
           }
         }
         else if(x == 'Infrastructure' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].infrastructure_type.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type[j]))){
-                key = String(this.dataSource.filteredData[i].infrastructure_type[j]);
+            for(let j = 0; j < this.dataSource.filteredData[i].infrasDocList.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].infrasDocList[j]))){
+                key = String(this.dataSource.filteredData[i].infrasDocList[j]);
                 rowx.push(key);
-                value = this.dataSource.filteredData[i].publication_date.substr(0,4);
+                value = this.dataSource.filteredData[i].creationDate.substr(0,4);
                 map.set(key,new Array(value));
               }
               else{
-                map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+                map.get(String(this.dataSource.filteredData[i].infrasDocList[j])).push(this.dataSource.filteredData[i].creationDate.substr(0,4));
               }
             }
             //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
-            } 
+            if(!rowy.includes(this.dataSource.filteredData[i].creationDate.substr(0,4))){
+              rowy.unshift(this.dataSource.filteredData[i].creationDate.substr(0,4));
+            }
           }
         }
         else if(x == 'Tag' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].tag.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].tag[j]))){
-                key = String(this.dataSource.filteredData[i].tag[j]);
+            for(let j = 0; j < this.dataSource.filteredData[i].tagsDoc.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].tagsDoc[j]))){
+                key = String(this.dataSource.filteredData[i].tagsDoc[j]);
                 rowx.push(key);
-                value = this.dataSource.filteredData[i].publication_date.substr(0,4);
+                value = this.dataSource.filteredData[i].creationDate.substr(0,4);
                 map.set(key,new Array(value));
               }
               else{
-                map.get(String(this.dataSource.filteredData[i].tag[j])).push(this.dataSource.filteredData[i].publication_date.substr(0,4));
+                map.get(String(this.dataSource.filteredData[i].tagsDoc[j])).push(this.dataSource.filteredData[i].creationDate.substr(0,4));
               }
             }
             //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].publication_date.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].publication_date.substr(0,4));
-            } 
+            if(!rowy.includes(this.dataSource.filteredData[i].creationDate.substr(0,4))){
+              rowy.unshift(this.dataSource.filteredData[i].creationDate.substr(0,4));
+            }
           }
         }
 
         else if(x == 'Damage' && y == 'Incident Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].damage_type[j]))){
-                key = String(this.dataSource.filteredData[i].damage_type[j]);
+            for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].damageDocList[j]))){
+                key = String(this.dataSource.filteredData[i].damageDocList[j]);
                 rowx.push(key);
-                value = this.dataSource.filteredData[i].incident_date.substr(0,4);
+                value = this.dataSource.filteredData[i].incidentDate.substr(0,4);
                 map.set(key,new Array(value));
               }
               else{
-                map.get(String(this.dataSource.filteredData[i].damage_type[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+                map.get(String(this.dataSource.filteredData[i].damageDocList[j])).push(this.dataSource.filteredData[i].incidentDate.substr(0,4));
               }
             }
             //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            } 
+            if(!rowy.includes(this.dataSource.filteredData[i].incidentDate.substr(0,4))){
+              rowy.unshift(this.dataSource.filteredData[i].incidentDate.substr(0,4));
+            }
           }
           console.log(map);
         }
         else if(x == 'Infrastructure' && y == 'Incident Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].infrastructure_type.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type[j]))){
-                key = String(this.dataSource.filteredData[i].infrastructure_type[j]);
+            for(let j = 0; j < this.dataSource.filteredData[i].infrasDocList.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].infrasDocList[j]))){
+                key = String(this.dataSource.filteredData[i].infrasDocList[j]);
                 rowx.push(key);
-                value = this.dataSource.filteredData[i].incident_date.substr(0,4);
+                value = this.dataSource.filteredData[i].incidentDate.substr(0,4);
                 map.set(key,new Array(value));
               }
               else{
-                map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+                map.get(String(this.dataSource.filteredData[i].infrasDocList[j])).push(this.dataSource.filteredData[i].incidentDate.substr(0,4));
               }
             }
             //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            } 
+            if(!rowy.includes(this.dataSource.filteredData[i].incidentDate.substr(0,4))){
+              rowy.unshift(this.dataSource.filteredData[i].incidentDate.substr(0,4));
+            }
           }
         }
         else if(x == 'Tag' && y == 'Incident Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].tag.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].tag[j]))){
-                key = String(this.dataSource.filteredData[i].tag[j]);
+            for(let j = 0; j < this.dataSource.filteredData[i].tagsDoc.length; j++){
+              if(!map.has(String(this.dataSource.filteredData[i].tagsDoc[j]))){
+                key = String(this.dataSource.filteredData[i].tagsDoc[j]);
                 rowx.push(key);
-                value = this.dataSource.filteredData[i].incident_date.substr(0,4);
+                value = this.dataSource.filteredData[i].incidentDate.substr(0,4);
                 map.set(key,new Array(value));
               }
               else{
-                map.get(String(this.dataSource.filteredData[i].tag[j])).push(this.dataSource.filteredData[i].incident_date.substr(0,4));
+                map.get(String(this.dataSource.filteredData[i].tagsDoc[j])).push(this.dataSource.filteredData[i].incidentDate.substr(0,4));
               }
             }
             //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].incident_date.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].incident_date.substr(0,4));
-            } 
+            if(!rowy.includes(this.dataSource.filteredData[i].incidentDate.substr(0,4))){
+              rowy.unshift(this.dataSource.filteredData[i].incidentDate.substr(0,4));
+            }
           }
         }
         //gives the count for each value within each type within cat x
         rowy = rowy.sort();
-        let countsy = []; 
+        let countsy = [];
         map.forEach((value: string, key: string) => {
               let countValue = [];
               for(let i = 0; i < value.length; i++){
                 //fills an array with length of the year
                 //this is to have a sort of count per year
-                countValue[value[i]] = 1 + (countValue[value[i]] || 0); 
+                countValue[value[i]] = 1 + (countValue[value[i]] || 0);
               }
               //the category x that doesn't have a certain value from category y is put a 0
               //this way that year will have a count of 0 documents
@@ -230,15 +230,15 @@ export class XyComponent implements OnInit {
               //returns an array with no null values
               let filteredArr = countValue.filter(function(value){ return value != null;});
               countsy.push(filteredArr);
-              
+
         });
         //sets the data table for the chart
         for(let i = 0; i < rowx.length; i++){
-          
+
           row[i] = countsy[i];
           row[i].unshift(rowx[i]);
         }
-        
+
         this.columnNames = rowy;
         this.columnNames.unshift(x);
         this.data = row;
@@ -247,43 +247,43 @@ export class XyComponent implements OnInit {
         this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
       }
       else {
-          //the hash map here is built with category x as key and value as ocurrecences of catX 
+          //the hash map here is built with category x as key and value as ocurrecences of catX
           if(x == "Damage"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
-              for(let j = 0; j < this.dataSource.filteredData[i].damage_type.length; j++){
-                  if(!map.has(String(this.dataSource.filteredData[i].damage_type[j]))){
-                    key = String(this.dataSource.filteredData[i].damage_type[j]);
+              for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
+                  if(!map.has(String(this.dataSource.filteredData[i].damageDocList[j]))){
+                    key = String(this.dataSource.filteredData[i].damageDocList[j]);
                     map.set(key, 1);
                   }
                   else{
-                    map.set(String(this.dataSource.filteredData[i].damage_type[j]), map.get(String(this.dataSource.filteredData[i].damage_type[j])) + 1);
-                  } 
+                    map.set(String(this.dataSource.filteredData[i].damageDocList[j]), map.get(String(this.dataSource.filteredData[i].damageDocList[j])) + 1);
+                  }
                }
              }
           }
           else if(x == "Infrastructure"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
-              for(let j = 0; j < this.dataSource.filteredData[i].infrastructure_type.length; j++){
-                  if(!map.has(String(this.dataSource.filteredData[i].infrastructure_type[j]))){
-                    key = String(this.dataSource.filteredData[i].infrastructure_type[j]);
+              for(let j = 0; j < this.dataSource.filteredData[i].infrasDocList.length; j++){
+                  if(!map.has(String(this.dataSource.filteredData[i].infrasDocList[j]))){
+                    key = String(this.dataSource.filteredData[i].infrasDocList[j]);
                     map.set(key, 1);
                   }
                   else{
-                    map.set(String(this.dataSource.filteredData[i].infrastructure_type[j]), map.get(String(this.dataSource.filteredData[i].infrastructure_type[j])) + 1);
-                  } 
+                    map.set(String(this.dataSource.filteredData[i].infrasDocList[j]), map.get(String(this.dataSource.filteredData[i].infrasDocList[j])) + 1);
+                  }
                }
              }
           }
           else if(x == "Tag"){
             for(let i = 0; i<this.dataSource.filteredData.length;i++){
-              for(let j = 0; j < this.dataSource.filteredData[i].tag.length; j++){
-                  if(!map.has(String(this.dataSource.filteredData[i].tag[j]))){
-                    key = String(this.dataSource.filteredData[i].tag[j]);
+              for(let j = 0; j < this.dataSource.filteredData[i].tagsDoc.length; j++){
+                  if(!map.has(String(this.dataSource.filteredData[i].tagsDoc[j]))){
+                    key = String(this.dataSource.filteredData[i].tagsDoc[j]);
                     map.set(key, 1);
                   }
                   else{
-                    map.set(String(this.dataSource.filteredData[i].tag[j]), map.get(String(this.dataSource.filteredData[i].tag[j])) + 1);
-                  } 
+                    map.set(String(this.dataSource.filteredData[i].tagsDoc[j]), map.get(String(this.dataSource.filteredData[i].tagsDoc[j])) + 1);
+                  }
                }
              }
           }
@@ -299,7 +299,7 @@ export class XyComponent implements OnInit {
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
         this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
-      }    
+      }
     });
   });
  });

@@ -20,7 +20,7 @@ interface Authors {
 }
 
 export interface DocumentMetadata {
-    id: string;
+    _id: string;
     author: Array<Authors>;
     title: string;
     published: boolean;
@@ -34,26 +34,26 @@ export interface DocumentMetadata {
     tagsDoc: Array<string>;
 }
 
-export interface MapMetadata{
+export interface MapMetadata {
     id: string;
     title: string;
     location: Array<string>;
-    publication_date: string;
-    incident_date: string;
-    infrastructure_type: Array<string>;
-    damage_type: Array<string>;
-    tag: Array<string>;
+    creationDate: string;
+    incidentDate: string;
+    infrasDocList: Array<string>;
+    damageDocList: Array<string>;
+    tagsDoc: Array<string>;
     language: string;
 }
 
 export interface XY {
     id: string;
     title: string;
-    tag: Array<string>;
-    infrastructure_type: Array<string>;
-    damage_type: Array<string>;
-    publication_date: string;
-    incident_date: string;
+    tagsDoc: Array<string>;
+    infrasDocList: Array<string>;
+    damageDocList: Array<string>;
+    creationDate: string;
+    incidentDate: string;
 }
 
 export interface Timeline {

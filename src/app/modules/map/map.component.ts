@@ -47,7 +47,7 @@ export class MapComponent implements OnInit {
   @ViewChild('inputToDate1', {
     read: MatInput
   }) inputToDate1: MatInput;
-  
+
   @ViewChild('inputToDate2', {
     read: MatInput
   }) inputToDate2: MatInput;
@@ -97,12 +97,12 @@ export class MapComponent implements OnInit {
    */
   filterSelection: Map<string, any> = new Map<string, any>([
     ['location', ''],
-    ['infrastructure_type', ''],
-    ['damage_type', ''],
+    ['infrasDocList', ''],
+    ['damageDocList', ''],
     ['language', ''],
-    ['tag', ''],
-    ['incident_date', ''],
-    ['publication_date', '']
+    ['tagsDoc', ''],
+    ['incidentDate', ''],
+    ['creationDate', '']
   ]);
 
   todayDate = new Date();
@@ -146,11 +146,11 @@ export class MapComponent implements OnInit {
     });
 
     // Retrieve all the available filters in the database.
-    this.searchSpaceService.getMapFilters().add(() =>{
-      this.infrastructureList = this.searchSpaceService.mapFilters.infrastructure_type
-      this.damageList = this.searchSpaceService.mapFilters.damage_type
-      this.tagsList = this.searchSpaceService.mapFilters.tag
-    })
+    this.searchSpaceService.getFilters().add(() => {
+      this.infrastructureList = this.searchSpaceService.filters[`infrastructures`];
+      this.damageList = this.searchSpaceService.filters[`damages`];
+      this.tagsList = this.searchSpaceService.filters[`tags`];
+    });
   }
 
   /**
@@ -168,7 +168,7 @@ export class MapComponent implements OnInit {
 
     this.applyFilter();
     console.log(this.dataSource.data);
-     
+
     if (this.dataSource.data.length === 0) {
       this.snackBar.open('Total results: 0', null, {
         duration: 3000
@@ -177,7 +177,8 @@ export class MapComponent implements OnInit {
     } else {
       this.data = [];
       this.dataSource.data.forEach(e => {
-        this.data.push([e.location, e.title, e.id]);
+        this.data.push([e.location[0], e.title, e._id.$oid]);
+        console.log(this.data);
       });
       this.dirtyFields = false;
       this.snackBar.open(`Total results: ${this.data.length}`, null, {
@@ -193,12 +194,12 @@ export class MapComponent implements OnInit {
    */
   markerSelect(e: ChartEvent) {
     if(
-      this.data[e[0].row][2] === 'Mayaguez, PR' || 
+      this.data[e[0].row][2] === 'Mayaguez, PR' ||
       this.data[e[0].row][2] === 'Ponce, PR' ||
       this.data[e[0].row][2] === 'Rio Piedras, PR'
     ){
       this.snackBar.open('ERROR: Placeholder data selected.', null, {duration: 3000})
-    
+
     }else {
       const docId = this.data[e[0].row][2];
       this.router.navigate([`/preview/${docId}`]);
@@ -229,7 +230,7 @@ export class MapComponent implements OnInit {
   /**
    * Converts the selected date from Date object to string with format YYYY-MM-DD.
    *
-   * @param event the event Object when the date picker changes value. 
+   * @param event the event Object when the date picker changes value.
    */
   datePreCheck(event: MatDatepickerInputEvent<any>) {
     event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
@@ -238,15 +239,15 @@ export class MapComponent implements OnInit {
   /**
    * Reset the filter values.
    */
-  resetFilters(){
+    resetFilters(){
     this.filterSelection = new Map<string, any>([
       ['location', ''],
-      ['infrastructure_type', ''],
-      ['damage_type', ''],
+      ['infrasDocList', ''],
+      ['damageDocList', ''],
       ['language', ''],
-      ['tag', ''],
-      ['incident_date', ''],
-      ['publication_date', '']
+      ['tagsDoc', ''],
+      ['incidentDate', ''],
+      ['creationDate', '']
     ]);
 
     this.inputToDate1.value = '';
@@ -259,7 +260,7 @@ export class MapComponent implements OnInit {
     this.incidentDate.clearValidators();
     this.publicationDate.clearValidators();
     this.dirtyFields = false;
-    this.applyFilter();  
+    this.applyFilter();
   }
 
   /**
