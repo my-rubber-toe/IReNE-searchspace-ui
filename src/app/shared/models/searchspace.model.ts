@@ -6,47 +6,54 @@ export interface CollaboratorRequest {
 }
 
 export interface Filters {
-  creators: Array<string>;
-  infrastructure_type: Array<string>;
-  damage_type: Array<string>;
-  tag: Array<string>;
+  authors: Array<string>;
+  infrastructures: Array<string>;
+  damages: Array<string>;
+  tags: Array<string>;
+}
+
+interface Authors {
+  author_FN: string;
+  author_LN: string;
+  author_email: string;
+  author_faculty: string;
 }
 
 export interface DocumentMetadata {
-    id: string;
-    authors: Array<string>;
+    _id: string;
+    author: Array<Authors>;
     title: string;
     published: boolean;
-    location: string;
-    publication_date: string;
-    incident_date: string;
-    modification_date: string;
-    infrastructure_type: Array<string>;
-    damage_type: Array<string>;
+    location: Array<string>;
+    creationDate: string;
+    incidentDate: string;
+    lastModificationDate: string;
+    infrasDocList: Array<string>;
+    damageDocList: Array<string>;
     language: string;
-    tag: Array<string>;
+    tagsDoc: Array<string>;
 }
 
-export interface MapMetadata{
+export interface MapMetadata {
     id: string;
     title: string;
     location: Array<string>;
-    publication_date: string;
-    incident_date: string;
-    infrastructure_type: Array<string>;
-    damage_type: Array<string>;
-    tag: Array<string>;
+    creationDate: string;
+    incidentDate: string;
+    infrasDocList: Array<string>;
+    damageDocList: Array<string>;
+    tagsDoc: Array<string>;
     language: string;
 }
 
 export interface XY {
     id: string;
     title: string;
-    tag: Array<string>;
-    infrastructure_type: Array<string>;
-    damage_type: Array<string>;
-    publication_date: string;
-    incident_date: string;
+    tagsDoc: Array<string>;
+    infrasDocList: Array<string>;
+    damageDocList: Array<string>;
+    creationDate: string;
+    incidentDate: string;
 }
 
 export interface Timeline {

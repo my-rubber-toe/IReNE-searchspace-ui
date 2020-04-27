@@ -1,9 +1,6 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
-import * as _moment from 'moment';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
@@ -11,36 +8,13 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {DocumentsTableComponent} from './documents-table/documents-table.component';
-
-
-const moment = _moment;
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'Y-MM-DD',
-  },
-  display: {
-    dateInput: 'Y-MM-DD',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'Y-MM-DD',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-
-
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
   providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
 export class DocumentsComponent implements OnInit {
@@ -49,8 +23,8 @@ export class DocumentsComponent implements OnInit {
   @ViewChild('creatorInput') creatorInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
-  date1 = new FormControl(moment(''));
-  date2 = new FormControl(moment(''));
+  date1 = new FormControl('');
+  date2 = new FormControl('');
   maxDate: Date;
   minDate: Date = new Date(1970, 0, 1);
   selectable = true;
@@ -71,54 +45,62 @@ export class DocumentsComponent implements OnInit {
   incidentFilter;
 
   constructor(
-    private filtersService: SearchSpaceService
+    private filtersService: SearchSpaceService,
+    private datePipe: DatePipe
   ) {
     this.maxDate = new Date();
   }
 
   ngOnInit(): void {
-    // Smooth scroll up
-    let scrollToTop = window.setInterval(() => {
-      let pos = window.pageYOffset;
-      if (pos > 0) {
-        window.scrollTo(0, pos - 20); // how far to scroll on each step
-      } else {
-        window.clearInterval(scrollToTop);
-      }
-    }, 16);
     this.filtersService.getFilters().add(() => {
       this.filters = this.filtersService.filters;
-      this.authors = this.filters[0].creators;
-      this.dmgList = this.filters[0].damage_type;
-      this.structureList = this.filters[0].infrastructure_type;
-      this.tagList = this.filters[0].tag;
+      this.authors = this.filters[`authors`];
+      this.dmgList = this.filters[`damages`];
+      this.structureList = this.filters[`infrastructures`];
+      this.tagList = this.filters[`tags`];
       this.filteredAuthors = this.creatorCtrl.valueChanges.pipe(
         // tslint:disable-next-line:deprecation
         startWith(null),
         map((creator: string | null) => creator ? this._filter(creator) : this.authors.slice()));
     });
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
     this.publicationFilter = (d: Date | null): boolean => {
-      return this.table.tempDataSource.data.some(e => {
-        return e.publication_date === moment(d).format('YYYY-MM-DD');
+      return this.table.dataSource.data.some(e => {
+        return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
     };
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
     this.incidentFilter = (d: Date | null): boolean => {
-      return this.table.tempDataSource.data.some(e => {
-        return e.incident_date === moment(d).format('YYYY-MM-DD');
+      return this.table.dataSource.data.some(e => {
+        return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
     };
   }
 
+  /**
+   * Check that the value selected in the calendar is not null and then format it
+   * @param event - date selected in the calendar
+   */
   checkEvent(event: MatDatepickerInputEvent<any>) {
     if (event.value !== null) {
-      event.value = event.value.format('Y-MM-DD');
+      event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
     } else {
       event.value = '';
     }
   }
 
-  remove(creator: string): void {
-    const index = this.selectedAuthors.indexOf(creator);
+  /**
+   * Removes creator from the selected options and add it back to the possible options
+   * @param author - author to remove from the selected options
+   */
+  remove(author: string): void {
+    const index = this.selectedAuthors.indexOf(author);
 
     if (index >= 0) {
       this.authors.push(this.selectedAuthors[index]);
@@ -128,6 +110,10 @@ export class DocumentsComponent implements OnInit {
     this.creatorCtrl.setValue(null);
   }
 
+  /**
+   * Add the author to the selected options and remove it from the possible options to select
+   * @param event author to be added
+   */
   selected(event: MatAutocompleteSelectedEvent): void {
     const index = this.authors.indexOf(event.option.viewValue);
     this.authors.splice(index, 1);
@@ -136,6 +122,11 @@ export class DocumentsComponent implements OnInit {
     this.creatorCtrl.setValue(null);
   }
 
+  /**
+   * filter for the autocomplete of the authors field
+   * @param value author to filter
+   *
+   */
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 

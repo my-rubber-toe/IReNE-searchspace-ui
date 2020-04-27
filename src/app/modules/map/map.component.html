@@ -16,7 +16,7 @@
   </div>
 
   <div fxFill>
-    
+
     <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 2em; padding-top: 2em;">
       <div fxFlex="8">
         <button mat-raised-button color="primary" style="width: 10em;" (click)="resetFilters()">
@@ -32,28 +32,28 @@
         <mat-form-field>
           <mat-label>Publication date</mat-label>
           <input #inputToDate1 matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"
-            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'publication_date')" readonly>
+            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate')" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Incident date</mat-label>
           <input #inputToDate2 matInput [matDatepicker]="picker2" [max]="todayDate" [formControl]="incidentDate"
-            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incident_date')" readonly>
+            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate')" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Infrastructure</mat-label>
           <mat-select #someSelect1 [formControl]="infrastructure" multiple
-            (selectionChange)="selectionEvent($event.value, 'infrastructure_type')">
-            <mat-option *ngFor="let element of infrastructureList" [value]="element">{{element}}</mat-option>
+            (selectionChange)="selectionEvent($event.value, 'infrasDocList')">
+            <mat-option *ngFor="let element of infrastructureList" [value]="element['infrastructureType']">{{element['infrastructureType']}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Damages</mat-label>
-          <mat-select #someSelect2 [formControl]="damage" multiple (selectionChange)="selectionEvent($event.value, 'damage_type')">
-            <mat-option *ngFor="let element of damageList" [value]="element">{{element}}</mat-option>
+          <mat-select #someSelect2 [formControl]="damage" multiple (selectionChange)="selectionEvent($event.value, 'damageDocList')">
+            <mat-option *ngFor="let element of damageList" [value]="element['damageType']">{{element['damageType']}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -64,8 +64,8 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Tags</mat-label>
-          <mat-select #someSelect4 [formControl]="tags" multiple (selectionChange)="selectionEvent($event.value, 'tag')">
-            <mat-option *ngFor="let element of tagsList" [value]="element">{{element}}</mat-option>
+          <mat-select #someSelect4 [formControl]="tags" multiple (selectionChange)="selectionEvent($event.value, 'tagsDoc')">
+            <mat-option *ngFor="let element of tagsList" [value]="element['tagItem']">{{element['tagItem']}}</mat-option>
           </mat-select>
         </mat-form-field>
 

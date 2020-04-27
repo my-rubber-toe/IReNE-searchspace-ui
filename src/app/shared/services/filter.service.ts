@@ -10,6 +10,12 @@ export class FilterService {
   constructor() {
   }
 
+  /**
+   * Filter the datasource using the filterSelection Map with categories and values of it. And returns the Datasoruce filtered.
+   * @param filterSelection Map with keys of the categories to filter and the values of it
+   * @param tempDataSource DataSource to filter
+   * @return filteringDatasource Datasource filtered
+   */
   applyFilter(filterSelection: Map<string, any>, tempDataSource: MatTableDataSource<DocumentMetadata>) {
     const filteringDataSource = new MatTableDataSource<DocumentMetadata>();
     filteringDataSource.data = tempDataSource.data;
@@ -17,6 +23,12 @@ export class FilterService {
     return filteringDataSource;
   }
 
+  /**
+   *    * Using the filterSelection Map keys will filter the tempDatasource in the categories specified by the keys
+   * with values in the map of the key corresponding to it.
+   * @param filteringDataSource filterSelection Map with keys of the categories to filter and the values of it
+   * @param filterSelection tempDataSource DataSource to filter
+   */
   private filterBySelection(filteringDataSource: MatTableDataSource<DocumentMetadata>, filterSelection: Map<string, any>) {
     const ite = filterSelection.keys();
     let invalidKey = false;

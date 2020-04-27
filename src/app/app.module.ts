@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DefaultModule} from './layouts/default/default.module';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
-import { fakeBackendProvider} from './shared/fakebackend/fakebackend.service';
+// import { fakeBackendProvider} from './shared/fakebackend/fakebackend.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import { PreviewModule } from './layouts/preview/preview.module';
 import {SocialLoginModule, AuthServiceConfig, LoginOpt} from 'angularx-social-login';
@@ -44,7 +44,6 @@ export function provideConfig() {
     SocialLoginModule
   ],
   providers: [
-    fakeBackendProvider,
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
