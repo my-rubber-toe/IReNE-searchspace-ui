@@ -29,7 +29,7 @@ export class XyComponent implements OnInit {
   categoryX: string[] = ['Infrastructure', 'Damage', 'Tag'];
 
   category_y = new FormControl();
-  categoryY: string[] = ['Number of Cases', 'Incident Date', 'Publication Date'];
+  categoryY: string[] = ['None', 'Incident Date', 'Publication Date'];
 
   //title and columnNames is filled in ngonInit()
   title = '';
@@ -72,7 +72,11 @@ export class XyComponent implements OnInit {
    onSelect(e: ChartEvent){
      console.log(this.data[e[0].row[2]]);
    }
-  constructor(private docservice:SearchSpaceService) { }
+  constructor(private docservice:SearchSpaceService) { 
+    this.category_x.setValue("Damage");
+    this.category_y.setValue("Publication Date");
+  
+  }
 
   ngOnInit(): void {
     this.docservice.getBehaviorViewX().subscribe(vx => {
@@ -92,7 +96,7 @@ export class XyComponent implements OnInit {
       let rowx = [];
       let rowy = [];
       //fills hashmap to get the category y within each category x
-      if(y != 'Number of Cases'){
+      if(y != 'None'){
         if(x == 'Damage' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
             for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
@@ -244,7 +248,7 @@ export class XyComponent implements OnInit {
         this.data = row;
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
-        this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
+        this.title = 'Comparison Graph \n Where: \n Vertical Axis = ' + x + " Categories " + "\nHorizontal Axis = Number of Cases Studies filtered by " + y;
       }
       else {
           //the hash map here is built with category x as key and value as ocurrecences of catX
@@ -298,7 +302,7 @@ export class XyComponent implements OnInit {
         this.data = row;
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
-        this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
+        this.title = 'Comparison Graph \n Where: \n Vertical Axis = ' + x + " Categories " + "\nHorizontal Axis = Number of Cases Studies filtered by " + y;
       }
     });
   });
