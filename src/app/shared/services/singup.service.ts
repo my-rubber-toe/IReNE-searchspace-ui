@@ -3,12 +3,12 @@ import {Injectable} from '@angular/core';
 import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Swal from 'sweetalert2';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SingupService {
-  fakeBackend = 'http://localhost:4200/api';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -25,7 +25,6 @@ export class SingupService {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
         // on success this will return user data from google.
-        console.log('success', userData);
         Swal.fire(
           `Hi ${userData.firstName}, Creating Request.\n Please wait`
         );
@@ -42,7 +41,6 @@ export class SingupService {
                 'Request already exists',
                 'error'
               );
-              console.log(error);
             });
       }
     );
@@ -51,7 +49,7 @@ export class SingupService {
    *  Send the info for creating a  Collaborator request
    */
   private  collabRequest(firstName: string, lastName: string, email: string) {
-    return this.http.post(`http://localhost:5000/api/collab-request/`, {firstName , lastName, email }, this.httpOptions);
+    return this.http.post(`${environment.base_url}collab-request/`, {firstName , lastName, email }, this.httpOptions);
   }
 
   /**
