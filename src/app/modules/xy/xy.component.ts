@@ -29,17 +29,13 @@ export class XyComponent implements OnInit {
   categoryX: string[] = ['Infrastructure', 'Damage', 'Tag'];
 
   category_y = new FormControl();
-  categoryY: string[] = ['None', 'Incident Date', 'Publication Date'];
+  categoryY: string[] = ['Number of Cases', 'Incident Date', 'Publication Date'];
 
   //title and columnNames is filled in ngonInit()
   title = '';
   type = 'BarChart';
    columnNames = [];
    options = {
-    enableScrollWheel:true,
-    showTip:true,
-    isStacked:true,
-
    };
    //data is filled in ngonInit()
    data = [];
@@ -96,7 +92,7 @@ export class XyComponent implements OnInit {
       let rowx = [];
       let rowy = [];
       //fills hashmap to get the category y within each category x
-      if(y != 'None'){
+      if(y != 'Number of Cases'){
         if(x == 'Damage' && y == 'Publication Date'){
           for(let i = 0; i<this.dataSource.filteredData.length;i++){
             for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
@@ -248,7 +244,18 @@ export class XyComponent implements OnInit {
         this.data = row;
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
-        this.title = 'Comparison Graph \n Where: \n Vertical Axis = ' + x + " Categories " + "\nHorizontal Axis = Number of Cases Studies filtered by " + y;
+        this.title = 'Comparison Graph';
+        this.options = {
+          enableScrollWheel:true,
+          showTip:true,
+          isStacked:true,
+          hAxis: {
+            title: 'Number of Cases filtered by ' + y
+          },
+          vAxis: {
+            title: 'Categories of Type ' + x
+          }
+         };
       }
       else {
           //the hash map here is built with category x as key and value as ocurrecences of catX
@@ -302,7 +309,18 @@ export class XyComponent implements OnInit {
         this.data = row;
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
-        this.title = 'Comparison Graph \n Where: \n Vertical Axis = ' + x + " Categories " + "\nHorizontal Axis = Number of Cases Studies filtered by " + y;
+        this.title = 'Comparison Graph';
+        this.options = {
+          enableScrollWheel:true,
+          showTip:true,
+          isStacked:true,
+          hAxis: {
+            title: 'Number of Cases'
+          },
+          vAxis: {
+            title: 'Categories of Type ' + x
+          }
+         };
       }
     });
   });
