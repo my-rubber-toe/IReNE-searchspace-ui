@@ -36,10 +36,6 @@ export class XyComponent implements OnInit {
   type = 'BarChart';
    columnNames = [];
    options = {
-    enableScrollWheel:true,
-    showTip:true,
-    isStacked:true,
-
    };
    //data is filled in ngonInit()
    data = [];
@@ -72,7 +68,11 @@ export class XyComponent implements OnInit {
    onSelect(e: ChartEvent){
      console.log(this.data[e[0].row[2]]);
    }
-  constructor(private docservice:SearchSpaceService) { }
+  constructor(private docservice:SearchSpaceService) { 
+    this.category_x.setValue("Damage");
+    this.category_y.setValue("Publication Date");
+  
+  }
 
   ngOnInit(): void {
     this.docservice.getBehaviorViewX().subscribe(vx => {
@@ -244,7 +244,18 @@ export class XyComponent implements OnInit {
         this.data = row;
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
-        this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
+        this.title = 'Comparison Graph';
+        this.options = {
+          enableScrollWheel:true,
+          showTip:true,
+          isStacked:true,
+          hAxis: {
+            title: 'Number of Cases filtered by ' + y
+          },
+          vAxis: {
+            title: 'Categories of Type ' + x
+          }
+         };
       }
       else {
           //the hash map here is built with category x as key and value as ocurrecences of catX
@@ -298,7 +309,18 @@ export class XyComponent implements OnInit {
         this.data = row;
         console.log('x: ',x,'y:',y);
         console.log('data:\n',this.data);
-        this.title = 'Comparison Graph \n Where: \n X = ' + x + " & Y = " + y;
+        this.title = 'Comparison Graph';
+        this.options = {
+          enableScrollWheel:true,
+          showTip:true,
+          isStacked:true,
+          hAxis: {
+            title: 'Number of Cases'
+          },
+          vAxis: {
+            title: 'Categories of Type ' + x
+          }
+         };
       }
     });
   });

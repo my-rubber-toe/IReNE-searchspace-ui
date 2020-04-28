@@ -138,4 +138,3 @@ export class DocumentsTableComponent implements OnInit {
     this.router.navigate([`/preview/${docId}`]);
   }
 }
-
