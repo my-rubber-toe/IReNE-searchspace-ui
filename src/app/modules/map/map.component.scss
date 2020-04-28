@@ -2,7 +2,7 @@
 .map-container {
   min-height: 85vh;
   overflow: hidden;
-} 
+}
 
 
 .map-information{
@@ -10,5 +10,10 @@
   flex-direction: column;
   overflow: hidden;
   padding: 2em;
+}
+
+div.map-element{
+  width: 1250px;
+  height: 500px;
 }
 

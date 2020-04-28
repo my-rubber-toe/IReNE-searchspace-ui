@@ -79,9 +79,9 @@
         </button>
       </div>
       <div fxFlex="1" style="padding-left: 7em;">
-        <google-chart #map [title]="title" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options"
-          [width]="width" [height]="height" (select)="markerSelect($event)">
-        </google-chart>
+        <div class ="map-element" id = "map-element">
+
+        </div>
       </div>
     </div>
   </div>
