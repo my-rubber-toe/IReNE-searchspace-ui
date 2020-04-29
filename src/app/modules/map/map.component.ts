@@ -184,7 +184,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (this.dataSource.data.length !== 0) {
       for (const e of this.dataSource.data) {
         for (const loc of e.location) {
-          this.FindLatLong(loc, (data) => {
+          this.FindLatLong(loc.address, (data) => {
             const marker = new google.maps.Marker({
                 position: {
                   lat: data.Latitude,

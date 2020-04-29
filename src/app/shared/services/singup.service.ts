@@ -49,7 +49,7 @@ export class SingupService {
    *  Send the info for creating a  Collaborator request
    */
   private  collabRequest(firstName: string, lastName: string, email: string) {
-    return this.http.post(`${environment.base_url}collab-request/`, {firstName , lastName, email }, this.httpOptions);
+    return this.http.post(`${environment.base_url}/collab-request/`, {firstName , lastName, email }, this.httpOptions);
   }
 
   /**

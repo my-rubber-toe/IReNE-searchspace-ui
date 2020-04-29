@@ -82,7 +82,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td  mat-cell *matCellDef="let element" >
-      <button mat-mini-fab color="primary"
+      <button mat-icon-button color="primary"
               (click)="previewDoc(element._id.$oid)"
               matTooltip="View Document"
               matTooltipPosition="right"
@@ -115,7 +115,7 @@
         </div>
         <div class="example-element-description">
           <h2>Locations</h2>
-          <div *ngFor="let location of element.location">{{location}}</div>
+          <div *ngFor="let location of element.location">{{location.address}}</div>
         </div>
       </div>
     </td>
