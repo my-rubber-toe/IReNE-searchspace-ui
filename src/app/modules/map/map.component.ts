@@ -1,17 +1,18 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
-import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-import { DocumentMetadata } from 'src/app/shared/models/searchspace.model';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Router } from '@angular/router';
-import { FilterService } from 'src/app/shared/services/filter.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import MarkerClusterer, { MarkerClustererOptions } from '@google/markerclustererplus';
+import {DatePipe} from '@angular/common';
+import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
+import {DocumentMetadata} from 'src/app/shared/models/searchspace.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {Router} from '@angular/router';
+import {FilterService} from 'src/app/shared/services/filter.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatInput} from '@angular/material/input';
+import {MatSelect} from '@angular/material/select';
+import MarkerClusterer from '@google/markerclustererplus';
+import {createMouseEvent} from '@angular/cdk/testing/testbed/fake-events';
+
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -92,8 +93,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   todayDate = new Date();
 
   // Option Forms and Date
-  publicationDate = new FormControl(moment(''));
-  incidentDate = new FormControl(moment(''));
+  publicationDate = new FormControl('');
+  incidentDate = new FormControl('');
 
   infrastructure = new FormControl();
   infrastructureList: string[];
@@ -139,8 +140,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   loadMap() {
-    const mapElement = document.getElementById('map-element');
-    this.gmap =  new google.maps.Map(mapElement, this.mapOptions);
+    const mapElement =  document.getElementById('map-element');
+    this.gmap = new google.maps.Map(mapElement, this.mapOptions);
     this.oms = new OverlappingMarkerSpiderfier(this.gmap, {
       markersWontMove: true,
       markersWontHide: true,
@@ -154,6 +155,16 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.markerCluster = new MarkerClusterer(this.gmap, null,
       {imagePath: 'assets/pictures/m/m', maxZoom: 15}
     );
+  }
+
+  automaticSpiderify(c) {
+    google.maps.event.addListener(this.gmap, 'idle', () => {
+      console.log(c);
+      if (this.gmap.getZoom() > 6) {
+        console.log(this.gmap.getZoom());
+        google.maps.event.trigger(c[0], 'click');
+      }
+    });
   }
 
   /**
@@ -192,6 +203,9 @@ export class MapComponent implements OnInit, AfterViewInit {
           });
         }
       }
+      google.maps.event.addListenerOnce(this.markerCluster, 'click', (c) => {
+        this.automaticSpiderify(c.getMarkers());
+      });
       this.gmap.setZoom(this.mapOptions.zoom);
       this.gmap.setCenter(this.mapOptions.center);
     } else {
