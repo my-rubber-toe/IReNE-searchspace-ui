@@ -158,9 +158,9 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   automaticSpiderify(c) {
-    google.maps.event.addListener(this.gmap, 'idle', () => {
+    google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
       console.log(c);
-      if (this.gmap.getZoom() > 6) {
+      if (this.gmap.getZoom() >= 16) {
         console.log(this.gmap.getZoom());
         google.maps.event.trigger(c[0], 'click');
       }
@@ -182,6 +182,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   updateMap() {
     this.dirtyFields = false;
     this.applyFilter();
+    google.maps.event.clearListeners(this.markerCluster, 'click');
     this.oms.removeAllMarkers();
     this.markerCluster.clearMarkers();
     if (this.dataSource.data.length !== 0) {
