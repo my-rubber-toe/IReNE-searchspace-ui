@@ -11,8 +11,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatInput} from '@angular/material/input';
 import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
-import {createMouseEvent} from '@angular/cdk/testing/testbed/fake-events';
-
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -202,7 +200,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           });
         }
       }
-      google.maps.event.addListenerOnce(this.markerCluster, 'click', (c) => {
+      google.maps.event.addListener(this.markerCluster, 'click', (c) => {
         this.automaticSpiderify(c.getMarkers());
       });
       this.gmap.setZoom(this.mapOptions.zoom);
