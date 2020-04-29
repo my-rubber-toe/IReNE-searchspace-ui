@@ -8,7 +8,6 @@ import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.c
 import {HttpClientModule} from '@angular/common/http';
 import {MatNativeDateModule} from '@angular/material/core';
 import { PreviewModule } from './layouts/preview/preview.module';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import {SocialLoginModule, AuthServiceConfig, LoginOpt} from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 
@@ -41,7 +40,6 @@ export function provideConfig() {
     HttpClientModule,
     MatNativeDateModule,
     PreviewModule,
-    NgxExtendedPdfViewerModule,
     SocialLoginModule,
   ],
   providers: [

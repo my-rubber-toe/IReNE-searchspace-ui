@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SearchSpaceService } from './searchspace.service';
+import {SearchSpaceService} from './searchspace.service';
 
 describe('DocumentsService', () => {
   let service: SearchSpaceService;

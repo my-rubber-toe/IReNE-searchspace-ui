@@ -1,12 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DocumentMetadata, Filters} from '../models/searchspace.model';
-import { CollaboratorRequest } from '../models/searchspace.model';
-import { MapMetadata } from '../models/searchspace.model';
-import { XY } from '../models/searchspace.model';
-import { Timeline } from '../models/searchspace.model';
-import { BehaviorSubject} from 'rxjs';
-import {Observable, of} from 'rxjs';
+import {CollaboratorRequest, DocumentMetadata, Filters, MapMetadata, Timeline, XY} from '../models/searchspace.model';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from 'src/environments/environment';
 
 

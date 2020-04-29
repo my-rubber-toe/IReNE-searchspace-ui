@@ -1,10 +1,12 @@
+<div fxFill fxLayout="column">
 <app-header [sidenav] = "sidenav"></app-header>
-<mat-sidenav-container (backdropClick)="sidenav.close()">
+<mat-sidenav-container fxFlex="shrink" (backdropClick)="sidenav.close()">
   <mat-sidenav #sidenav mode="over"  autoFocus="false" role="navigation">
     <app-sidenav [sidenav] = "sidenav"></app-sidenav>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content fxFlex="grow">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<app-footer></app-footer>
+<app-footer fxFlex="15"></app-footer>
+</div>
