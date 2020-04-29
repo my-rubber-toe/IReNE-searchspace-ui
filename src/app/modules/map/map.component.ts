@@ -159,9 +159,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   automaticSpiderify(c) {
     google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
-      console.log(c);
       if (this.gmap.getZoom() >= 16) {
-        console.log(this.gmap.getZoom());
         google.maps.event.trigger(c[0], 'click');
       }
     });
