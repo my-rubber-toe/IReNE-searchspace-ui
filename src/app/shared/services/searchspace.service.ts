@@ -68,7 +68,7 @@ export class SearchSpaceService {
    * Get the possibles filters of every category to use
    */
   getFilters() {
-    return this.http.get(`${environment.serverUrl}/filters`).subscribe(
+    return this.http.get(`${environment.serverUrl}/filters/`).subscribe(
       (response: Filters[]) => {
         this.filters = response[`message`];
       }
@@ -76,7 +76,7 @@ export class SearchSpaceService {
   }
 
   getMapFilters() {
-    return this.http.get(`${environment.serverUrl}/map/filters`).subscribe(
+    return this.http.get(`${environment.serverUrl}/map/filters/`).subscribe(
       (filters: Filters) => {
         this.mapFilters = filters;
       }
@@ -86,7 +86,7 @@ export class SearchSpaceService {
    * Get the possibles filters of tags category to use
    */
   getTagFilters() {
-    return this.http.get(`${environment.serverUrl}/filters/tags`).subscribe(
+    return this.http.get(`${environment.serverUrl}/filters/tags/`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -97,7 +97,7 @@ export class SearchSpaceService {
    * Get the possibles filters of infrastructures category to use
    */
   getInfraFilters() {
-    return this.http.get(`${environment.serverUrl}/filters/infrastructures`).subscribe(
+    return this.http.get(`${environment.serverUrl}/filters/infrastructures/`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -108,7 +108,7 @@ export class SearchSpaceService {
    * Get the possibles filters of Damages category to use
    */
   getDamageFilters() {
-    return this.http.get(`${environment.serverUrl}/filters/damages`).subscribe(
+    return this.http.get(`${environment.serverUrl}/filters/damages/`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -119,7 +119,7 @@ export class SearchSpaceService {
    * Get the possibles filters of Authors category to use
    */
   getAuthorFilters() {
-    return this.http.get(`${environment.serverUrl}/filters/authors`).subscribe(
+    return this.http.get(`${environment.serverUrl}/filters/authors/`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -130,7 +130,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${environment.serverUrl}/visualize/comparison-graph`).subscribe(
+    return this.http.get(`${environment.serverUrl}/visualize/comparison-graph/`).subscribe(
       (response: XY[]) => {
         this.comparison = response[`message`];
       });
@@ -141,7 +141,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`${environment.serverUrl}/visualize/timeline`).subscribe(
+    return this.http.get(`${environment.serverUrl}/visualize/timeline/`).subscribe(
       (response: Timeline[]) => {
         this.timeline = response[`message`];
       });
