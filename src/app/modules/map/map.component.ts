@@ -150,7 +150,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
     };
-
   }
 
   ngAfterViewInit(): void {
