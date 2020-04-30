@@ -1,49 +1,32 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import { GoogleChartComponent, ChartEvent } from 'angular-google-charts';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
-import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-import { DocumentMetadata } from 'src/app/shared/models/searchspace.model';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Router } from '@angular/router';
-import { FilterService } from 'src/app/shared/services/filter.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-
-
-
-interface SearchValues {
-  publicationDate: string;
-  incidentDate: string;
-  infras: string;
-  damage: string;
-  tags: string;
-  language: string;
-}
+import {DatePipe} from '@angular/common';
+import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
+import {DocumentMetadata} from 'src/app/shared/models/searchspace.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {Router} from '@angular/router';
+import {FilterService} from 'src/app/shared/services/filter.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatInput} from '@angular/material/input';
+import {MatSelect} from '@angular/material/select';
+import MarkerClusterer from '@google/markerclustererplus';
+declare const OverlappingMarkerSpiderfier;
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private filterService: FilterService,
     private datePipe: DatePipe,
     private searchSpaceService: SearchSpaceService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
     ) {}
-
-  @ViewChild('map')
-  map: GoogleChartComponent;
-
   @ViewChild('inputToDate1', {
     read: MatInput
   }) inputToDate1: MatInput;
@@ -72,25 +55,25 @@ export class MapComponent implements OnInit {
 
   documents: DocumentMetadata[];
 
-  tempDate1: Date = null;
-  tempDate2: Date = null;
-
-
   // Google Map Data Setup
   title = '';
+  gmap;
   type = 'Map';
-  data = [
-    ['Mayaguez, PR', 'Mayaguez, PR', 'Mayaguez, PR'],
-    ['Ponce, PR', 'Ponce, PR', 'Ponce, PR'],
-    ['Rio Piedras, PR', 'Rio Piedras, PR', 'Rio Piedras, PR']
-  ];
-  columnNames = ['location', 'title', 'docId'];
-  options = {
-    showTip: true,
-    // enableScrollWheel: true
+  center: google.maps.LatLngLiteral;
+  mapOptions: google.maps.MapOptions = {
+    mapTypeId: 'roadmap',
+    mapTypeControl: true,
+    zoomControl: true,
+    scrollwheel: false,
+    disableDoubleClickZoom: true,
+    minZoom: 9,
+    zoom: 9,
+    center: {
+      lat: 18.2208328,
+      lng: -66.5901489
+    }
   };
-  width = 1250;
-  height = 500;
+  oms;
 
   /**
    * The available filters that will be used for the data.
@@ -108,14 +91,14 @@ export class MapComponent implements OnInit {
   todayDate = new Date();
 
   // Option Forms and Date
-  publicationDate = new FormControl(moment(''));
-  incidentDate = new FormControl(moment(''));
+  publicationDate = new FormControl('');
+  incidentDate = new FormControl('');
 
   infrastructure = new FormControl();
   infrastructureList: string[];
 
   damage = new FormControl();
-  damageList: string[]
+  damageList: string[];
 
   tags = new FormControl();
   tagsList: string[];
@@ -128,18 +111,10 @@ export class MapComponent implements OnInit {
    */
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
+  private markerCluster: MarkerClusterer;
 
   /**@ignore */
   ngOnInit() {
-    const scrollToTop = window.setInterval(() => {
-    const pos = window.pageYOffset;
-    if (pos > 0) {
-        window.scrollTo(0, pos - 30); // how far to scroll on each step
-    } else {
-        window.clearInterval(scrollToTop);
-    }
-    }, 16);
-
     this.searchSpaceService.getDocuments().add(() => {
       this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
       this.tempDataSource = this.dataSource;
@@ -150,6 +125,41 @@ export class MapComponent implements OnInit {
       this.infrastructureList = this.searchSpaceService.filters[`infrastructures`];
       this.damageList = this.searchSpaceService.filters[`damages`];
       this.tagsList = this.searchSpaceService.filters[`tags`];
+    });
+    this.center = {
+        lat: 18.2208328,
+        lng: -66.5901489,
+    };
+
+  }
+
+  ngAfterViewInit(): void {
+    this.loadMap();
+  }
+
+  loadMap() {
+    const mapElement =  document.getElementById('map-element');
+    this.gmap = new google.maps.Map(mapElement, this.mapOptions);
+    this.oms = new OverlappingMarkerSpiderfier(this.gmap, {
+      markersWontMove: true,
+      markersWontHide: true,
+      basicFormatEvents: true,
+      nearbyDistance: 5,
+    });
+    this.oms.addListener('click', (marker) => {
+      this.markerSelect(marker.desc);
+    });
+    // tslint:disable-next-line:no-unused-expression
+    this.markerCluster = new MarkerClusterer(this.gmap, null,
+      {imagePath: 'assets/pictures/m/m', maxZoom: 15}
+    );
+  }
+
+  automaticSpiderify(c) {
+    google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
+      if (this.gmap.getZoom() >= 16) {
+        google.maps.event.trigger(c[0], 'click');
+      }
     });
   }
 
@@ -162,50 +172,65 @@ export class MapComponent implements OnInit {
 
   /**
    * Update the map with the new values based on the selected search criteria. Marker on the map is treated as a 3 item array
+   * Set the dirty to false,  so the user need to change a value in the filters to press update button again.
    * [location, title, docId]
    */
   updateMap() {
-
+    this.dirtyFields = false;
     this.applyFilter();
-    console.log(this.dataSource.data);
-
-    if (this.dataSource.data.length === 0) {
-      this.snackBar.open('Total results: 0', null, {
-        duration: 3000
+    google.maps.event.clearListeners(this.markerCluster, 'click');
+    this.oms.removeAllMarkers();
+    this.markerCluster.clearMarkers();
+    if (this.dataSource.data.length !== 0) {
+      for (const e of this.dataSource.data) {
+        for (const loc of e.location) {
+          this.FindLatLong(loc.address, (data) => {
+            const marker = new google.maps.Marker({
+                position: {
+                  lat: data.Latitude,
+                  lng: data.Longitude,
+                },
+              title: e.title,
+              },
+            );
+            // @ts-ignore
+            marker.desc = e._id[`$oid`];
+            this.oms.addMarker(marker);
+            this.markerCluster.addMarker(marker);
+          });
+        }
+      }
+      google.maps.event.addListener(this.markerCluster, 'click', (c) => {
+        this.automaticSpiderify(c.getMarkers());
       });
-      this.data = [];
+      this.gmap.setZoom(this.mapOptions.zoom);
+      this.gmap.setCenter(this.mapOptions.center);
     } else {
-      this.data = [];
-      this.dataSource.data.forEach(e => {
-        this.data.push([e.location[0], e.title, e._id[`$oid`]]);
-        console.log(this.data);
-      });
-      this.dirtyFields = false;
-      this.snackBar.open(`Total results: ${this.data.length}`, null, {
+      this.snackBar.open('Not found matching results', null, {
         duration: 3000
       });
-
-     }
-  }
-
-  /**
-   * Retrieve the information from the selected map marker and redirect the user to the correspoinding document.
-   * @param e The event that holds the information of the selected marker in the map.
-   */
-  markerSelect(e: ChartEvent) {
-    if(
-      this.data[e[0].row][2] === 'Mayaguez, PR' ||
-      this.data[e[0].row][2] === 'Ponce, PR' ||
-      this.data[e[0].row][2] === 'Rio Piedras, PR'
-    ){
-      this.snackBar.open('ERROR: Placeholder data selected.', null, {duration: 3000})
-
-    }else {
-      const docId = this.data[e[0].row][2];
-      this.router.navigate([`/preview/${docId}`]);
     }
   }
 
+
+  FindLatLong(address, callback) {
+    const geocoder = new google.maps.Geocoder();
+    // tslint:disable-next-line:only-arrow-functions
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        const lat = results[0].geometry.location.lat();
+        const lng = results[0].geometry.location.lng();
+        callback({ Status: 'OK', Latitude: lat, Longitude: lng });
+      }
+    });
+  }
+  /**
+   * Retrieve the information from the selected map marker and redirect the user to the corresponding document.
+   * @param label - label including the id
+   */
+  markerSelect(label: string) {
+    this.router.navigate([`/preview/${label}`]);
+  }
   /**
    * Setup the selection filter based on the selected option.
    * @param selection the array of values from the selected options
@@ -214,7 +239,6 @@ export class MapComponent implements OnInit {
   selectionEvent(selection: any, type: string) {
     this.filterSelection.set(type, selection);
     this.dirtyFields = true;
-    console.log(this.filterSelection);
   }
 
   ///////////////////// HELPERS//////////////////////////////////////
@@ -239,7 +263,7 @@ export class MapComponent implements OnInit {
   /**
    * Reset the filter values.
    */
-    resetFilters(){
+    resetFilters() {
     this.filterSelection = new Map<string, any>([
       ['location', ''],
       ['infrasDocList', ''],
@@ -261,20 +285,21 @@ export class MapComponent implements OnInit {
     this.publicationDate.clearValidators();
     this.dirtyFields = false;
     this.applyFilter();
+    this.oms.removeAllMarkers();
+    this.markerCluster.clearMarkers();
   }
 
   /**
    * Retrieve all available markers and reset filters.
    */
-  getAll(){
-    if(this.data.length < this.dataSource.data.length){
+  getAll() {
+    if ( this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
       this.resetFilters();
       this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
-      this.tempDataSource = this.dataSource;
       this.dirtyFields = false;
       this.updateMap();
-    }else{
-      this.snackBar.open('All items are being displayed.',null,{duration: 3000})
+    } else {
+      this.snackBar.open('All items are being displayed.', null, {duration: 3000});
     }
   }
 }

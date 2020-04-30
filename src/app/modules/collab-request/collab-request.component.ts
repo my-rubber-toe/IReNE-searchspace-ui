@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+// @ts-ignore
 import {SingupService} from '../../shared/services/singup.service';
 
 @Component({

@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   GOOGLE_MAPS_API_KEY: null,
+  base_url: 'http://localhost:5000'
 };
 
 /*

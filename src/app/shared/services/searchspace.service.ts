@@ -1,21 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DocumentMetadata, Filters} from '../models/searchspace.model';
-import { CollaboratorRequest } from '../models/searchspace.model';
-import { MapMetadata } from '../models/searchspace.model';
-import { XY } from '../models/searchspace.model';
-import { Timeline } from '../models/searchspace.model';
-import { BehaviorSubject} from 'rxjs';
-import {Observable, of} from 'rxjs';
+import {CollaboratorRequest, DocumentMetadata, Filters, MapMetadata, Timeline, XY} from '../models/searchspace.model';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchSpaceService {
-
-
-  fakeBackend = 'http://localhost:8080/api';
   /**
    * Initial Headers for http requests from this service
    */
@@ -51,20 +44,11 @@ export class SearchSpaceService {
   getBehaviorViewY(): Observable<any> {
       return this.behaveY.asObservable();
   }
-  collabRequest() {
-    /**
-     * Get all requests for collaborators from the fake server.
-     */
-    return this.http.get(`${this.fakeBackend}/collab-request`).subscribe(
-      (response: CollaboratorRequest[]) => {
-        this.collaboratorsReq = response;
-      });
-  }
   /**
    * Get all documents metadata from the fake server.
    */
   getDocuments() {
-    return this.http.get(`http://localhost:5000/api/documents/`, this.httpOptions).subscribe(
+    return this.http.get(`${environment.base_url}/documents/`, this.httpOptions).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response[`message`];
       });
@@ -75,7 +59,7 @@ export class SearchSpaceService {
    * @param id Id of the document to get
    */
   getDocumentById(id: string) {
-    this.http.get<DocumentMetadata[]>(`${this.fakeBackend}/documents/{{doc_id}}`).subscribe(
+    this.http.get<DocumentMetadata[]>(`${environment.base_url}/documents/{{doc_id}}`).subscribe(
       (response: DocumentMetadata[]) => {
         this.documents = response;
       });
@@ -85,7 +69,7 @@ export class SearchSpaceService {
    * Get the possibles filters of every category to use
    */
   getFilters() {
-    return this.http.get(`http://localhost:5000/api/filters`).subscribe(
+    return this.http.get(`${environment.base_url}/filters`).subscribe(
       (response: Filters[]) => {
         this.filters = response[`message`];
       }
@@ -93,7 +77,7 @@ export class SearchSpaceService {
   }
 
   getMapFilters() {
-    return this.http.get(`${this.fakeBackend}/map/filters`).subscribe(
+    return this.http.get(`${environment.base_url}/map/filters`).subscribe(
       (filters: Filters) => {
         this.mapFilters = filters;
       }
@@ -103,7 +87,7 @@ export class SearchSpaceService {
    * Get the possibles filters of tags category to use
    */
   getTagFilters() {
-    return this.http.get(`${this.fakeBackend}/api/filters/tags`).subscribe(
+    return this.http.get(`${environment.base_url}/filters/tags`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -114,7 +98,7 @@ export class SearchSpaceService {
    * Get the possibles filters of infrastructures category to use
    */
   getInfraFilters() {
-    return this.http.get(`${this.fakeBackend}/api/filters/infrastructures`).subscribe(
+    return this.http.get(`${environment.base_url}/filters/infrastructures`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -125,7 +109,7 @@ export class SearchSpaceService {
    * Get the possibles filters of Damages category to use
    */
   getDamageFilters() {
-    return this.http.get(`${this.fakeBackend}/api/filters/damages`).subscribe(
+    return this.http.get(`${environment.base_url}/filters/damages`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -136,7 +120,7 @@ export class SearchSpaceService {
    * Get the possibles filters of Authors category to use
    */
   getAuthorFilters() {
-    return this.http.get(`${this.fakeBackend}/api/filters/authors`).subscribe(
+    return this.http.get(`${environment.base_url}/filters/authors`).subscribe(
       (response: Filters[]) => {
         this.filters = response;
       }
@@ -147,7 +131,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`http://localhost:5000/api/visualize/comparison-graph`).subscribe(
+    return this.http.get(`${environment.base_url}/visualize/comparison-graph`).subscribe(
       (response: XY[]) => {
         this.comparison = response[`message`];
       });
@@ -158,7 +142,7 @@ export class SearchSpaceService {
       /**
      * Get all documents from the fake server.
      */
-    return this.http.get(`http://localhost:5000/api/visualize/timeline`).subscribe(
+    return this.http.get(`${environment.base_url}/visualize/timeline`).subscribe(
       (response: Timeline[]) => {
         this.timeline = response[`message`];
       });

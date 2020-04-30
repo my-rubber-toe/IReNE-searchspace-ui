@@ -6,10 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DefaultModule} from './layouts/default/default.module';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
-// import { fakeBackendProvider} from './shared/fakebackend/fakebackend.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import { PreviewModule } from './layouts/preview/preview.module';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import {SocialLoginModule, AuthServiceConfig, LoginOpt} from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 
@@ -42,8 +40,7 @@ export function provideConfig() {
     HttpClientModule,
     MatNativeDateModule,
     PreviewModule,
-    NgxExtendedPdfViewerModule,
-    SocialLoginModule
+    SocialLoginModule,
   ],
   providers: [
     {

@@ -85,7 +85,7 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
-      this.http.get(`http://localhost:5000/api/documents/view/` + id).subscribe(
+      this.http.get(`http://localhost:5000/documents/view/` + id).subscribe(
         (response: Document) => {
           const doc = response[`message`];
           this.title = doc.title;

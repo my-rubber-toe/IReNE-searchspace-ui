@@ -1,3 +1,4 @@
+
 mat-card{
   display:flex;
   flex-direction: column;
@@ -34,7 +35,6 @@ p#irene{
   font-weight: bold;
 }
 p#searchspace{
-  margin-top: 10px;
   opacity: 1;
   font-size: 2em;
   font-weight: bold
@@ -42,5 +42,9 @@ p#searchspace{
 h2{
   opacity:.9;
   text-align: center
+}
+img{
+  cursor: pointer;
+  outline: none;
 }
 
