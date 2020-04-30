@@ -37,7 +37,7 @@
      
     </div>
     </div>
-    <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 5em; padding-top: 1em;">
+    <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 10em; padding-top: 1em;">
         <google-chart #chart
             [title]="title"
             [type]="type"
@@ -50,8 +50,23 @@
         ></google-chart>
     </div>
     <div style="padding-left: 10em; padding-top: 10em;">
-
-        <google-chart #chart
+      <table  mat-table [dataSource]="timelinesource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="Event">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Event </th>
+          <td class= "cell" mat-cell *matCellDef="let element"> {{element.event}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Start Date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.start}} </td>
+        </ng-container>
+        <ng-container matColumnDef="End Date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+          <td  mat-cell *matCellDef="let element"> {{element.end}} </td>
+        </ng-container>
+        <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr class="columnHeaders" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+        <!-- <google-chart #chart
         [title]="titleT"
         [type]="typeT"
         [data]="dataT"
@@ -60,7 +75,7 @@
         [width]="widthT"
         [height]="heightT"
         (select)="onSelectT($event)"
-    ></google-chart>
+    ></google-chart> -->
     </div>
     
  </div>

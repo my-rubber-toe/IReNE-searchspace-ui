@@ -32,6 +32,7 @@ import {environment} from 'src/environments/environment';
 import { TimelineModule } from 'src/app/modules/timeline/timeline.module';
 import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
 
 
 
@@ -73,7 +74,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     GoogleChartsModule.forRoot( environment.GOOGLE_MAPS_API_KEY || null),
     MatChipsModule,
     MatAutocompleteModule,
-    TimelineModule
+    TimelineModule,
+    MatTableModule
   ],
     providers: [
       DatePipe
