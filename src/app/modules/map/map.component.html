@@ -31,15 +31,17 @@
         <br>
         <mat-form-field>
           <mat-label>Publication date</mat-label>
-          <input #inputToDate1 matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"
-            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate')" readonly>
+          <input #inputToDate1 matInput [matDatepicker]="picker" [max]="todayDate"
+                 [formControl]="publicationDate" [matDatepickerFilter]="publicationFilter"
+                 (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate')" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Incident date</mat-label>
-          <input #inputToDate2 matInput [matDatepicker]="picker2" [max]="todayDate" [formControl]="incidentDate"
-            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate')" readonly>
+          <input #inputToDate2 matInput [matDatepicker]="picker2" [max]="todayDate"
+                 [formControl]="incidentDate" [matDatepickerFilter]="incidentFilter"
+                 (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate')" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>

@@ -19,6 +19,8 @@ declare const OverlappingMarkerSpiderfier;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, AfterViewInit {
+  private publicationFilter;
+  private incidentFilter;
 
   constructor(
     private filterService: FilterService,
@@ -129,6 +131,24 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.center = {
         lat: 18.2208328,
         lng: -66.5901489,
+    };
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
+    this.publicationFilter = (d: Date | null): boolean => {
+      return this.dataSource.data.some(e => {
+        return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
+      });
+    };
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
+    this.incidentFilter = (d: Date | null): boolean => {
+      return this.dataSource.data.some(e => {
+        return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
+      });
     };
 
   }
