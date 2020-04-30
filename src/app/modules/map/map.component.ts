@@ -19,8 +19,8 @@ declare const OverlappingMarkerSpiderfier;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  private publicationFilter;
-  private incidentFilter;
+  publicationFilter;
+  incidentFilter;
 
   constructor(
     private filterService: FilterService,
