@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {DocumentMetadata} from '../models/searchspace.model';
 

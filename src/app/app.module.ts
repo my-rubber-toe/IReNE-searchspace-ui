@@ -40,7 +40,7 @@ export function provideConfig() {
     HttpClientModule,
     MatNativeDateModule,
     PreviewModule,
-    SocialLoginModule
+    SocialLoginModule,
   ],
   providers: [
     {

@@ -1,17 +1,16 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
-import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-import { DocumentMetadata } from 'src/app/shared/models/searchspace.model';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Router } from '@angular/router';
-import { FilterService } from 'src/app/shared/services/filter.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import MarkerClusterer, { MarkerClustererOptions } from '@google/markerclustererplus';
+import {DatePipe} from '@angular/common';
+import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
+import {DocumentMetadata} from 'src/app/shared/models/searchspace.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {Router} from '@angular/router';
+import {FilterService} from 'src/app/shared/services/filter.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatInput} from '@angular/material/input';
+import {MatSelect} from '@angular/material/select';
+import MarkerClusterer from '@google/markerclustererplus';
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -20,6 +19,8 @@ declare const OverlappingMarkerSpiderfier;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, AfterViewInit {
+  publicationFilter;
+  incidentFilter;
 
   constructor(
     private filterService: FilterService,
@@ -92,8 +93,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   todayDate = new Date();
 
   // Option Forms and Date
-  publicationDate = new FormControl(moment(''));
-  incidentDate = new FormControl(moment(''));
+  publicationDate = new FormControl('');
+  incidentDate = new FormControl('');
 
   infrastructure = new FormControl();
   infrastructureList: string[];
@@ -131,6 +132,24 @@ export class MapComponent implements OnInit, AfterViewInit {
         lat: 18.2208328,
         lng: -66.5901489,
     };
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
+    this.publicationFilter = (d: Date | null): boolean => {
+      return this.dataSource.data.some(e => {
+        return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
+      });
+    };
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
+    this.incidentFilter = (d: Date | null): boolean => {
+      return this.dataSource.data.some(e => {
+        return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
+      });
+    };
 
   }
 
@@ -139,8 +158,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   loadMap() {
-    const mapElement = document.getElementById('map-element');
-    this.gmap =  new google.maps.Map(mapElement, this.mapOptions);
+    const mapElement =  document.getElementById('map-element');
+    this.gmap = new google.maps.Map(mapElement, this.mapOptions);
     this.oms = new OverlappingMarkerSpiderfier(this.gmap, {
       markersWontMove: true,
       markersWontHide: true,
@@ -154,6 +173,14 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.markerCluster = new MarkerClusterer(this.gmap, null,
       {imagePath: 'assets/pictures/m/m', maxZoom: 15}
     );
+  }
+
+  automaticSpiderify(c) {
+    google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
+      if (this.gmap.getZoom() >= 16 && this.oms.markersNearMarker(c[0], true).length > 1) {
+        google.maps.event.trigger(c[0], 'click');
+      }
+    });
   }
 
   /**
@@ -171,27 +198,31 @@ export class MapComponent implements OnInit, AfterViewInit {
   updateMap() {
     this.dirtyFields = false;
     this.applyFilter();
+    google.maps.event.clearListeners(this.markerCluster, 'click');
     this.oms.removeAllMarkers();
     this.markerCluster.clearMarkers();
     if (this.dataSource.data.length !== 0) {
       for (const e of this.dataSource.data) {
         for (const loc of e.location) {
-          this.FindLatLong(loc, (data) => {
+          if (loc.latitude && loc.longitude) {
             const marker = new google.maps.Marker({
                 position: {
-                  lat: data.Latitude,
-                  lng: data.Longitude,
+                  lat: loc.latitude,
+                  lng: loc.longitude,
                 },
-              title: e.title,
+                title: e.title,
               },
             );
             // @ts-ignore
             marker.desc = e._id[`$oid`];
             this.oms.addMarker(marker);
             this.markerCluster.addMarker(marker);
-          });
+          }
         }
       }
+      google.maps.event.addListener(this.markerCluster, 'click', (c) => {
+        this.automaticSpiderify(c.getMarkers());
+      });
       this.gmap.setZoom(this.mapOptions.zoom);
       this.gmap.setCenter(this.mapOptions.center);
     } else {
@@ -202,17 +233,18 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
 
-  FindLatLong(address, callback) {
-    const geocoder = new google.maps.Geocoder();
-    // tslint:disable-next-line:only-arrow-functions
-    geocoder.geocode({ address }, (results, status) => {
-      if (status === google.maps.GeocoderStatus.OK) {
-        const lat = results[0].geometry.location.lat();
-        const lng = results[0].geometry.location.lng();
-        callback({ Status: 'OK', Latitude: lat, Longitude: lng });
-      }
-    });
-  }
+// FindLatLong(address, callback) {
+//  const geocoder = new google.maps.Geocoder();
+//  // tslint:disable-next-line:only-arrow-functions
+//  geocoder.geocode({ address }, (results, status) => {
+//    if (status === google.maps.GeocoderStatus.OK) {
+//      const lat = results[0].geometry.location.lat();
+//      const lng = results[0].geometry.location.lng();
+//      callback({ Status: 'OK', Latitude: lat, Longitude: lng });
+//    }
+//  });
+// }
+
   /**
    * Retrieve the information from the selected map marker and redirect the user to the corresponding document.
    * @param label - label including the id

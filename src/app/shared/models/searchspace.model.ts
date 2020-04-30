@@ -24,7 +24,7 @@ export interface DocumentMetadata {
     author: Array<Authors>;
     title: string;
     published: boolean;
-    location: Array<string>;
+    location: Array<locationPlace>;
     creationDate: string;
     incidentDate: string;
     lastModificationDate: string;
@@ -34,10 +34,16 @@ export interface DocumentMetadata {
     tagsDoc: Array<string>;
 }
 
+export interface locationPlace {
+    address: string;
+    latitude: number;
+    longitude: number;
+}
+
 export interface MapMetadata {
     id: string;
     title: string;
-    location: Array<string>;
+    location: Array<locationPlace>;
     creationDate: string;
     incidentDate: string;
     infrasDocList: Array<string>;

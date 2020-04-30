@@ -1,17 +1,24 @@
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { SearchSpaceService } from '../../../shared/services/searchspace.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { DocumentMetadata } from '../../../shared/models/searchspace.model';
-import { Router } from '@angular/router';
-import { FilterService } from '../../../shared/services/filter.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {SearchSpaceService} from '../../../shared/services/searchspace.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {DocumentMetadata} from '../../../shared/models/searchspace.model';
+import {Router} from '@angular/router';
+import {FilterService} from '../../../shared/services/filter.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-documents-table',
   templateUrl: './documents-table.component.html',
   styleUrls: ['./documents-table.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
 export class DocumentsTableComponent implements OnInit {
@@ -27,9 +34,10 @@ export class DocumentsTableComponent implements OnInit {
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
-  displayedColumns: string[] = ['title', 'authorFullName', 'location',
-    'creationDate', 'incidentDate', 'lastModificationDate', 'infrasDocList',
-    'damageDocList', 'language', 'tagsDoc', 'actions'];
+  displayedColumns: string[] = ['title', 'creatorFullName',
+    'creationDate', 'incidentDate', 'lastModificationDate',
+    'language', 'actions'];
+  expandedElement: DocumentMetadata | null;
   /**
    * Map of the categories to filter and what values to use as filters
    */

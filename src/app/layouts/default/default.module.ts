@@ -32,6 +32,7 @@ import {environment} from 'src/environments/environment';
 import { TimelineModule } from 'src/app/modules/timeline/timeline.module';
 import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
 
 
 
@@ -47,34 +48,35 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MapComponent,
     TimelineComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        SharedModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatButtonModule,
-        MatToolbarModule,
-        FlexLayoutModule,
-        HomeModule,
-        DocumentsModule,
-        MatGridListModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatSnackBarModule,
-        XyModule,
-        GoogleChartsModule,
-        FormsModule,
-        GoogleChartsModule.forRoot(environment.GOOGLE_MAPS_API_KEY || null),
-        MatChipsModule,
-        MatAutocompleteModule,
-        TimelineModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatToolbarModule,
+    FlexLayoutModule,
+    HomeModule,
+    DocumentsModule,
+    MatGridListModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatSnackBarModule,
+    XyModule,
+    GoogleChartsModule,
+    FormsModule,
+    GoogleChartsModule.forRoot( environment.GOOGLE_MAPS_API_KEY || null),
+    MatChipsModule,
+    MatAutocompleteModule,
+    TimelineModule,
+    MatTableModule
+  ],
     providers: [
       DatePipe
     ]
