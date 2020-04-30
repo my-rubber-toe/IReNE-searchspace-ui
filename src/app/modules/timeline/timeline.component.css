@@ -1,12 +1,11 @@
-.timeline-graph{
-    min-height: 85vh;
-    overflow: hidden;
-  }
+html{
+  overflow: visible;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
-  
+
 
 }
 
@@ -14,7 +13,7 @@ td,tr{
   border: .5px solid black;
   text-indent: 30px;
   width: 33%;
-  
+
 }
 .cell{
   text-indent: 1px;
@@ -22,21 +21,21 @@ td,tr{
 th{
   border: .5px solid black;
   text-indent: 30px;
-  
+
   background-color: rgb(190, 190, 190);
   font-weight: bold;
-  font-size: large; 
+  font-size: large;
 }
 
 /* mat-select.items .mat-select-arrow{
   visibility: hidden;
       z-index: 999;
 }
-    
+
 mat-select.items .mat-select-placeholder{
   color: rgba(black, 1);
 }
-    
+
 mat-select.items .mat-option-disabled{
   color: rgba(black, 1);
 } */
