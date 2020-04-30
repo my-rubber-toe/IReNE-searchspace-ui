@@ -34,7 +34,7 @@ export class DocumentsTableComponent implements OnInit {
   tempEvent: Event;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
-  displayedColumns: string[] = ['title', 'authorFullName',
+  displayedColumns: string[] = ['title', 'creatorFullName',
     'creationDate', 'incidentDate', 'lastModificationDate',
     'language', 'actions'];
   expandedElement: DocumentMetadata | null;
