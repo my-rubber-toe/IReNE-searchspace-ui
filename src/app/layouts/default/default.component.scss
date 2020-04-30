@@ -1,4 +1,7 @@
 mat-sidenav-container {
+  min-height: available;
+  min-width: available;
+  overflow: visible;
 }
 mat-sidenav{
   width: 350px;
