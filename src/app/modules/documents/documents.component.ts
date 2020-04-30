@@ -26,7 +26,7 @@ export class DocumentsComponent implements OnInit {
   date1 = new FormControl('');
   date2 = new FormControl('');
   maxDate: Date;
-  minDate: Date = new Date(1970, 0, 1);
+  minDate: Date = new Date(2010, 0, 1);
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];

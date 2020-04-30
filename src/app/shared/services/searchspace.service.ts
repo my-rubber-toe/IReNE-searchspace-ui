@@ -15,7 +15,6 @@ export class SearchSpaceService {
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json; charset-utf-8', Accept: 'application/json'}),
   };
-  collaboratorsReq: CollaboratorRequest[];
   documents: DocumentMetadata[];
   filters: Filters[];
   maps: MapMetadata[];
