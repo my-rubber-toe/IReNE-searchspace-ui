@@ -157,7 +157,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   automaticSpiderify(c) {
     google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
-      if (this.gmap.getZoom() >= 16) {
+      if (this.gmap.getZoom() >= 16 && this.oms.markersNearMarker(c[0], true).length > 1) {
         google.maps.event.trigger(c[0], 'click');
       }
     });
@@ -184,20 +184,20 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (this.dataSource.data.length !== 0) {
       for (const e of this.dataSource.data) {
         for (const loc of e.location) {
-          this.FindLatLong(loc.address, (data) => {
+          if (loc.latitude && loc.longitude) {
             const marker = new google.maps.Marker({
                 position: {
-                  lat: data.Latitude,
-                  lng: data.Longitude,
+                  lat: loc.latitude,
+                  lng: loc.longitude,
                 },
-              title: e.title,
+                title: e.title,
               },
             );
             // @ts-ignore
             marker.desc = e._id[`$oid`];
             this.oms.addMarker(marker);
             this.markerCluster.addMarker(marker);
-          });
+          }
         }
       }
       google.maps.event.addListener(this.markerCluster, 'click', (c) => {
@@ -213,17 +213,18 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
 
-  FindLatLong(address, callback) {
-    const geocoder = new google.maps.Geocoder();
-    // tslint:disable-next-line:only-arrow-functions
-    geocoder.geocode({ address }, (results, status) => {
-      if (status === google.maps.GeocoderStatus.OK) {
-        const lat = results[0].geometry.location.lat();
-        const lng = results[0].geometry.location.lng();
-        callback({ Status: 'OK', Latitude: lat, Longitude: lng });
-      }
-    });
-  }
+// FindLatLong(address, callback) {
+//  const geocoder = new google.maps.Geocoder();
+//  // tslint:disable-next-line:only-arrow-functions
+//  geocoder.geocode({ address }, (results, status) => {
+//    if (status === google.maps.GeocoderStatus.OK) {
+//      const lat = results[0].geometry.location.lat();
+//      const lng = results[0].geometry.location.lng();
+//      callback({ Status: 'OK', Latitude: lat, Longitude: lng });
+//    }
+//  });
+// }
+
   /**
    * Retrieve the information from the selected map marker and redirect the user to the corresponding document.
    * @param label - label including the id
