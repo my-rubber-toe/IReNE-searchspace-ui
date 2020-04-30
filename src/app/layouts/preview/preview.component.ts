@@ -7,6 +7,7 @@ import {encoded_html} from './test_encoded_html';
 
 // Import CKEditor5-build-classic
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { environment } from 'src/environments/environment';
 
 
 interface Author {
@@ -85,7 +86,7 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
-      this.http.get(`http://localhost:5000/documents/view/` + id).subscribe(
+      this.http.get(`${environment.serverUrl}/documents/view/` + id).subscribe(
         (response: Document) => {
           const doc = response[`message`];
           this.title = doc.title;

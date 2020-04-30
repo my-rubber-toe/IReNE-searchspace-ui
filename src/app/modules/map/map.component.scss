@@ -3,6 +3,10 @@ html{
 }
 
 
+.map-container {
+  overflow-x: hidden;
+  padding-bottom: 10em;
+}
 .map-information{
   display: flex;
   flex-direction: column;
