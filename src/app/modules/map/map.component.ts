@@ -124,6 +124,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.searchSpaceService.getDocuments().add(() => {
       this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
       this.tempDataSource = this.dataSource;
+      this.loadMap();
     });
 
     // Retrieve all the available filters in the database.
@@ -225,7 +226,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.loadMap();
+
   }
 
   loadMap() {
@@ -244,6 +245,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.markerCluster = new MarkerClusterer(this.gmap, null,
       {imagePath: 'assets/pictures/m/m', maxZoom: 15}
     );
+    google.maps.event.addListenerOnce(this.gmap, 'idle', () => {
+      // map is ready
+      this.updateMap();
+    });
   }
 
   automaticSpiderify(c) {
@@ -387,7 +392,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   getAll() {
     if ( this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
       this.resetFilters();
-      this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
+      this.dataSource.data =  this.tempDataSource.data;
       this.dirtyFields = false;
       this.updateMap();
     } else {
