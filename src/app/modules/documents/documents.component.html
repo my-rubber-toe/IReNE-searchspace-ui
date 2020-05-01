@@ -19,7 +19,9 @@
               documentsTableComponent.applyFilter()" [formControl]="date1" value=null
       >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
+                      (monthSelected)="monthSelected = true"
+                      startView="multi-year" #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="side">
       <mat-label>Select incident date</mat-label>
@@ -30,7 +32,9 @@
               documentsTableComponent.applyFilter()" [formControl]="date2" value="=null"
       >
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
+      <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
+                      (monthSelected)="monthSelected = true"
+                      startView="multi-year" #picker2></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="side">
       <mat-chip-list #chipList aria-label="Author selection">

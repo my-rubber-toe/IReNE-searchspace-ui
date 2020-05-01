@@ -4,13 +4,13 @@ import {DatePipe} from '@angular/common';
 import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
 import {DocumentMetadata} from 'src/app/shared/models/searchspace.model';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {Router} from '@angular/router';
 import {FilterService} from 'src/app/shared/services/filter.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatInput} from '@angular/material/input';
 import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -114,6 +114,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
   private markerCluster: MarkerClusterer;
+  private falseYears = [];
+  yearSelected = false;
+  private falseMonths = [];
+  monthSelected = false;
 
   /**@ignore */
   ngOnInit() {
@@ -132,11 +136,45 @@ export class MapComponent implements OnInit, AfterViewInit {
         lat: 18.2208328,
         lng: -66.5901489,
     };
-    /**
-     * Definition of the filter of the calendar to display what  dates can  be selected
-     * @param d date to check
-     */
+    /*
+    * Definition of the filter of the calendar to display what  dates can  be selected
+    * @param d date to check
+    */
     this.publicationFilter = (d: Date | null): boolean => {
+      if ( !this.yearSelected) {
+        if (this.falseYears.includes(d.getFullYear())) {
+          return false;
+        } else {
+          if ( this.dataSource.data.some(e => {
+            return e.creationDate.includes(d.getFullYear().toString());
+          })) {
+            return true;
+          } else {
+            this.falseYears.push(d.getFullYear());
+            return false;
+          }
+        }
+      }
+      if ( this.yearSelected && !this.monthSelected) {
+        if (this.falseMonths.includes(d.getMonth())) {
+          return false;
+        } else {
+          let date;
+          if (d.getMonth() + 1 < 10) {
+            date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
+          } else {
+            date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
+          }
+          if (this.dataSource.data.some(e => {
+            return e.creationDate.includes(date);
+          })) {
+            return true;
+          } else {
+            this.falseMonths.push(d.getMonth());
+            return false;
+          }
+        }
+      }
       return this.dataSource.data.some(e => {
         return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
@@ -146,6 +184,40 @@ export class MapComponent implements OnInit, AfterViewInit {
      * @param d date to check
      */
     this.incidentFilter = (d: Date | null): boolean => {
+      if ( !this.yearSelected) {
+        if (this.falseYears.includes(d.getFullYear())) {
+          return false;
+        } else {
+          if ( this.dataSource.data.some(e => {
+            return e.incidentDate.includes(d.getFullYear().toString());
+          })) {
+            return true;
+          } else {
+            this.falseYears.push(d.getFullYear());
+            return false;
+          }
+        }
+      }
+      if ( this.yearSelected && !this.monthSelected) {
+        if (this.falseMonths.includes(d.getMonth())) {
+          return false;
+        } else {
+          let date;
+          if (d.getMonth() + 1 < 10) {
+            date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
+          } else {
+            date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
+          }
+          if (this.dataSource.data.some(e => {
+            return e.incidentDate.includes(date);
+          })) {
+            return true;
+          } else {
+            this.falseMonths.push(d.getMonth());
+            return false;
+          }
+        }
+      }
       return this.dataSource.data.some(e => {
         return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
@@ -321,5 +393,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     } else {
       this.snackBar.open('All items are being displayed.', null, {duration: 3000});
     }
+  }
+
+  datesChecked() {
+    this.yearSelected = false;
+    this.monthSelected = false;
+    this.falseYears = [];
+    this.falseMonths = [];
   }
 }
