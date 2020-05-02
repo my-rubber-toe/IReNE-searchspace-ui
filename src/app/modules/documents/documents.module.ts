@@ -36,4 +36,5 @@ import {FlexModule} from '@angular/flex-layout';
     FlexModule,
   ]
 })
-export class DocumentsModule { }
+export class DocumentsModule {
+}

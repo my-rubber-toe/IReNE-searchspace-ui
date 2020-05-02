@@ -1,7 +1,8 @@
-.table-container{
+.table-container {
   max-height: 60vh;
   overflow: auto;
 }
+
 table {
   width: 100%;
 }
@@ -51,16 +52,16 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 
-mat-select.items .mat-select-arrow{
+mat-select.items .mat-select-arrow {
   visibility: hidden;
   z-index: 999;
 }
 
-mat-select.items .mat-select-placeholder{
+mat-select.items .mat-select-placeholder {
   color: rgba(black, 1);
 }
 
-mat-select.items .mat-option-disabled{
+mat-select.items .mat-option-disabled {
   color: rgba(black, 1);
 }
 
