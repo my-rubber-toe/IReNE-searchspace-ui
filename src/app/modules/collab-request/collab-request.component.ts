@@ -17,7 +17,8 @@ export class CollabRequestComponent implements OnInit {
 
   constructor(
     private singupService: SingupService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }

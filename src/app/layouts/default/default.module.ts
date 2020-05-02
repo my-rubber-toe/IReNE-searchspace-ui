@@ -29,12 +29,10 @@ import {XyComponent} from 'src/app/modules/xy/xy.component';
 import {GoogleChartsModule} from 'angular-google-charts';
 import {MapComponent} from 'src/app/modules/map/map.component';
 import {environment} from 'src/environments/environment';
-import { TimelineModule } from 'src/app/modules/timeline/timeline.module';
-import { TimelineComponent } from 'src/app/modules/timeline/timeline.component';
+import {TimelineModule} from 'src/app/modules/timeline/timeline.module';
+import {TimelineComponent} from 'src/app/modules/timeline/timeline.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
-
-
 
 
 @NgModule({

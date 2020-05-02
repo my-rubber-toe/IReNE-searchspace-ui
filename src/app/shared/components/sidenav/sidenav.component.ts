@@ -7,5 +7,6 @@ import {Component, Input} from '@angular/core';
 })
 
 export class SidenavComponent {
+  // tslint:disable-next-line:no-input-rename
   @Input('sidenav') sidenav;
 }

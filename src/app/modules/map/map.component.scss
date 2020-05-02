@@ -1,4 +1,4 @@
-html{
+html {
   overflow: visible;
 }
 
@@ -7,14 +7,15 @@ html{
   overflow-x: hidden;
   padding-bottom: 10em;
 }
-.map-information{
+
+.map-information {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   padding: 2em;
 }
 
-div.map-element{
+div.map-element {
   width: 1250px;
   height: 500px;
 }

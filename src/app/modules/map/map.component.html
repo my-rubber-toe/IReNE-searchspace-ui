@@ -37,8 +37,8 @@
         <mat-form-field>
           <mat-label>Publication date</mat-label>
           <input #inputToDate1 matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"
-            [matDatepickerFilter]="publicationFilter"
-            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate'); updateMap()">
+                 [matDatepickerFilter]="publicationFilter"
+                 (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate'); updateMap()">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
                           (monthSelected)="monthSelected = true"
@@ -47,8 +47,8 @@
         <mat-form-field>
           <mat-label>Incident date</mat-label>
           <input #inputToDate2 matInput [matDatepicker]="picker2" [max]="todayDate" [formControl]="incidentDate"
-            [matDatepickerFilter]="incidentFilter"
-            (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate'); updateMap()">
+                 [matDatepickerFilter]="incidentFilter"
+                 (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate'); updateMap()">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
                           (monthSelected)="monthSelected = true"
@@ -57,7 +57,7 @@
         <mat-form-field>
           <mat-label>Infrastructure</mat-label>
           <mat-select #someSelect1 [formControl]="infrastructure" multiple
-            (selectionChange)="selectionEvent($event.value, 'infrasDocList'); updateMap()">
+                      (selectionChange)="selectionEvent($event.value, 'infrasDocList'); updateMap()">
             <mat-option *ngFor="let element of infrastructureList" [value]="element['infrastructureType']">
               {{element['infrastructureType']}}</mat-option>
           </mat-select>
@@ -65,7 +65,7 @@
         <mat-form-field>
           <mat-label>Damages</mat-label>
           <mat-select #someSelect2 [formControl]="damage" multiple
-            (selectionChange)="selectionEvent($event.value, 'damageDocList'); updateMap()">
+                      (selectionChange)="selectionEvent($event.value, 'damageDocList'); updateMap()">
             <mat-option *ngFor="let element of damageList" [value]="element['damageType']">{{element['damageType']}}
             </mat-option>
           </mat-select>
@@ -73,14 +73,14 @@
         <mat-form-field>
           <mat-label>Language</mat-label>
           <mat-select #someSelect3 [formControl]="language" multiple
-            (selectionChange)="selectionEvent($event.value, 'language'); updateMap()">
+                      (selectionChange)="selectionEvent($event.value, 'language'); updateMap()">
             <mat-option *ngFor="let element of languageList" [value]="element">{{element}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Tags</mat-label>
           <mat-select #someSelect4 [formControl]="tags" multiple
-            (selectionChange)="selectionEvent($event.value, 'tagsDoc'); updateMap()">
+                      (selectionChange)="selectionEvent($event.value, 'tagsDoc'); updateMap()">
             <mat-option *ngFor="let element of tagsList" [value]="element['tagItem']">{{element['tagItem']}}
             </mat-option>
           </mat-select>

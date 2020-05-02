@@ -11,6 +11,7 @@ import {MatInput} from '@angular/material/input';
 import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -28,7 +29,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     private searchSpaceService: SearchSpaceService,
     private router: Router,
     private snackBar: MatSnackBar,
-    ) {}
+  ) {
+  }
+
   @ViewChild('inputToDate1', {
     read: MatInput
   }) inputToDate1: MatInput;
@@ -119,10 +122,11 @@ export class MapComponent implements OnInit, AfterViewInit {
   private falseMonths = [];
   monthSelected = false;
 
+  // tslint:disable-next-line:jsdoc-format
   /**@ignore */
   ngOnInit() {
     this.searchSpaceService.getDocuments().add(() => {
-      this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
+      this.dataSource = new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
       this.tempDataSource = this.dataSource;
       this.loadMap();
     });
@@ -134,19 +138,19 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.tagsList = this.searchSpaceService.filters[`tags`];
     });
     this.center = {
-        lat: 18.2208328,
-        lng: -66.5901489,
+      lat: 18.2208328,
+      lng: -66.5901489,
     };
     /*
     * Definition of the filter of the calendar to display what  dates can  be selected
     * @param d date to check
     */
     this.publicationFilter = (d: Date | null): boolean => {
-      if ( !this.yearSelected) {
+      if (!this.yearSelected) {
         if (this.falseYears.includes(d.getFullYear())) {
           return false;
         } else {
-          if ( this.dataSource.data.some(e => {
+          if (this.dataSource.data.some(e => {
             return e.creationDate.includes(d.getFullYear().toString());
           })) {
             return true;
@@ -156,7 +160,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           }
         }
       }
-      if ( this.yearSelected && !this.monthSelected) {
+      if (this.yearSelected && !this.monthSelected) {
         if (this.falseMonths.includes(d.getMonth())) {
           return false;
         } else {
@@ -185,11 +189,11 @@ export class MapComponent implements OnInit, AfterViewInit {
      * @param d date to check
      */
     this.incidentFilter = (d: Date | null): boolean => {
-      if ( !this.yearSelected) {
+      if (!this.yearSelected) {
         if (this.falseYears.includes(d.getFullYear())) {
           return false;
         } else {
-          if ( this.dataSource.data.some(e => {
+          if (this.dataSource.data.some(e => {
             return e.incidentDate.includes(d.getFullYear().toString());
           })) {
             return true;
@@ -199,7 +203,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           }
         }
       }
-      if ( this.yearSelected && !this.monthSelected) {
+      if (this.yearSelected && !this.monthSelected) {
         if (this.falseMonths.includes(d.getMonth())) {
           return false;
         } else {
@@ -230,7 +234,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   loadMap() {
-    const mapElement =  document.getElementById('map-element');
+    const mapElement = document.getElementById('map-element');
     this.gmap = new google.maps.Map(mapElement, this.mapOptions);
     this.oms = new OverlappingMarkerSpiderfier(this.gmap, {
       markersWontMove: true,
@@ -328,6 +332,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   markerSelect(label: string) {
     this.router.navigate([`/preview/${label}`]);
   }
+
   /**
    * Setup the selection filter based on the selected option.
    * @param selection the array of values from the selected options
@@ -360,7 +365,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   /**
    * Reset the filter values.
    */
-    resetFilters() {
+  resetFilters() {
     this.filterSelection = new Map<string, any>([
       ['location', ''],
       ['infrasDocList', ''],
@@ -390,9 +395,9 @@ export class MapComponent implements OnInit, AfterViewInit {
    * Retrieve all available markers and reset filters.
    */
   getAll() {
-    if ( this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
+    if (this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
       this.resetFilters();
-      this.dataSource.data =  this.tempDataSource.data;
+      this.dataSource.data = this.tempDataSource.data;
       this.dirtyFields = false;
       this.updateMap();
     } else {

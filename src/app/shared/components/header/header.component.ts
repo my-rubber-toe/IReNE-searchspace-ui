@@ -6,5 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  // tslint:disable-next-line:no-input-rename
   @Input('sidenav') sidenav;
 }

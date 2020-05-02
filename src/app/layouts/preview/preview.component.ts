@@ -1,13 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {DatePipe} from '@angular/common';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {encoded_html} from './test_encoded_html';
-
 // Import CKEditor5-build-classic
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 
 
 interface Author {
@@ -50,23 +49,22 @@ interface Document {
   styleUrls: ['./preview.component.css']
 })
 export class PreviewComponent implements OnInit {
-  fakeBackend = 'http://localhost:4200/api/documents/view';
   loadingDocument = true;
   notFound = false;
 
   // Force the CSS to load the Classic editor CSS values.
   public editor = ClassicEditor;
 
-  title: string = '';
-  description: string = '';
-  creatorFullName: string = '';
-  creatorEmail: string = '';
-  creationDate: string = '';
-  lastModificationDate: string = '';
-  incidentDate: string = '';
-  infrasDocList: Array<String> = [];
-  damageDocList: Array<String> = [];
-  tagsDoc: Array<String> = [];
+  title = '';
+  description = '';
+  creatorFullName = '';
+  creatorEmail = '';
+  creationDate = '';
+  lastModificationDate = '';
+  incidentDate = '';
+  infrasDocList: Array<string> = [];
+  damageDocList: Array<string> = [];
+  tagsDoc: Array<string> = [];
   author: Array<Author> = [];
   actor: Array<Actor> = [];
   section: Array<Section> = [];
@@ -104,17 +102,9 @@ export class PreviewComponent implements OnInit {
           this.section = doc.section;
 
           this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
-
-          // Simulate long respone
-//         setTimeout(() => {
-//           this.loadingDocument = false;
-//         }, 1500);
           this.loadingDocument = false;
         },
         (error) => {
-//          setTimeout(() => {
-//            this.loadingDocument = false;
-//          }, 1500);
           this.loadingDocument = false;
           this.notFound = true;
         }
