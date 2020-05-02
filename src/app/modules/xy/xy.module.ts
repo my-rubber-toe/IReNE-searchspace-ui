@@ -1,8 +1,5 @@
-
-import { XyComponent } from './xy.component';
-
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
@@ -10,7 +7,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
+
 // import { AppComponent } from 'src/app/app.component';
 
 
@@ -27,4 +25,5 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ]
 })
-export class XyModule { }
+export class XyModule {
+}
