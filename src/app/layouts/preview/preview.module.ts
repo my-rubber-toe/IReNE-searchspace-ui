@@ -7,7 +7,6 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {RouterModule} from '@angular/router';
 
 @NgModule({
@@ -23,7 +22,6 @@ import {RouterModule} from '@angular/router';
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
-    CKEditorModule
   ],
   providers: [
     DatePipe

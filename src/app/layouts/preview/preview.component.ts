@@ -2,10 +2,6 @@ import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {encoded_html} from './test_encoded_html';
-// Import CKEditor5-build-classic
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {environment} from 'src/environments/environment';
 
 
@@ -51,10 +47,6 @@ interface Document {
 export class PreviewComponent implements OnInit {
   loadingDocument = true;
   notFound = false;
-
-  // Force the CSS to load the Classic editor CSS values.
-  public editor = ClassicEditor;
-
   title = '';
   description = '';
   creatorFullName = '';
@@ -68,15 +60,11 @@ export class PreviewComponent implements OnInit {
   author: Array<Author> = [];
   actor: Array<Actor> = [];
   section: Array<Section> = [];
-
-  ckeditorData: SafeHtml = '';
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private datePipe: DatePipe,
-    private sanitizer: DomSanitizer
   ) {
 
   }
@@ -100,8 +88,6 @@ export class PreviewComponent implements OnInit {
           this.author = doc.author;
           this.actor = doc.actor;
           this.section = doc.section;
-
-          this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
           this.loadingDocument = false;
         },
         (error) => {
