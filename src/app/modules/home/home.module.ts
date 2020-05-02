@@ -26,4 +26,5 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatIconModule,
   ]
 })
-export class HomeModule { }
+export class HomeModule {
+}
