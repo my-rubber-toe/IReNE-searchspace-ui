@@ -1,7 +1,7 @@
 <div fxFill class="home">
 <div fxLayout="column" fxLayoutAlign="center">
   <div fxLayout="row wrap" fxLayoutAlign="center center">
-    <div style="margin-top: 50px" fxFlex="grow" fxLayoutAlign="center">
+    <div style="margin-top: 5vh; margin-bottom: 5vh" fxFlex="grow" fxLayoutAlign="center">
       <p id="irene">
         IReNE
       </p>
@@ -12,25 +12,29 @@
       documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()" fxFlex="60" fxFlexOrder="1">
     </app-search>
     <app-documents-table fxFlexOrder="2" fxFlex="70" #documentsTableComponent></app-documents-table>
-    <div *ngIf="!documentsTableComponent.show" class="disclaimer" fxFlex="60" fxFlexOrder="2">
-      <h2>
-        Welcome to the Interdisciplinary Research Network Extension
-      </h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
-        eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
-        Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
-        Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
-        eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
-        Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
-        Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
+      <mat-card *ngIf="!documentsTableComponent.show" class="disclaimer" fxFlex="60" fxFlexOrder="2">
+        <mat-card-header>
+          <h2>
+            Welcome to the Interdisciplinary Research Network Extension
+          </h2>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
+            eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
+            Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
+            Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
+            eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
+            Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
+            Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
 
 
-      </p>
-    </div>
+          </p>
+        </mat-card-content>
+      </mat-card>
   </div>
   <div *ngIf="!documentsTableComponent.show" fxLayout="row" fxLayoutAlign="center start">
     <div fxLayout="row" fxFlex="60" fxLayoutAlign="space-evenly ">

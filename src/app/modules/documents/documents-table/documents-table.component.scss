@@ -1,5 +1,6 @@
-html{
-  overflow: visible;
+.table-container{
+  max-height: 60vh;
+  overflow: auto;
 }
 table {
   width: 100%;
