@@ -7,17 +7,31 @@
 
     </p>
     <p>
-      <i style="padding-left: 2em;">Note: The default view of the graph and table is the first case study in the list, select another Case Study to view its timeline.</i>
+      <i style="padding-left: 2em;">Note: The default view of the graph and table is the first case study in the list with 'Building' & 'Earthquake' set as categories, select another Case Study to view its timeline.</i>
     </p>
 
   <div fxFill>
     <div fxLayout="row" fxFlex="10" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
       <div fxFlex="1">
+        <mat-form-field>
+          <mat-label>Infrastructure Categories</mat-label>
+          <mat-select #someSelect1 [formControl]="infrastructure" multiple (selectionChange)="updateTCAT()" placeholder="Building">
+            <mat-option *ngFor="let element of infrastructureList" [value]="element['infrastructureType']">
+              {{element['infrastructureType']}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Damage Categories</mat-label>
+          <mat-select #someSelect1 [formControl]="damage" multiple (selectionChange)="updateTCAT()" placeholder="Earthquake">
+            <mat-option *ngFor="let element of damageList" [value]="element['damageType']">
+              {{element['damageType']}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field class="side">
-            <mat-label>Case Studies</mat-label>
-            <mat-select  [formControl]= "timeTitle" (selectionChange)="updateCaseStudy()" (keyup)="sendValueCS(subjectCS.value)" #subjectCS placeholder="Damage" >
-              <mat-option  *ngFor="let caseStudy of timelineTitles" [value]="caseStudy">{{caseStudy}}</mat-option>
-            </mat-select>
+          <mat-label>Case Studies Titles</mat-label>
+          <mat-select  [formControl]= "timeTitle" type="checkbox" (selectionChange)="updateCaseStudy()" (keyup)="sendValueCS(subjectCS.value)" #subjectCS placeholder="Damage" >
+            <mat-option  *ngFor="let caseStudy of timelineTitles" [value]="caseStudy">{{caseStudy}}</mat-option>
+          </mat-select>
         </mat-form-field>
 
 
@@ -46,7 +60,6 @@
             [options]="options"
             [width]="width"
             [height]="height"
-            (select)="onSelect($event)"
         ></google-chart>
     </div>
     <div style="padding-left: 10em; padding-top: 10em;">

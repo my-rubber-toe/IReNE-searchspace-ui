@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl} from '@angular/forms';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-import { ChartEvent } from 'angular-google-charts';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { XY } from 'src/app/shared/models/searchspace.model';
-import { Annotation } from 'dist/assets/pdf.worker';
 
 interface CatXValues {
   cat_x: string

@@ -23,8 +23,19 @@ export class SearchSpaceService {
   timeline: Timeline[];
   private behaveX = new BehaviorSubject<Object>({textVal: 'Damage'});
   private behaveY = new BehaviorSubject<Object>({textVal: 'Publication Date'});
-  private behaveCS = new BehaviorSubject<Object>({textVal: 'hello'});
+  private behaveCS = new BehaviorSubject<Object>({textVal: 'title'});
+  private TimelineCat = new BehaviorSubject<Object>({
+    infrasDocList: "Building",
+    damageDocList: "Earthquake",
+    tagsDoc: "Hurricane"
+  });
   constructor(private http: HttpClient) { }
+  setBehaviorViewTCAT(TimelineCat: Object) {
+    this.TimelineCat.next(TimelineCat);
+  }
+  getBehaviorViewTCAT(): Observable<any> {
+      return this.TimelineCat.asObservable();
+  }
   setBehaviorViewX(behaveX: Object) {
     this.behaveX.next(behaveX);
   }
