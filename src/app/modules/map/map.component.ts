@@ -235,7 +235,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
-    script.async = false;
+    script.async = true;
     script.defer = true;
     body.appendChild(script);
     return script;
