@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
-import {DocumentMetadata} from 'src/app/shared/models/searchspace.model';
+import {MapMetadata} from 'src/app/shared/models/searchspace.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {FilterService} from 'src/app/shared/services/filter.service';
@@ -58,7 +58,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   dirtyFields = false;
 
-  documents: DocumentMetadata[];
+  documents: MapMetadata[];
 
   // Google Map Data Setup
   title = '';
@@ -114,8 +114,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   /**
    * The data source to be used.
    */
-  dataSource: MatTableDataSource<DocumentMetadata>;
-  tempDataSource: MatTableDataSource<DocumentMetadata>;
+  dataSource: MatTableDataSource<MapMetadata>;
+  tempDataSource: MatTableDataSource<MapMetadata>;
   private markerCluster: MarkerClusterer;
   private falseYears = [];
   yearSelected = false;
@@ -125,10 +125,12 @@ export class MapComponent implements OnInit, AfterViewInit {
   // tslint:disable-next-line:jsdoc-format
   /**@ignore */
   ngOnInit() {
-    this.searchSpaceService.getDocuments().add(() => {
-      this.dataSource = new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
+    this.searchSpaceService.getMapDocuments().add(() => {
+      this.dataSource = new MatTableDataSource<MapMetadata>(this.searchSpaceService.map);
       this.tempDataSource = this.dataSource;
-      this.loadMap();
+      this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAZEkjgNHbvCFQ4ohopyKSg3-zbfHx4pSk').onload = () => {
+        this.loadMap();
+      };
     });
 
     // Retrieve all the available filters in the database.
@@ -228,9 +230,18 @@ export class MapComponent implements OnInit, AfterViewInit {
       });
     };
   }
+  public loadScript(url: string) {
+    const body = document.body as HTMLDivElement;
+    const script = document.createElement('script');
+    script.innerHTML = '';
+    script.src = url;
+    script.async = false;
+    script.defer = true;
+    body.appendChild(script);
+    return script;
+  }
 
   ngAfterViewInit(): void {
-
   }
 
   loadMap() {
@@ -359,7 +370,11 @@ export class MapComponent implements OnInit, AfterViewInit {
    * @param event the event Object when the date picker changes value.
    */
   datePreCheck(event: MatDatepickerInputEvent<any>) {
-    event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+    if (event.value !== null) {
+      event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+    } else {
+      event.value = '';
+    }
   }
 
   /**
