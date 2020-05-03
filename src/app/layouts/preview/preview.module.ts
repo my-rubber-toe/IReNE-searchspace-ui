@@ -8,6 +8,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {PreviewRoutingModule} from './preview-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {RouterModule} from '@angular/router';
   ],
   imports: [
     CommonModule,
+    PreviewRoutingModule,
     FormsModule,
     RouterModule,
     HttpClientModule,

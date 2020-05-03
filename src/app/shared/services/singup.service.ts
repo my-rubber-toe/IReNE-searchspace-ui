@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-
 import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Swal from 'sweetalert2';

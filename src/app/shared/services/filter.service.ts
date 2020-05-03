@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {DocumentMetadata} from '../models/searchspace.model';
+import {DocumentMetadata, MapMetadata} from '../models/searchspace.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class FilterService {
    * @param tempDataSource DataSource to filter
    * @return filteringDatasource Datasource filtered
    */
-  applyFilter(filterSelection: Map<string, any>, tempDataSource: MatTableDataSource<DocumentMetadata>) {
-    const filteringDataSource = new MatTableDataSource<DocumentMetadata>();
+  applyFilter(filterSelection: Map<string, any>, tempDataSource: MatTableDataSource<any>) {
+    const filteringDataSource = new MatTableDataSource<any>();
     filteringDataSource.data = tempDataSource.data;
     this.filterBySelection(filteringDataSource, filterSelection);
     return filteringDataSource;
@@ -29,11 +29,11 @@ export class FilterService {
    * @param filteringDataSource filterSelection Map with keys of the categories to filter and the values of it
    * @param filterSelection tempDataSource DataSource to filter
    */
-  private filterBySelection(filteringDataSource: MatTableDataSource<DocumentMetadata>, filterSelection: Map<string, any>) {
+  private filterBySelection(filteringDataSource: MatTableDataSource<any>, filterSelection: Map<string, any>) {
     const ite = filterSelection.keys();
     let invalidKey = false;
     for (const key of ite) {
-      const tempFilterData = new MatTableDataSource<DocumentMetadata>();
+      const tempFilterData = new MatTableDataSource<any>();
       const filter = filterSelection.get(key);
       if (filter.length !== 0) {
         const iter = filteringDataSource.data.values();

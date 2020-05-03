@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DocumentMetadata, Filters, MapMetadata, Timeline, XY} from '../models/searchspace.model';
+import {MapMetadata, Filters, Timeline, XY, DocumentMetadata} from '../models/searchspace.model';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from 'src/environments/environment';
 
@@ -16,6 +16,7 @@ export class SearchSpaceService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json; charset-utf-8', Accept: 'application/json'}),
   };
   documents: DocumentMetadata[];
+  map: MapMetadata[];
   filters: Filters[];
   maps: MapMetadata[];
   mapFilters: Filters;
@@ -53,14 +54,10 @@ export class SearchSpaceService {
       });
   }
 
-  /**
-   * Get the document that has the corresponding id
-   * @param id Id of the document to get
-   */
-  getDocumentById(id: string) {
-    this.http.get<DocumentMetadata[]>(`${environment.serverUrl}/documents/{{doc_id}}`).subscribe(
-      (response: DocumentMetadata[]) => {
-        this.documents = response;
+  getMapDocuments() {
+    return this.http.get(`${environment.serverUrl}/visualize/map/`, this.httpOptions).subscribe(
+      (response: MapMetadata[]) => {
+        this.map = response[`message`];
       });
   }
 
@@ -127,7 +124,7 @@ export class SearchSpaceService {
   }
 
   docXY() {
-      /**
+    /**
      * Get all documents from the fake server.
      */
     return this.http.get(`${environment.serverUrl}/visualize/comparison-graph/`).subscribe(
@@ -138,7 +135,7 @@ export class SearchSpaceService {
 
 
   docTimeline() {
-      /**
+    /**
      * Get all documents from the fake server.
      */
     return this.http.get(`${environment.serverUrl}/visualize/timeline/`).subscribe(

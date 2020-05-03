@@ -7,16 +7,19 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {HomeComponent} from './home.component';
+import {HomeRoutingModule} from './home-routing.module';
 
 
 @NgModule({
-  declarations: [SearchComponent,
+  declarations: [SearchComponent, HomeComponent
   ],
   exports: [
     SearchComponent,
   ],
   imports: [
     CommonModule,
+    HomeRoutingModule,
     MatIconModule,
     MatButtonModule,
     MatInputModule,

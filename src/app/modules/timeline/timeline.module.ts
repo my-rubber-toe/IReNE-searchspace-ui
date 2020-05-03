@@ -7,12 +7,19 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TimelineRoutingModule} from './timeline-routing.module';
+import {TimelineComponent} from './timeline.component';
+import {MatSelectModule} from '@angular/material/select';
+import {GoogleChartsModule} from 'angular-google-charts';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 @NgModule({
+  declarations: [TimelineComponent],
   imports: [
     CommonModule,
+    TimelineRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -20,7 +27,11 @@ import {FormsModule} from '@angular/forms';
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    GoogleChartsModule,
+    FlexLayoutModule
   ]
 })
 export class TimelineModule {

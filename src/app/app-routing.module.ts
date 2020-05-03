@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
-import {CollabRequestComponent} from './modules/collab-request/collab-request.component';
+import {CollabrequestComponent} from './modules/collabrequest/collabrequest.component';
 import {DocumentsComponent} from './modules/documents/documents.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AboutComponent} from './about/about.component';
-import {HomeComponent} from './modules/home/home.component';
 import {DefaultComponent} from './layouts/default/default.component';
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import {XyComponent} from './modules/xy/xy.component';
@@ -19,35 +18,35 @@ const routes: Routes = [
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {
         path: 'home',
-        component: HomeComponent,
+        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
       },
       {
       path: 'about',
       component: AboutComponent,
-    },
+      },
       {
-        path: 'collab-request',
-        component: CollabRequestComponent
+        path: 'collabrequest',
+        loadChildren: () => import('./modules/collabrequest/collabrequest.module').then(m => m.CollabrequestModule)
       },
       {
         path: 'documents',
-        component: DocumentsComponent
+        loadChildren: () => import('./modules/documents/documents.module').then(m => m.DocumentsModule)
       },
       {
         path: 'map',
-        component: MapComponent
+        loadChildren: () => import('./modules/map/map.module').then(m => m.MapModule)
       },
       {
         path: 'xy',
-        component: XyComponent
+        loadChildren: () => import('./modules/xy/xy.module').then(m => m.XyModule)
       },
       {
         path: 'timeline',
-        component: TimelineComponent
+        loadChildren: () => import('./modules/timeline/timeline.module').then(m => m.TimelineModule)
       },
       {
         path: 'preview/:docId',
-        component: PreviewComponent,
+        loadChildren: () => import('./layouts/preview/preview.module').then(m => m.PreviewModule)
       },
       { path: '**', component: PageNotFoundComponent },
       ],

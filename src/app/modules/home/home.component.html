@@ -7,12 +7,9 @@
         </p>
         <p id="searchspace">Search Space</p>
       </div>
-      <app-search (typed)="documentsTableComponent.show= true;
-    documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()" (empty)="documentsTableComponent.show = false;
-      documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()" fxFlex="60" fxFlexOrder="1">
+      <app-search fxFlex="60" fxFlexOrder="1">
       </app-search>
-      <app-documents-table fxFlexOrder="2" fxFlex="70" #documentsTableComponent></app-documents-table>
-      <mat-card *ngIf="!documentsTableComponent.show" class="disclaimer" fxFlex="60" fxFlexOrder="2">
+      <mat-card class="disclaimer" fxFlex="60" fxFlexOrder="2">
         <mat-card-header>
           <h2>
             Welcome to the Interdisciplinary Research Network Extension
@@ -36,7 +33,7 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div *ngIf="!documentsTableComponent.show" fxLayout="row" fxLayoutAlign="center start">
+    <div fxLayout="row" fxLayoutAlign="center start">
       <div fxLayout="row" fxFlex="60" fxLayoutAlign="space-evenly ">
         <mat-card>
           <mat-card-header>

@@ -7,14 +7,21 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {XyRoutingModule} from './xy-routing.module';
+import {XyComponent} from './xy.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatSelectModule} from '@angular/material/select';
+import {GoogleChartsModule} from 'angular-google-charts';
 
 // import { AppComponent } from 'src/app/app.component';
 
 
 @NgModule({
+  declarations: [XyComponent],
   imports: [
     CommonModule,
+    XyRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -22,7 +29,11 @@ import {FormsModule} from '@angular/forms';
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    GoogleChartsModule
   ]
 })
 export class XyModule {

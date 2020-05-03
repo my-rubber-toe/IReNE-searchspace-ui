@@ -3,10 +3,10 @@ import {SingupService} from '../../shared/services/singup.service';
 
 @Component({
   selector: 'app-collab-request',
-  templateUrl: './collab-request.component.html',
-  styleUrls: ['./collab-request.component.scss']
+  templateUrl: './collabrequest.component.html',
+  styleUrls: ['./collabrequest.component.scss']
 })
-export class CollabRequestComponent implements OnInit {
+export class CollabrequestComponent implements OnInit {
   constructor(
     private singupService: SingupService,
   ) {

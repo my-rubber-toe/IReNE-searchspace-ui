@@ -41,7 +41,7 @@ export interface locationPlace {
 }
 
 export interface MapMetadata {
-    id: string;
+    _id: string;
     title: string;
     location: Array<locationPlace>;
     creationDate: string;
