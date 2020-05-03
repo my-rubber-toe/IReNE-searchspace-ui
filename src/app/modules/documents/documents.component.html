@@ -97,6 +97,9 @@
           <mat-option *ngFor="let tag of tagList" [value]="tag['tagItem']">{{tag['tagItem']}}</mat-option>
         </mat-select>
       </mat-form-field>
+      <button mat-raised-button color="primary"  style="margin-left: 10%;" (click)="resetFilters()">
+        Reset Filters
+      </button>
     </div>
     <mat-divider [vertical]="true" fxFlex="1" style="height: 500px"></mat-divider>
     <app-documents-table show="true" fxFlex="80" #documentsTableComponent></app-documents-table>

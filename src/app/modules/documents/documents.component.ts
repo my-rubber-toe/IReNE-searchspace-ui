@@ -215,4 +215,16 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
     this.falseYears = [];
     this.falseMonths = [];
   }
+
+  resetFilters() {
+    this.formControl.reset();
+    this.creatorCtrl.reset();
+    this.selectedAuthors.forEach(author => {
+      this.remove(author);
+    });
+    this.date1.reset();
+    this.date2.reset();
+    this.table.filterSelection.clear();
+    this.table.applyFilter();
+  }
 }
