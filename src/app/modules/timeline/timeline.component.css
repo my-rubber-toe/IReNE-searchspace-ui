@@ -1,4 +1,4 @@
-html{
+html {
   overflow: visible;
 }
 
@@ -9,18 +9,20 @@ table {
 
 }
 
-td,tr{
+td, tr {
   border: .5px solid black;
-  text-indent: 30px;
+  text-indent: 20px;
   width: 33%;
 
 }
-.cell{
+
+.cell {
   text-indent: 1px;
 }
-th{
+
+th {
   border: .5px solid black;
-  text-indent: 30px;
+  text-indent: 20px;
 
   background-color: rgb(190, 190, 190);
   font-weight: bold;

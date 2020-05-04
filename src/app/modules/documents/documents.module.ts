@@ -13,15 +13,22 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FlexModule} from '@angular/flex-layout';
+import {DocumentsRoutingModule} from './documents-routing.module';
+import {DocumentsComponent} from './documents.component';
+import {HomeModule} from '../home/home.module';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
-  declarations: [DocumentsTableComponent],
+  declarations: [DocumentsTableComponent, DocumentsComponent],
   exports: [
     DocumentsTableComponent
   ],
   imports: [
     CommonModule,
+    DocumentsRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -34,6 +41,11 @@ import {FlexModule} from '@angular/flex-layout';
     MatButtonModule,
     MatTooltipModule,
     FlexModule,
+    HomeModule,
+    ReactiveFormsModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ]
 })
-export class DocumentsModule { }
+export class DocumentsModule {
+}

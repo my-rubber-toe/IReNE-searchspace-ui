@@ -41,7 +41,7 @@ export interface locationPlace {
 }
 
 export interface MapMetadata {
-    id: string;
+    _id: string;
     title: string;
     location: Array<locationPlace>;
     creationDate: string;
@@ -66,4 +66,7 @@ export interface Timeline {
     id: string;
     title: string;
     timeline: Array<object>;
+    tagsDoc: Array<string>;
+    infrasDocList: Array<string>;
+    damageDocList: Array<string>;
 }

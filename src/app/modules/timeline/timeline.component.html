@@ -1,23 +1,37 @@
 <div class="timeline-graph">
-    <h1 style="padding: 0em 2em;"><b>Timeline View</b></h1>
-    <p style="padding: 0px 2em;">
-      Select a Case Study to see its Timeline. The graph represents the timeline of the selected
-      Case Study, which each block represents an event within the Case Study. The table below
-      illustrate the title of the event, the start date, and the end date of each event.
-
+  <h1 style="padding: 0em 2em;"><b>Timeline View</b></h1>
+  <p style="padding: 0px 2em;">
+    Select a Case Study to see its Timeline. The graph represents the timeline of the selected
+    Case Study, which each block represents an event within the Case Study. The table below
+    illustrate the title of the event, the start date, and the end date of each event.
     </p>
     <p>
-      <i style="padding-left: 2em;">Note: The default view of the graph and table is the first case study in the list, select another Case Study to view its timeline.</i>
+      <i style="padding-left: 2em;">Note: The default view of the graph and table is the first case study in the list with 'Building' & 'Earthquake' set as categories, select another Case Study to view its timeline.</i>
     </p>
 
+
   <div fxFill>
-    <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
+    <div fxLayout="row" fxFlex="10" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
       <div fxFlex="1">
+        <mat-form-field>
+          <mat-label>Infrastructure Categories</mat-label>
+          <mat-select #someSelect1 [formControl]="infrastructure" multiple (selectionChange)="updateTCAT()" placeholder="Building">
+            <mat-option *ngFor="let element of infrastructureList" [value]="element['infrastructureType']">
+              {{element['infrastructureType']}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Damage Categories</mat-label>
+          <mat-select #someSelect1 [formControl]="damage" multiple (selectionChange)="updateTCAT()" placeholder="Earthquake">
+            <mat-option *ngFor="let element of damageList" [value]="element['damageType']">
+              {{element['damageType']}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field class="side">
-            <mat-label>Case Studies</mat-label>
-            <mat-select  [formControl]= "timeTitle" (selectionChange)="updateCaseStudy()" (keyup)="sendValueCS(subjectCS.value)" #subjectCS placeholder="Damage" >
-              <mat-option  *ngFor="let caseStudy of timelineTitles" [value]="caseStudy">{{caseStudy}}</mat-option>
-            </mat-select>
+          <mat-label>Case Studies Titles</mat-label>
+          <mat-select  [formControl]= "timeTitle" type="checkbox" (selectionChange)="updateCaseStudy()" (keyup)="sendValueCS(subjectCS.value)" #subjectCS placeholder="Damage" >
+            <mat-option  *ngFor="let caseStudy of timelineTitles" [value]="caseStudy">{{caseStudy}}</mat-option>
+          </mat-select>
         </mat-form-field>
 
 
@@ -35,7 +49,7 @@
           </mat-form-field> -->
 
 
-    </div>
+      </div>
     </div>
     <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 10em; padding-top: 1em;">
         <google-chart #chart
@@ -46,40 +60,39 @@
             [options]="options"
             [width]="width"
             [height]="height"
-            (select)="onSelect($event)"
         ></google-chart>
     </div>
     <div style="padding-left: 10em; padding-top: 10em;">
-      <table  mat-table [dataSource]="timelinesource" class="mat-elevation-z8" matSort>
+      <table mat-table [dataSource]="timelinesource" class="mat-elevation-z8" matSort>
         <ng-container matColumnDef="Event">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Event </th>
-          <td class= "cell" mat-cell *matCellDef="let element"> {{element.event}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Event</th>
+          <td class="cell" mat-cell *matCellDef="let element"> {{element.event}} </td>
         </ng-container>
         <ng-container matColumnDef="Start Date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date</th>
           <td mat-cell *matCellDef="let element"> {{element.start}} </td>
         </ng-container>
         <ng-container matColumnDef="End Date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
-          <td  mat-cell *matCellDef="let element"> {{element.end}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date</th>
+          <td mat-cell *matCellDef="let element"> {{element.end}} </td>
         </ng-container>
-        <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="columnHeaders" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-        <!-- <google-chart #chart
-        [title]="titleT"
-        [type]="typeT"
-        [data]="dataT"
-        [columnNames]="columnNamesT"
-        [options]="optionsT"
-        [width]="widthT"
-        [height]="heightT"
-        (select)="onSelectT($event)"
-    ></google-chart> -->
+      <!-- <google-chart #chart
+      [title]="titleT"
+      [type]="typeT"
+      [data]="dataT"
+      [columnNames]="columnNamesT"
+      [options]="optionsT"
+      [width]="widthT"
+      [height]="heightT"
+      (select)="onSelectT($event)"
+  ></google-chart> -->
     </div>
 
- </div>
- </div>
+  </div>
+</div>
 
 
 

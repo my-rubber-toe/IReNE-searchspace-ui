@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CollabRequestComponent} from './collab-request.component';
+import {CollabrequestComponent} from './collabrequest.component';
 
 describe('CollabRequestComponent', () => {
-  let component: CollabRequestComponent;
-  let fixture: ComponentFixture<CollabRequestComponent>;
+  let component: CollabrequestComponent;
+  let fixture: ComponentFixture<CollabrequestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CollabRequestComponent ]
+      declarations: [CollabrequestComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CollabRequestComponent);
+    fixture = TestBed.createComponent(CollabrequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

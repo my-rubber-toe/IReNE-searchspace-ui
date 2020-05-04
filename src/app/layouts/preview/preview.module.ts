@@ -3,12 +3,12 @@ import {NgModule} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import {PreviewComponent} from './preview.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { RouterModule } from '@angular/router';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {PreviewRoutingModule} from './preview-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    PreviewRoutingModule,
     FormsModule,
     RouterModule,
     HttpClientModule,
@@ -23,7 +24,6 @@ import { RouterModule } from '@angular/router';
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
-    CKEditorModule
   ],
   providers: [
     DatePipe

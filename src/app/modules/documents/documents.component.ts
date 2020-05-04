@@ -1,10 +1,10 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import { MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {AfterViewChecked, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import { Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {DocumentsTableComponent} from './documents-table/documents-table.component';
@@ -14,8 +14,7 @@ import {DatePipe} from '@angular/common';
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
-  providers: [
-  ],
+  providers: [],
 })
 export class DocumentsComponent implements OnInit, AfterViewChecked {
   @Output() sendChange = new EventEmitter();
@@ -72,11 +71,11 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
        * @param d date to check
        */
       this.publicationFilter = (d: Date | null): boolean => {
-        if ( !this.yearSelected) {
+        if (!this.yearSelected) {
           if (this.falseYears.includes(d.getFullYear())) {
             return false;
           } else {
-            if ( this.table.dataSource.data.some(e => {
+            if (this.table.dataSource.data.some(e => {
               return e.creationDate.includes(d.getFullYear().toString());
             })) {
               return true;
@@ -86,7 +85,7 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
             }
           }
         }
-        if ( this.yearSelected && !this.monthSelected) {
+        if (this.yearSelected && !this.monthSelected) {
           if (this.falseMonths.includes(d.getMonth())) {
             return false;
           } else {
@@ -108,18 +107,18 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
         }
         return this.table.dataSource.data.some(e => {
           return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
-          });
+        });
       };
       /**
        * Definition of the filter of the calendar to display what  dates can  be selected
        * @param d date to check
        */
       this.incidentFilter = (d: Date | null): boolean => {
-        if ( !this.yearSelected) {
+        if (!this.yearSelected) {
           if (this.falseYears.includes(d.getFullYear())) {
             return false;
           } else {
-            if ( this.table.dataSource.data.some(e => {
+            if (this.table.dataSource.data.some(e => {
               return e.incidentDate.includes(d.getFullYear().toString());
             })) {
               return true;
@@ -129,7 +128,7 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
             }
           }
         }
-        if ( this.yearSelected && !this.monthSelected) {
+        if (this.yearSelected && !this.monthSelected) {
           if (this.falseMonths.includes(d.getMonth())) {
             return false;
           } else {
@@ -215,5 +214,17 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
     this.monthSelected = false;
     this.falseYears = [];
     this.falseMonths = [];
+  }
+
+  resetFilters() {
+    this.formControl.reset();
+    this.creatorCtrl.reset();
+    this.selectedAuthors.forEach(author => {
+      this.remove(author);
+    });
+    this.date1.reset();
+    this.date2.reset();
+    this.table.filterSelection.clear();
+    this.table.applyFilter();
   }
 }

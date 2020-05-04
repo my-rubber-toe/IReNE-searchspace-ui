@@ -105,7 +105,7 @@ export class DocumentsTableComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate =
-        (data: DocumentMetadata, filters: string, ) => {
+        (data: DocumentMetadata, filters: string,) => {
           const matchFilter = [];
           const filterArray = filters.split(' ');
           const columns = (Object as any).values(data);

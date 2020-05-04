@@ -1,330 +1,232 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl} from '@angular/forms';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
-import { ChartEvent } from 'angular-google-charts';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { XY } from 'src/app/shared/models/searchspace.model';
 
 interface CatXValues {
-  cat_x: string
+  cat_x: string;
 }
+
 interface CatYValues {
-  cat_y: string
+  cat_y: string;
 }
+
 @Component({
   selector: 'app-xy',
   templateUrl: './xy.component.html',
   styleUrls: ['./xy.component.scss']
 })
+
 export class XyComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  tempEvent: Event;
   dataSource: MatTableDataSource<XY>;
-  tempDataSource: MatTableDataSource<XY>;
   events: string[] = [];
+  // tslint:disable-next-line:variable-name
   category_x = new FormControl();
   categoryX: string[] = ['Infrastructure', 'Damage', 'Tag'];
 
+  // tslint:disable-next-line:variable-name
   category_y = new FormControl();
   categoryY: string[] = ['Number of Cases', 'Incident Date', 'Publication Date'];
 
-  //title and columnNames is filled in ngonInit()
+  // title and columnNames is filled in ngOnInit()
   title = '';
   type = 'BarChart';
-   columnNames = [];
-   options = {
-   };
-   //data is filled in ngonInit()
-   data = [];
-   width = 750;
-   height = 550;
+  columnNames = [];
+  options = {};
+  // data is filled in ngOnInit()
+  data = [];
+  width = 1000;
+  height = 550;
 
-   //sends the value to use in ngoninit()
-   sendValueX(value) {
-    this.docservice.setBehaviorViewX({textVal: value});
-    }
-   sendValueY(value) {
-    this.docservice.setBehaviorViewY({textVal: value});
-    }
-    //gets the value from html
-    updateCatX(){
-      const catxVal : CatXValues = {
-       cat_x: this.category_x.value
-      }
-      this.sendValueX(catxVal.cat_x);
-      return catxVal.cat_x;
-    }
-    updateCatY(){
-      const catyVal : CatYValues = {
-       cat_y: this.category_y.value
-      }
-      this.sendValueY(catyVal.cat_y);
-      return catyVal.cat_y;
-    }
+  verticalDict = {
+    Damage: 'damageDocList',
+    Infrastructure: 'infrasDocList',
+    Tag: 'tagsDoc'
+  };
 
-   onSelect(e: ChartEvent){
-     console.log(this.data[e[0].row[2]]);
-   }
-  constructor(private docservice:SearchSpaceService) { 
-    this.category_x.setValue("Damage");
-    this.category_y.setValue("Publication Date");
-  
+  horizontalDict = {
+    'Publication Date': 'creationDate',
+    'Incident Date': 'incidentDate'
+  };
+
+  // sends the value to use in ngOnInit()
+  sendValueX(value) {
+    this.docService.setBehaviorViewX({textVal: value});
+  }
+
+  sendValueY(value) {
+    this.docService.setBehaviorViewY({textVal: value});
+  }
+
+  // gets the value from html
+  updateCatX() {
+    const catxVal: CatXValues = {
+      cat_x: this.category_x.value
+    };
+    this.sendValueX(catxVal.cat_x);
+    return catxVal.cat_x;
+  }
+
+  updateCatY() {
+    const catyVal: CatYValues = {
+      cat_y: this.category_y.value
+    };
+    this.sendValueY(catyVal.cat_y);
+    return catyVal.cat_y;
+  }
+
+  constructor(private docService: SearchSpaceService) {
+    this.category_x.setValue('Damage');
+    this.category_y.setValue('Publication Date');
+
   }
 
   ngOnInit(): void {
-    this.docservice.getBehaviorViewX().subscribe(vx => {
-    this.docservice.getBehaviorViewY().subscribe(vy => {
-    this.docservice.docXY().add(() => {
-      this.dataSource =  new MatTableDataSource<XY>(this.docservice.comparison);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      //values from the selection of category x & y
-      const x = vx['textVal'];
-      const y = vy['textVal'];
+    this.docService.docXY().add(() => {
+      this.docService.getBehaviorViewX().subscribe(vx => {
+        this.docService.getBehaviorViewY().subscribe(vy => {
+          this.dataSource = new MatTableDataSource<XY>(this.docService.comparison);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          // values from the selection of category x & y
+          const x = vx.textVal;
+          const y = vy.textVal;
 
-      let map = new Map();
-      let key = '';
-      let value = '';
-      let row = [];
-      let rowx = [];
-      let rowy = [];
-      //fills hashmap to get the category y within each category x
-      if(y != 'Number of Cases'){
-        if(x == 'Damage' && y == 'Publication Date'){
-          for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].damageDocList[j]))){
-                key = String(this.dataSource.filteredData[i].damageDocList[j]);
-                rowx.push(key);
-                value = this.dataSource.filteredData[i].creationDate.substr(0,4);
-                map.set(key,new Array(value));
+          const map = new Map();
+          const key = '';
+          const value = '';
+          const row = [];
+          const rowx = [];
+          let rowy = [];
+          // fills hashmap to get the category y within each category x
+          for (const i of this.dataSource.filteredData) {
+            if (y !== 'Number of Cases') {
+              for (const j of i[this.verticalDict[x]]) {
+                this.setDatesMap(i, j, map, key, value, rowx, rowy, this.horizontalDict[y]);
               }
-              else{
-                map.get(String(this.dataSource.filteredData[i].damageDocList[j])).push(this.dataSource.filteredData[i].creationDate.substr(0,4));
+            } else {
+              // the hash map here is built with category x as key and value as ocurrecences of catX
+              for (const j of i[this.verticalDict[x]]) {
+                this.setCountMap(i, j, map, key);
               }
-            }
-            //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].creationDate.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].creationDate.substr(0,4));
             }
           }
-        }
-        else if(x == 'Infrastructure' && y == 'Publication Date'){
-          for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].infrasDocList.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].infrasDocList[j]))){
-                key = String(this.dataSource.filteredData[i].infrasDocList[j]);
-                rowx.push(key);
-                value = this.dataSource.filteredData[i].creationDate.substr(0,4);
-                map.set(key,new Array(value));
+          if (y === 'Number of Cases') {
+            // sets the data table for the chart
+            let index = 0;
+            // tslint:disable-next-line:no-shadowed-variable
+            map.forEach((value: number, key: string) => {
+              row[index] = [key, value];
+              index++;
+            });
+            this.columnNames = [x, y];
+            this.data = row;
+            this.title = 'Comparison Graph';
+            this.options = {
+                enableScrollWheel: true,
+                showTip: true,
+                isStacked: true,
+                hAxis: {
+                  title: 'Number of Cases',
+                  titleFontSize: 20
+                },
+                vAxis: {
+                  title: 'Categories of Type ' + x,
+                  titleFontSize: 20
+                },
+                fontSize: 10,
+                titleFontSize: 30,
+                legendFontSize: 14
+               };
+            this.height = row.length * 50;
+          } else {
+            // gives the count for each value within each type within cat x
+            rowy = rowy.sort();
+            const countsy = [];
+            // tslint:disable-next-line:no-shadowed-variable
+            map.forEach((value: string, key: string) => {
+              const countValue = [];
+              for (const i of value) {
+                // fills an array with length of the year
+                // this is to have a sort of count per year
+                countValue[i] = 1 + (countValue[i] || 0);
               }
-              else{
-                map.get(String(this.dataSource.filteredData[i].infrasDocList[j])).push(this.dataSource.filteredData[i].creationDate.substr(0,4));
-              }
-            }
-            //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].creationDate.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].creationDate.substr(0,4));
-            }
-          }
-        }
-        else if(x == 'Tag' && y == 'Publication Date'){
-          for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].tagsDoc.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].tagsDoc[j]))){
-                key = String(this.dataSource.filteredData[i].tagsDoc[j]);
-                rowx.push(key);
-                value = this.dataSource.filteredData[i].creationDate.substr(0,4);
-                map.set(key,new Array(value));
-              }
-              else{
-                map.get(String(this.dataSource.filteredData[i].tagsDoc[j])).push(this.dataSource.filteredData[i].creationDate.substr(0,4));
-              }
-            }
-            //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].creationDate.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].creationDate.substr(0,4));
-            }
-          }
-        }
-
-        else if(x == 'Damage' && y == 'Incident Date'){
-          for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].damageDocList[j]))){
-                key = String(this.dataSource.filteredData[i].damageDocList[j]);
-                rowx.push(key);
-                value = this.dataSource.filteredData[i].incidentDate.substr(0,4);
-                map.set(key,new Array(value));
-              }
-              else{
-                map.get(String(this.dataSource.filteredData[i].damageDocList[j])).push(this.dataSource.filteredData[i].incidentDate.substr(0,4));
-              }
-            }
-            //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].incidentDate.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].incidentDate.substr(0,4));
-            }
-          }
-          console.log(map);
-        }
-        else if(x == 'Infrastructure' && y == 'Incident Date'){
-          for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].infrasDocList.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].infrasDocList[j]))){
-                key = String(this.dataSource.filteredData[i].infrasDocList[j]);
-                rowx.push(key);
-                value = this.dataSource.filteredData[i].incidentDate.substr(0,4);
-                map.set(key,new Array(value));
-              }
-              else{
-                map.get(String(this.dataSource.filteredData[i].infrasDocList[j])).push(this.dataSource.filteredData[i].incidentDate.substr(0,4));
-              }
-            }
-            //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].incidentDate.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].incidentDate.substr(0,4));
-            }
-          }
-        }
-        else if(x == 'Tag' && y == 'Incident Date'){
-          for(let i = 0; i<this.dataSource.filteredData.length;i++){
-            for(let j = 0; j < this.dataSource.filteredData[i].tagsDoc.length; j++){
-              if(!map.has(String(this.dataSource.filteredData[i].tagsDoc[j]))){
-                key = String(this.dataSource.filteredData[i].tagsDoc[j]);
-                rowx.push(key);
-                value = this.dataSource.filteredData[i].incidentDate.substr(0,4);
-                map.set(key,new Array(value));
-              }
-              else{
-                map.get(String(this.dataSource.filteredData[i].tagsDoc[j])).push(this.dataSource.filteredData[i].incidentDate.substr(0,4));
-              }
-            }
-            //gets the distinct category y
-            if(!rowy.includes(this.dataSource.filteredData[i].incidentDate.substr(0,4))){
-              rowy.unshift(this.dataSource.filteredData[i].incidentDate.substr(0,4));
-            }
-          }
-        }
-        //gives the count for each value within each type within cat x
-        rowy = rowy.sort();
-        let countsy = [];
-        map.forEach((value: string, key: string) => {
-              let countValue = [];
-              for(let i = 0; i < value.length; i++){
-                //fills an array with length of the year
-                //this is to have a sort of count per year
-                countValue[value[i]] = 1 + (countValue[value[i]] || 0);
-              }
-              //the category x that doesn't have a certain value from category y is put a 0
-              //this way that year will have a count of 0 documents
-              for(let i = 0; i < rowy.length; i++){
-                if(countValue[rowy[i]] == null){
-                  countValue[rowy[i]] = 0;
+              // the category x that doesn't have a certain value from category y is put a 0
+              // this way that year will have a count of 0 documents
+              for (const i of rowy) {
+                if (countValue[i] == null) {
+                  countValue[i] = 0;
                 }
 
               }
-              //returns an array with no null values
-              let filteredArr = countValue.filter(function(value){ return value != null;});
+              // returns an array with no null values
+              // tslint:disable-next-line:no-shadowed-variable
+              const filteredArr = countValue.filter((value) => value != null);
               countsy.push(filteredArr);
 
+            });
+            // sets the data table for the chart
+            for (let i = 0; i < rowx.length; i++) {
+
+              row[i] = countsy[i];
+              row[i].unshift(rowx[i]);
+            }
+
+            this.columnNames = rowy;
+            this.columnNames.unshift(x);
+            this.data = row;
+            this.title = 'Comparison Graph';
+            this.options = {
+              enableScrollWheel: true,
+              showTip: true,
+              isStacked: true,
+              hAxis: {
+                title: 'Number of Cases filtered by ' + y,
+                titleFontSize: 15
+              },
+              vAxis: {
+                title: 'Categories of Type ' + x,
+                titleFontSize: 15
+              },
+              fontSize: 10,
+              titleFontSize: 30,
+              legendFontSize: 14
+              };
+            this.height = row.length * 50;
+          }
         });
-        //sets the data table for the chart
-        for(let i = 0; i < rowx.length; i++){
-
-          row[i] = countsy[i];
-          row[i].unshift(rowx[i]);
-        }
-
-        this.columnNames = rowy;
-        this.columnNames.unshift(x);
-        this.data = row;
-        console.log('x: ',x,'y:',y);
-        console.log('data:\n',this.data);
-        this.title = 'Comparison Graph';
-        this.options = {
-          enableScrollWheel:true,
-          showTip:true,
-          isStacked:true,
-          hAxis: {
-            title: 'Number of Cases filtered by ' + y
-          },
-          vAxis: {
-            title: 'Categories of Type ' + x
-          }
-         };
-      }
-      else {
-          //the hash map here is built with category x as key and value as ocurrecences of catX
-          if(x == "Damage"){
-            for(let i = 0; i<this.dataSource.filteredData.length;i++){
-              for(let j = 0; j < this.dataSource.filteredData[i].damageDocList.length; j++){
-                  if(!map.has(String(this.dataSource.filteredData[i].damageDocList[j]))){
-                    key = String(this.dataSource.filteredData[i].damageDocList[j]);
-                    map.set(key, 1);
-                  }
-                  else{
-                    map.set(String(this.dataSource.filteredData[i].damageDocList[j]), map.get(String(this.dataSource.filteredData[i].damageDocList[j])) + 1);
-                  }
-               }
-             }
-          }
-          else if(x == "Infrastructure"){
-            for(let i = 0; i<this.dataSource.filteredData.length;i++){
-              for(let j = 0; j < this.dataSource.filteredData[i].infrasDocList.length; j++){
-                  if(!map.has(String(this.dataSource.filteredData[i].infrasDocList[j]))){
-                    key = String(this.dataSource.filteredData[i].infrasDocList[j]);
-                    map.set(key, 1);
-                  }
-                  else{
-                    map.set(String(this.dataSource.filteredData[i].infrasDocList[j]), map.get(String(this.dataSource.filteredData[i].infrasDocList[j])) + 1);
-                  }
-               }
-             }
-          }
-          else if(x == "Tag"){
-            for(let i = 0; i<this.dataSource.filteredData.length;i++){
-              for(let j = 0; j < this.dataSource.filteredData[i].tagsDoc.length; j++){
-                  if(!map.has(String(this.dataSource.filteredData[i].tagsDoc[j]))){
-                    key = String(this.dataSource.filteredData[i].tagsDoc[j]);
-                    map.set(key, 1);
-                  }
-                  else{
-                    map.set(String(this.dataSource.filteredData[i].tagsDoc[j]), map.get(String(this.dataSource.filteredData[i].tagsDoc[j])) + 1);
-                  }
-               }
-             }
-          }
-        //sets the data table for the chart
-        let index = 0;
-        map.forEach((value: number, key: string) => {
-            row[index] = [key, value];
-            console.log(row);
-            index++;
-         });
-        this.columnNames = [x,y];
-        this.data = row;
-        console.log('x: ',x,'y:',y);
-        console.log('data:\n',this.data);
-        this.title = 'Comparison Graph';
-        this.options = {
-          enableScrollWheel:true,
-          showTip:true,
-          isStacked:true,
-          hAxis: {
-            title: 'Number of Cases'
-          },
-          vAxis: {
-            title: 'Categories of Type ' + x
-          }
-         };
-      }
+      });
     });
-  });
- });
   }
 
+  setDatesMap(i, j, map: Map<any, any>, key: string, value: string, rowx: any[], rowy: any[], cat: string) {
+    if (!map.has(String(j))) {
+      key = String(j);
+      rowx.push(key);
+      value = i[cat].substr(0, 4);
+      map.set(key, new Array(value));
+    } else {
+      map.get(String(j)
+      ).push(i[cat].substr(0, 4));
+    }
+    // gets the distinct category y
+    if (!rowy.includes(i[cat].substr(0, 4))) {
+      rowy.unshift(i[cat].substr(0, 4));
+    }
+  }
+
+  setCountMap(i, j, map: Map<any, any>, key: string) {
+    if (!map.has(String(j))) {
+      key = String(j);
+      map.set(key, 1);
+    } else {
+      map.set(String(j),
+        map.get(String(j)) + 1);
+    }
+  }
 }

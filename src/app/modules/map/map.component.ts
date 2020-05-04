@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
-import {DocumentMetadata} from 'src/app/shared/models/searchspace.model';
+import {MapMetadata} from 'src/app/shared/models/searchspace.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
 import {FilterService} from 'src/app/shared/services/filter.service';
@@ -11,6 +11,7 @@ import {MatInput} from '@angular/material/input';
 import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -28,7 +29,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     private searchSpaceService: SearchSpaceService,
     private router: Router,
     private snackBar: MatSnackBar,
-    ) {}
+  ) {
+  }
+
   @ViewChild('inputToDate1', {
     read: MatInput
   }) inputToDate1: MatInput;
@@ -55,7 +58,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   dirtyFields = false;
 
-  documents: DocumentMetadata[];
+  documents: MapMetadata[];
 
   // Google Map Data Setup
   title = '';
@@ -111,19 +114,23 @@ export class MapComponent implements OnInit, AfterViewInit {
   /**
    * The data source to be used.
    */
-  dataSource: MatTableDataSource<DocumentMetadata>;
-  tempDataSource: MatTableDataSource<DocumentMetadata>;
+  dataSource: MatTableDataSource<MapMetadata>;
+  tempDataSource: MatTableDataSource<MapMetadata>;
   private markerCluster: MarkerClusterer;
   private falseYears = [];
   yearSelected = false;
   private falseMonths = [];
   monthSelected = false;
 
+  // tslint:disable-next-line:jsdoc-format
   /**@ignore */
   ngOnInit() {
-    this.searchSpaceService.getDocuments().add(() => {
-      this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
+    this.searchSpaceService.getMapDocuments().add(() => {
+      this.dataSource = new MatTableDataSource<MapMetadata>(this.searchSpaceService.map);
       this.tempDataSource = this.dataSource;
+      this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAZEkjgNHbvCFQ4ohopyKSg3-zbfHx4pSk').onload = () => {
+        this.loadMap();
+      };
     });
 
     // Retrieve all the available filters in the database.
@@ -133,19 +140,19 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.tagsList = this.searchSpaceService.filters[`tags`];
     });
     this.center = {
-        lat: 18.2208328,
-        lng: -66.5901489,
+      lat: 18.2208328,
+      lng: -66.5901489,
     };
     /*
     * Definition of the filter of the calendar to display what  dates can  be selected
     * @param d date to check
     */
     this.publicationFilter = (d: Date | null): boolean => {
-      if ( !this.yearSelected) {
+      if (!this.yearSelected) {
         if (this.falseYears.includes(d.getFullYear())) {
           return false;
         } else {
-          if ( this.dataSource.data.some(e => {
+          if (this.dataSource.data.some(e => {
             return e.creationDate.includes(d.getFullYear().toString());
           })) {
             return true;
@@ -155,7 +162,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           }
         }
       }
-      if ( this.yearSelected && !this.monthSelected) {
+      if (this.yearSelected && !this.monthSelected) {
         if (this.falseMonths.includes(d.getMonth())) {
           return false;
         } else {
@@ -184,11 +191,11 @@ export class MapComponent implements OnInit, AfterViewInit {
      * @param d date to check
      */
     this.incidentFilter = (d: Date | null): boolean => {
-      if ( !this.yearSelected) {
+      if (!this.yearSelected) {
         if (this.falseYears.includes(d.getFullYear())) {
           return false;
         } else {
-          if ( this.dataSource.data.some(e => {
+          if (this.dataSource.data.some(e => {
             return e.incidentDate.includes(d.getFullYear().toString());
           })) {
             return true;
@@ -198,7 +205,7 @@ export class MapComponent implements OnInit, AfterViewInit {
           }
         }
       }
-      if ( this.yearSelected && !this.monthSelected) {
+      if (this.yearSelected && !this.monthSelected) {
         if (this.falseMonths.includes(d.getMonth())) {
           return false;
         } else {
@@ -223,13 +230,22 @@ export class MapComponent implements OnInit, AfterViewInit {
       });
     };
   }
+  public loadScript(url: string) {
+    const body = document.body as HTMLDivElement;
+    const script = document.createElement('script');
+    script.innerHTML = '';
+    script.src = url;
+    script.async = true;
+    script.defer = true;
+    body.appendChild(script);
+    return script;
+  }
 
   ngAfterViewInit(): void {
-    this.loadMap();
   }
 
   loadMap() {
-    const mapElement =  document.getElementById('map-element');
+    const mapElement = document.getElementById('map-element');
     this.gmap = new google.maps.Map(mapElement, this.mapOptions);
     this.oms = new OverlappingMarkerSpiderfier(this.gmap, {
       markersWontMove: true,
@@ -244,6 +260,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.markerCluster = new MarkerClusterer(this.gmap, null,
       {imagePath: 'assets/pictures/m/m', maxZoom: 15}
     );
+    google.maps.event.addListenerOnce(this.gmap, 'idle', () => {
+      // map is ready
+      this.updateMap();
+    });
   }
 
   automaticSpiderify(c) {
@@ -323,6 +343,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   markerSelect(label: string) {
     this.router.navigate([`/preview/${label}`]);
   }
+
   /**
    * Setup the selection filter based on the selected option.
    * @param selection the array of values from the selected options
@@ -349,13 +370,17 @@ export class MapComponent implements OnInit, AfterViewInit {
    * @param event the event Object when the date picker changes value.
    */
   datePreCheck(event: MatDatepickerInputEvent<any>) {
-    event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+    if (event.value !== null) {
+      event.value = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+    } else {
+      event.value = '';
+    }
   }
 
   /**
    * Reset the filter values.
    */
-    resetFilters() {
+  resetFilters() {
     this.filterSelection = new Map<string, any>([
       ['location', ''],
       ['infrasDocList', ''],
@@ -385,9 +410,9 @@ export class MapComponent implements OnInit, AfterViewInit {
    * Retrieve all available markers and reset filters.
    */
   getAll() {
-    if ( this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
+    if (this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
       this.resetFilters();
-      this.dataSource =  new MatTableDataSource<DocumentMetadata>(this.searchSpaceService.documents);
+      this.dataSource.data = this.tempDataSource.data;
       this.dirtyFields = false;
       this.updateMap();
     } else {
