@@ -50,6 +50,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   yearSelected = false;
   private falseMonths = [];
   monthSelected = false;
+  loading: boolean;
 
   constructor(
     private filtersService: SearchSpaceService,
@@ -215,6 +216,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       this.search.search.setValue(params.search);
       this.table.searchFilter(params.search);
     });
+    this.loading = this.table.loading;
   }
 
   datesChecked() {
