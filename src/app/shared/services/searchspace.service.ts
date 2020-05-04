@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {MapMetadata, Filters, Timeline, XY, DocumentMetadata} from '../models/searchspace.model';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from 'src/environments/environment';
@@ -14,6 +14,7 @@ export class SearchSpaceService {
    */
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json; charset-utf-8', Accept: 'application/json'}),
+    reportProgress: true,
   };
   documents: DocumentMetadata[];
   map: MapMetadata[];
@@ -59,10 +60,8 @@ export class SearchSpaceService {
    * Get all documents metadata from the fake server.
    */
   getDocuments() {
-    return this.http.get(`${environment.serverUrl}/documents/`, this.httpOptions).subscribe(
-      (response: DocumentMetadata[]) => {
-        this.documents = response[`message`];
-      });
+    const req = new HttpRequest('GET', `${environment.serverUrl}/documents/`, this.httpOptions);
+    return this.http.request(req);
   }
 
   getMapDocuments() {

@@ -17,6 +17,10 @@ export class SearchComponent implements OnInit {
    */
   @Output() empty = new EventEmitter();
   /**
+   * Event emitter for when the user submit the value in the searchbar
+   */
+  @Output() submitEvent = new EventEmitter();
+  /**
    * form control
    */
   public search;
@@ -33,11 +37,15 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  constructor() {
+  constructor(
+  ) {
   }
 
   ngOnInit(): void {
     this.search = new FormControl('');
   }
 
+  applySubmit() {
+    this.submitEvent.emit(this.search.value);
+  }
 }

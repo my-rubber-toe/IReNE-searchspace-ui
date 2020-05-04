@@ -19,6 +19,7 @@ import {HomeModule} from '../home/home.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -26,26 +27,27 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
   exports: [
     DocumentsTableComponent
   ],
-  imports: [
-    CommonModule,
-    DocumentsRoutingModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatDatepickerModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatListModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatTooltipModule,
-    FlexModule,
-    HomeModule,
-    ReactiveFormsModule,
-    MatChipsModule,
-    MatAutocompleteModule,
-  ]
+    imports: [
+        CommonModule,
+        DocumentsRoutingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatDatepickerModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatListModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatTooltipModule,
+        FlexModule,
+        HomeModule,
+        ReactiveFormsModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatProgressBarModule,
+    ]
 })
 export class DocumentsModule {
 }

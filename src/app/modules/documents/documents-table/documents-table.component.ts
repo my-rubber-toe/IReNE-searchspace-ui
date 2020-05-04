@@ -7,6 +7,8 @@ import {DocumentMetadata} from '../../../shared/models/searchspace.model';
 import {Router} from '@angular/router';
 import {FilterService} from '../../../shared/services/filter.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {HttpEvent, HttpEventType} from '@angular/common/http';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-documents-table',
@@ -31,7 +33,7 @@ export class DocumentsTableComponent implements OnInit {
   /**
    * Event produced by the search bar with the words to use as filters
    */
-  tempEvent: Event;
+  tempEvent: string;
   dataSource: MatTableDataSource<DocumentMetadata>;
   tempDataSource: MatTableDataSource<DocumentMetadata>;
   displayedColumns: string[] = ['title', 'creatorFullName',
@@ -50,6 +52,9 @@ export class DocumentsTableComponent implements OnInit {
     ['incidentDate', ''],
     ['creationDate', '']
   ]);
+  public value = 0;
+  loading = true;
+  private subscription: Subscription;
 
   constructor(
     private filter: FilterService,
@@ -75,17 +80,21 @@ export class DocumentsTableComponent implements OnInit {
    * Filter the datasource with value of the event.
    * @param event words to filter, the event is send it by the searchbar.
    */
-  searchFilter(event: Event) {
-    if (event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.tempEvent = event;
-      if (filterValue === '') {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-      } else {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-      }
+  searchFilter(event) {
+      this.subscription.add((() => {
+        this.dataSource.filter = event.trim().toLowerCase();
+        this.tempEvent = event;
+      }));
+
+      // @ts-ignore
+//     if (typeof event !== 'undefined') {
+//       setTimeout(() => {
+//           console.log(this.dataSource);
+//           if (typeof this.dataSource !== 'undefined') {
+//           this.dataSource.filter = event.trim().toLowerCase();
+//         }
+//         }, 2000);
     }
-  }
 
   /**
    * Paginates and sorts the datasource.
@@ -100,23 +109,29 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.documentService.getDocuments().add(() => {
-      this.dataSource = new MatTableDataSource<DocumentMetadata>(this.documentService.documents);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate =
-        (data: DocumentMetadata, filters: string,) => {
-          const matchFilter = [];
-          const filterArray = filters.split(' ');
-          const columns = (Object as any).values(data);
-          filterArray.forEach(filter => {
-            const customFilter = [];
-            columns.forEach(column => customFilter.push(column.toString().toLowerCase().includes(filter)));
-            matchFilter.push(customFilter.some(Boolean)); // OR
-          });
-          return matchFilter.every(Boolean); // AND
-        };
-      this.tempDataSource = this.dataSource;
+    this.subscription = this.documentService.getDocuments().subscribe(  (event: HttpEvent<any>) => {
+      if (event.type === HttpEventType.DownloadProgress) {
+        this.value = event.loaded / event.total * 100;
+      }
+      if (event.type === HttpEventType.Response) {
+        this.dataSource = new MatTableDataSource<DocumentMetadata>(event.body[`message`]);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.filterPredicate =
+          (data: DocumentMetadata, filters: string, ) => {
+            const matchFilter = [];
+            const filterArray = filters.split(' ');
+            const columns = (Object as any).values(data);
+            filterArray.forEach(filter => {
+              const customFilter = [];
+              columns.forEach(column => customFilter.push(column.toString().toLowerCase().includes(filter)));
+              matchFilter.push(customFilter.some(Boolean)); // OR
+            });
+            return matchFilter.every(Boolean); // AND
+          };
+        this.tempDataSource = this.dataSource;
+        this.loading = false;
+      }
     });
   }
 
@@ -126,7 +141,6 @@ export class DocumentsTableComponent implements OnInit {
    * @param type category of the filter.
    */
   selectionEvent(selection: any, type: string) {
-    console.log(selection);
     this.filterSelection.set(type, selection);
   }
 
@@ -135,7 +149,7 @@ export class DocumentsTableComponent implements OnInit {
    * @param event words to filter by the searchbar.
    */
   searchEvent(event: Event) {
-    this.tempEvent = event;
+    this.tempEvent = (event.target as HTMLInputElement).value;
   }
 
   /**

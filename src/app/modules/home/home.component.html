@@ -7,7 +7,7 @@
         </p>
         <p id="searchspace">Search Space</p>
       </div>
-      <app-search fxFlex="60" fxFlexOrder="1">
+      <app-search (submitEvent)="sendSubmit($event)" fxFlex="60" fxFlexOrder="1">
       </app-search>
       <mat-card class="disclaimer" fxFlex="60" fxFlexOrder="2">
         <mat-card-header>
@@ -17,18 +17,11 @@
         </mat-card-header>
         <mat-card-content>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
-            eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
-            Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
-            Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Sed sollicitudin, est ac ullamcorper efficitur, dolor diam maximus
-            eros, nec feugiat libero sapien eu lorem. Integer a pulvinar ante.
-            Morbi convallis imperdiet turpis, nec accumsan lacus volutpat in.
-            Pellentesque tempor sapien ex, vel consequat velit rutrum ac.
-
-
+            IReN is a web application developed to facilitate the creation and access of case studies
+            regarding the multi-faceted infrastructure damages of natural disasters in Puerto Rico. The web application
+            allows for the creation, searching, and editing of case studies and was developed by students from the
+            University of Puerto Rico to help the RISE-UP initiative document, collaborate, and share information that
+            will help create more resilient future infrastructure in Puerto Rico.
           </p>
         </mat-card-content>
       </mat-card>
@@ -39,7 +32,7 @@
           <mat-card-header>
             <mat-card-title>Search</mat-card-title>
           </mat-card-header>
-          <img routerLink="/documents" mat-card-image src="assets/pictures/search-black-48dp.svg" alt="search">
+          <img routerLink="/documents" mat-card-image src="../../../assets/pictures/search-black-48dp.svg" alt="search">
           <mat-card-content>
             Search documents in the database and apply different filters.
           </mat-card-content>
@@ -48,7 +41,7 @@
           <mat-card-header>
             <mat-card-title>Map</mat-card-title>
           </mat-card-header>
-          <img routerLink="/map" mat-card-image src="assets/pictures/room_black.svg" alt="search">
+          <img routerLink="/map" mat-card-image src="../../../assets/pictures/room_black.svg" alt="search">
           <mat-card-content>
             Select filters for the documents and show the locations of it in a map.
           </mat-card-content>
@@ -57,7 +50,7 @@
           <mat-card-header>
             <mat-card-title>Timeline</mat-card-title>
           </mat-card-header>
-          <img routerLink="/timeline" mat-card-image src="assets/pictures/date_range.svg" alt="search">
+          <img routerLink="/timeline" mat-card-image src="../../../assets/pictures/date_range.svg" alt="search">
           <mat-card-content>
             Select document to visualize the timeline of it.
           </mat-card-content>
@@ -66,7 +59,7 @@
           <mat-card-header>
             <mat-card-title>XvsY Plot</mat-card-title>
           </mat-card-header>
-          <img routerLink="/xy" mat-card-image src="assets/pictures/show_chart.svg" alt="search">
+          <img routerLink="/xy" mat-card-image src="../../../assets/pictures/show_chart.svg" alt="search">
           <mat-card-content>
             Select filters and view a X vs Y plot to visualize the correlation.
           </mat-card-content>

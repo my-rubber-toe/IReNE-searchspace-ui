@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
@@ -9,6 +9,8 @@ import {map, startWith} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {DocumentsTableComponent} from './documents-table/documents-table.component';
 import {DatePipe} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {SearchComponent} from '../home/search/search.component';
 
 @Component({
   selector: 'app-documents',
@@ -16,10 +18,11 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./documents.component.scss'],
   providers: [],
 })
-export class DocumentsComponent implements OnInit, AfterViewChecked {
+export class DocumentsComponent implements OnInit, AfterViewInit {
   @Output() sendChange = new EventEmitter();
   @Output() selectedEvent = new EventEmitter();
   @ViewChild('creatorInput') creatorInput: ElementRef<HTMLInputElement>;
+  @ViewChild('searchComponent') search: SearchComponent;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
   date1 = new FormControl('');
@@ -51,6 +54,7 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
   constructor(
     private filtersService: SearchSpaceService,
     private datePipe: DatePipe,
+    public route: ActivatedRoute
   ) {
     this.maxDate = new Date();
   }
@@ -205,8 +209,12 @@ export class DocumentsComponent implements OnInit, AfterViewChecked {
     return this.authors.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  ngAfterViewChecked(): void {
-
+  ngAfterViewInit(): void {
+    this.route.queryParams.subscribe(params => {
+      // @ts-ignore
+      this.search.search.setValue(params.search);
+      this.table.searchFilter(params.search);
+    });
   }
 
   datesChecked() {

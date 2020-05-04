@@ -2,7 +2,7 @@
   <mat-divider></mat-divider>
   <div fxLayout="column" fxLayoutAlign="space-evenly stretch">
     <div fxLayoutAlign="center" fxLayoutGap="3px">
-      <app-search fxFlex="80" hint="false"
+      <app-search #searchComponent fxFlex="80"
                   (typed)="documentsTableComponent.searchEvent($event);
         documentsTableComponent.show = true; documentsTableComponent.applyFilter()"
                   (empty)="documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()">
