@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {XY} from 'src/app/shared/models/searchspace.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl} from '@angular/forms';
+import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { XY } from 'src/app/shared/models/searchspace.model';
 
 interface CatXValues {
   cat_x: string;
@@ -19,6 +19,7 @@ interface CatYValues {
   templateUrl: './xy.component.html',
   styleUrls: ['./xy.component.scss']
 })
+
 export class XyComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -39,7 +40,7 @@ export class XyComponent implements OnInit {
   options = {};
   // data is filled in ngOnInit()
   data = [];
-  width = 750;
+  width = 1000;
   height = 550;
 
   verticalDict = {
@@ -127,16 +128,22 @@ export class XyComponent implements OnInit {
             this.data = row;
             this.title = 'Comparison Graph';
             this.options = {
-              enableScrollWheel: true,
-              showTip: true,
-              isStacked: true,
-              hAxis: {
-                title: 'Number of Cases'
-              },
-              vAxis: {
-                title: 'Categories of Type ' + x
-              }
-            };
+                enableScrollWheel: true,
+                showTip: true,
+                isStacked: true,
+                hAxis: {
+                  title: 'Number of Cases',
+                  titleFontSize: 20
+                },
+                vAxis: {
+                  title: 'Categories of Type ' + x,
+                  titleFontSize: 20
+                },
+                fontSize: 10,
+                titleFontSize: 30,
+                legendFontSize: 14
+               };
+            this.height = row.length * 50;
           } else {
             // gives the count for each value within each type within cat x
             rowy = rowy.sort();
@@ -179,12 +186,18 @@ export class XyComponent implements OnInit {
               showTip: true,
               isStacked: true,
               hAxis: {
-                title: 'Number of Cases filtered by ' + y
+                title: 'Number of Cases filtered by ' + y,
+                titleFontSize: 15
               },
               vAxis: {
-                title: 'Categories of Type ' + x
-              }
-            };
+                title: 'Categories of Type ' + x,
+                titleFontSize: 15
+              },
+              fontSize: 10,
+              titleFontSize: 30,
+              legendFontSize: 14
+              };
+            this.height = row.length * 50;
           }
         });
       });
