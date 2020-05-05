@@ -81,19 +81,13 @@ export class DocumentsTableComponent implements OnInit {
    * @param event words to filter, the event is send it by the searchbar.
    */
   searchFilter(event) {
+    if (typeof event !== 'undefined') {
       this.subscription.add((() => {
         this.dataSource.filter = event.trim().toLowerCase();
         this.tempEvent = event;
+        this.subscription.unsubscribe();
       }));
-
-      // @ts-ignore
-//     if (typeof event !== 'undefined') {
-//       setTimeout(() => {
-//           console.log(this.dataSource);
-//           if (typeof this.dataSource !== 'undefined') {
-//           this.dataSource.filter = event.trim().toLowerCase();
-//         }
-//         }, 2000);
+    }
     }
 
   /**

@@ -17,7 +17,6 @@
                [matDatepicker]="picker" (dateChange)="checkEvent($event);
                documentsTableComponent.selectionEvent([$event.value], 'creationDate');
               documentsTableComponent.applyFilter()" [formControl]="date1" value=null
-               [disabled] = documentsTableComponent.loading
         >
         <mat-datepicker-toggle matSuffix [for]="picker" [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
         <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
@@ -31,7 +30,6 @@
                (dateChange)="checkEvent($event);
               documentsTableComponent.selectionEvent([$event.value], 'incidentDate');
               documentsTableComponent.applyFilter()" [formControl]="date2" value="=null"
-               [disabled] = documentsTableComponent.loading
         >
         <mat-datepicker-toggle matSuffix [for]="picker2" [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
         <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
@@ -39,7 +37,7 @@
                         startView="multi-year" #picker2></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="side">
-        <mat-chip-list #chipList aria-label="Author selection">
+        <mat-chip-list #chipList aria-label="Author selection" [disabled]=documentsTableComponent.loading>
           <mat-chip
             *ngFor="let author of selectedAuthors"
             [selectable]="selectable"
@@ -57,7 +55,6 @@
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [disabled] = documentsTableComponent.loading
           >
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);
@@ -70,7 +67,6 @@
       <mat-form-field class="side">
         <mat-label>Infrastructure</mat-label>
         <mat-select [formControl]="formControl" multiple
-                    [disabled] = documentsTableComponent.loading
                     (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'infrasDocList');
       documentsTableComponent.applyFilter()">
           <mat-option *ngFor="let structure of structureList"
@@ -80,7 +76,6 @@
       <mat-form-field class="side">
         <mat-label>Damages</mat-label>
         <mat-select [formControl]="formControl" multiple
-                    [disabled] = documentsTableComponent.loading
                     (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'damageDocList');
       documentsTableComponent.applyFilter()">
           <mat-option *ngFor="let dmg of dmgList" [value]="dmg['damageType']">{{dmg['damageType']}}</mat-option>
@@ -89,7 +84,6 @@
       <mat-form-field class="side">
         <mat-label>Language</mat-label>
         <mat-select [formControl]="formControl" multiple
-                    [disabled] = documentsTableComponent.loading
                     (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'language');
       documentsTableComponent.applyFilter()">
           <mat-option *ngFor="let language of languageList" [value]="language">{{language}}</mat-option>
@@ -98,7 +92,6 @@
       <mat-form-field class="side">
         <mat-label>Tags</mat-label>
         <mat-select [formControl]="formControl" multiple
-                    [disabled] = documentsTableComponent.loading
                     (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'tagsDoc');
       documentsTableComponent.applyFilter()">
           <mat-option *ngFor="let tag of tagList" [value]="tag['tagItem']">{{tag['tagItem']}}</mat-option>

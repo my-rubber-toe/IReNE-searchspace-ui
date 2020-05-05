@@ -25,8 +25,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   @ViewChild('searchComponent') search: SearchComponent;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
-  date1 = new FormControl('');
-  date2 = new FormControl('');
+  date1 = new FormControl({value: '', disabled: true});
+  date2 = new FormControl({value: '', disabled: true});
   maxDate: Date;
   minDate: Date = new Date(1970, 0, 1);
   selectable = true;
@@ -37,8 +37,8 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   filteredAuthors: Observable<string[]>;
   filters: Filters[];
   events: string[] = [];
-  formControl = new FormControl();
-  creatorCtrl = new FormControl();
+  formControl = new FormControl({value: '', disabled: true});
+  creatorCtrl = new FormControl( {value: '', disabled: true});
   languageList: string[] = ['English', 'Spanish'];
   structureList: string[];
   dmgList: string[];
@@ -216,7 +216,12 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       this.search.search.setValue(params.search);
       this.table.searchFilter(params.search);
     });
-    this.loading = this.table.loading;
+    this.table[`subscription`].add(() => {
+      this.formControl.enable();
+      this.creatorCtrl.enable();
+      this.date1.enable();
+      this.date2.enable();
+    });
   }
 
   datesChecked() {
