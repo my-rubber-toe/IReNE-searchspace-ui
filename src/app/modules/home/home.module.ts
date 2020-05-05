@@ -4,7 +4,7 @@ import {SearchComponent} from './search/search.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {HomeComponent} from './home.component';
@@ -17,17 +17,18 @@ import {HomeRoutingModule} from './home-routing.module';
   exports: [
     SearchComponent,
   ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    MatCardModule,
-    FlexLayoutModule,
-    MatIconModule,
-  ]
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        MatCardModule,
+        FlexLayoutModule,
+        MatIconModule,
+        ReactiveFormsModule,
+    ]
 })
 export class HomeModule {
 }

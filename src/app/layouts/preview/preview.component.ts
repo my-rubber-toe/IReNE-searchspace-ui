@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {environment} from 'src/environments/environment';
@@ -42,8 +42,10 @@ interface Document {
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.css']
+  styleUrls: ['./preview.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
+
 export class PreviewComponent implements OnInit {
   loadingDocument = true;
   notFound = false;

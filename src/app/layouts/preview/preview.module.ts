@@ -9,10 +9,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {PreviewRoutingModule} from './preview-routing.module';
+import { PreviewPipe } from './preview.pipe';
 
 @NgModule({
   declarations: [
-    PreviewComponent
+    PreviewComponent,
+    PreviewPipe,
   ],
   imports: [
     CommonModule,

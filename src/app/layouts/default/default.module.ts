@@ -6,6 +6,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AboutComponent} from '../../about/about.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {AboutComponent} from '../../about/about.component';
     SharedModule,
     MatSidenavModule,
     FlexLayoutModule,
+    MatCardModule,
   ],
     providers: [
       DatePipe

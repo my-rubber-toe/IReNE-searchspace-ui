@@ -131,5 +131,6 @@
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
   </div>
+    <mat-progress-bar *ngIf="loading" mode="determinate" value="{{value}}"></mat-progress-bar>
   <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
 </div>
