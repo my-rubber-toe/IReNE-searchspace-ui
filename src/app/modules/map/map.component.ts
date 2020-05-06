@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
@@ -12,12 +12,14 @@ import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {DateHeaderComponent} from '../documents/date-header.component';
+
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent implements OnInit, AfterViewInit {
   publicationFilter;
@@ -71,6 +73,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     zoomControl: true,
     scrollwheel: false,
     disableDoubleClickZoom: true,
+    streetViewControl: false,
     minZoom: 9,
     zoom: 9,
     center: {
