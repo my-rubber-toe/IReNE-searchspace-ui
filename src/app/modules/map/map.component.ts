@@ -11,6 +11,7 @@ import {MatInput} from '@angular/material/input';
 import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {DateHeaderComponent} from '../documents/date-header.component';
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -78,6 +79,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   };
   oms;
+  headerComponent = DateHeaderComponent;
 
   /**
    * The available filters that will be used for the data.

@@ -17,13 +17,6 @@
   <div fxFill>
     <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 2em; padding-top: 0.5em;">
       <div fxFlex="8">
-        <!-- <p *ngIf="!dirtyFields" style="color: red;">Select at least one field or show all.</p>
-        <p *ngIf="dirtyFields" style="color: forestgreen;">Please click to update the map.</p>
-        <button mat-raised-button color="primary" style="width: 10em;" [disabled]="!dirtyFields" (click)="updateMap()">
-          Update Map
-        </button>
-        <br>
-        <br> -->
         <button mat-raised-button color="primary" style="width: 10em;" (click)="resetFilters()">
           Reset Filters
         </button>
@@ -41,7 +34,7 @@
                  (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate'); updateMap()">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
-                          (monthSelected)="monthSelected = true"
+                          (monthSelected)="monthSelected = true" [calendarHeaderComponent]="headerComponent"
                           startView="multi-year" #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
@@ -51,7 +44,7 @@
                  (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate'); updateMap()">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
-                          (monthSelected)="monthSelected = true"
+                          (monthSelected)="monthSelected = true" [calendarHeaderComponent]="headerComponent"
                           startView="multi-year" #picker2></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
