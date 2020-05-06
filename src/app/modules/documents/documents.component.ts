@@ -1,4 +1,14 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
@@ -19,6 +29,7 @@ import {DateHeaderComponent} from './date-header.component';
   styleUrls: ['./documents.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DocumentsComponent implements OnInit, AfterViewInit {
   @Output() sendChange = new EventEmitter();
@@ -27,7 +38,6 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   @ViewChild('searchComponent') search: SearchComponent;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
-  @ViewChild('picker') picker: MatDatepicker<Date>;
   date1 = new FormControl({value: '', disabled: true});
   date2 = new FormControl({value: '', disabled: true});
   maxDate: Date;
@@ -46,13 +56,15 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   structureList: string[];
   dmgList: string[];
   tagList: string[];
-  publicationFilter;
-  incidentFilter;
+  dateFilter;
   yearSelected = false;
   monthSelected = false;
   dateHeaderComponent = DateHeaderComponent;
   private falseYears = [];
   private falseMonths = [];
+  private picker = {
+    selected: ''
+  };
 
   constructor(
     private filtersService: SearchSpaceService,
@@ -73,93 +85,50 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line:deprecation
         startWith(null),
         map((creator: string | null) => creator ? this._filter(creator) : this.authors.slice()));
-      /**
-       * Definition of the filter of the calendar to display what  dates can  be selected
-       * @param d date to check
-       */
-      this.publicationFilter = (d: Date | null): boolean => {
-        if (!this.yearSelected) {
-          if (this.falseYears.includes(d.getFullYear())) {
-            return false;
-          } else {
-            if (this.table.dataSource.data.some(e => {
-              return e.creationDate.includes(d.getFullYear().toString());
-            })) {
-              return true;
-            } else {
-              this.falseYears.push(d.getFullYear());
-              return false;
-            }
-          }
-        }
-        if (this.yearSelected && !this.monthSelected) {
-          if (this.falseMonths.includes(d.getMonth())) {
-            return false;
-          } else {
-            let date;
-            if (d.getMonth() + 1 < 10) {
-              date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
-            } else {
-              date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
-            }
-            if (this.table.dataSource.data.some(e => {
-              return e.creationDate.includes(date);
-            })) {
-              return true;
-            } else {
-              this.falseMonths.push(d.getMonth());
-              return false;
-            }
-          }
-        }
-        return this.table.dataSource.data.some(e => {
-          return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
-        });
-      };
-      /**
-       * Definition of the filter of the calendar to display what  dates can  be selected
-       * @param d date to check
-       */
-      this.incidentFilter = (d: Date | null): boolean => {
-        if (!this.yearSelected) {
-          if (this.falseYears.includes(d.getFullYear())) {
-            return false;
-          } else {
-            if (this.table.dataSource.data.some(e => {
-              return e.incidentDate.includes(d.getFullYear().toString());
-            })) {
-              return true;
-            } else {
-              this.falseYears.push(d.getFullYear());
-              return false;
-            }
-          }
-        }
-        if (this.yearSelected && !this.monthSelected) {
-          if (this.falseMonths.includes(d.getMonth())) {
-            return false;
-          } else {
-            let date;
-            if (d.getMonth() + 1 < 10) {
-              date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
-            } else {
-              date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
-            }
-            if (this.table.dataSource.data.some(e => {
-              return e.incidentDate.includes(date);
-            })) {
-              return true;
-            } else {
-              this.falseMonths.push(d.getMonth());
-              return false;
-            }
-          }
-        }
-        return this.table.dataSource.data.some(e => {
-          return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
-        });
-      };
     });
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
+    this.dateFilter = (d: Date | null): boolean => {
+      if (!this.yearSelected) {
+        if (this.falseYears.includes(d.getFullYear())) {
+          return false;
+        } else {
+          if (this.table.dataSource.data.some(e => {
+            return e[this.picker.selected].includes(d.getFullYear().toString());
+          })) {
+            return true;
+          } else {
+            this.falseYears.push(d.getFullYear());
+            return false;
+          }
+        }
+      }
+      if (!this.monthSelected) {
+        if (this.falseMonths.includes(d.getMonth().toString() + d.getFullYear().toString())) {
+          return false;
+        } else {
+          let date;
+          date = d.getFullYear().toString() + '-';
+          if (d.getMonth() + 1 < 10) {
+            date = date + '0';
+          }
+          date = date + (d.getMonth() + 1).toString();
+          if (this.table.dataSource.data.some(e => {
+            return e[this.picker.selected].includes(date);
+          })) {
+            return true;
+          } else {
+            this.falseMonths.push(d.getMonth().toString() + d.getFullYear().toString());
+            return false;
+          }
+        }
+      }
+      return this.table.dataSource.data.some(e => {
+        return e[this.picker.selected] === this.datePipe.transform(d, 'yyyy-MM-dd');
+      });
+    };
   }
 
   /**
@@ -220,6 +189,13 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.monthSelected = false;
     this.falseYears = [];
     this.falseMonths = [];
+  }
+
+  datePicker() {
+    this.picker.selected = 'creationDate';
+  }
+  datePicker1() {
+    this.picker.selected = 'incidentDate';
   }
 
   resetFilters() {

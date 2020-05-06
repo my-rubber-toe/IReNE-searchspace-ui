@@ -13,27 +13,27 @@
     <div fxFlex="10">
       <mat-form-field class="side">
         <mat-label>Select publication date</mat-label>
-        <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="publicationFilter"
+        <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="dateFilter"
                [matDatepicker]="picker" (dateChange)="checkEvent($event);
                documentsTableComponent.selectionEvent([$event.value], 'creationDate');
               documentsTableComponent.applyFilter()" [formControl]="date1" value=null
         >
         <mat-datepicker-toggle matSuffix [for]="picker"
                                [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
-        <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
+        <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true" (opened)="datePicker()"
                         [calendarHeaderComponent]="dateHeaderComponent" (monthSelected)="monthSelected = true"
                         startView="multi-year" #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="side">
         <mat-label>Select incident date</mat-label>
-        <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="incidentFilter"
+        <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="dateFilter"
                [matDatepicker]="picker2"
                (dateChange)="checkEvent($event);
               documentsTableComponent.selectionEvent([$event.value], 'incidentDate');
               documentsTableComponent.applyFilter()" [formControl]="date2" value="=null"
         >
         <mat-datepicker-toggle matSuffix [for]="picker2" [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
-        <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
+        <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true" (opened)="datePicker1()"
                         (monthSelected)="monthSelected = true" [calendarHeaderComponent]="dateHeaderComponent"
                         startView="multi-year" #picker2></mat-datepicker>
       </mat-form-field>

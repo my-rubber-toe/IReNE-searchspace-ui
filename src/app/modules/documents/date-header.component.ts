@@ -162,9 +162,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
 
   /** Whether the previous period button is enabled. */
   previousEnabled(): boolean {
-    if (this.calendar.currentView === 'month' || this.calendar.currentView === 'year' ) {
-      return false;
-    }
     if (!this.calendar.minDate) {
       return true;
     }
@@ -174,9 +171,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
 
   /** Whether the next period button is enabled. */
   nextEnabled(): boolean {
-    if (this.calendar.currentView === 'month' || this.calendar.currentView === 'year' ) {
-      return false;
-    }
     return !this.calendar.maxDate ||
       !this._isSameView(this.calendar.activeDate, this.calendar.maxDate);
   }
