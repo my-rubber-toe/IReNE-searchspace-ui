@@ -18,9 +18,10 @@
                documentsTableComponent.selectionEvent([$event.value], 'creationDate');
               documentsTableComponent.applyFilter()" [formControl]="date1" value=null
         >
-        <mat-datepicker-toggle matSuffix [for]="picker" [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="picker"
+                               [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
         <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
-                        (monthSelected)="monthSelected = true"
+                        [calendarHeaderComponent]="dateHeaderComponent" (monthSelected)="monthSelected = true"
                         startView="multi-year" #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="side">
@@ -33,7 +34,7 @@
         >
         <mat-datepicker-toggle matSuffix [for]="picker2" [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
         <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
-                        (monthSelected)="monthSelected = true"
+                        (monthSelected)="monthSelected = true" [calendarHeaderComponent]="dateHeaderComponent"
                         startView="multi-year" #picker2></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="side">

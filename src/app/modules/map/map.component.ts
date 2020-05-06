@@ -11,7 +11,6 @@ import {MatInput} from '@angular/material/input';
 import {MatSelect} from '@angular/material/select';
 import MarkerClusterer from '@google/markerclustererplus';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -128,9 +127,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.searchSpaceService.getMapDocuments().add(() => {
       this.dataSource = new MatTableDataSource<MapMetadata>(this.searchSpaceService.map);
       this.tempDataSource = this.dataSource;
-      this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAZEkjgNHbvCFQ4ohopyKSg3-zbfHx4pSk').onload = () => {
-        this.loadMap();
-      };
+      this.loadMap();
     });
 
     // Retrieve all the available filters in the database.
@@ -230,16 +227,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       });
     };
   }
-  public loadScript(url: string) {
-    const body = document.body as HTMLDivElement;
-    const script = document.createElement('script');
-    script.innerHTML = '';
-    script.src = url;
-    script.async = true;
-    script.defer = true;
-    body.appendChild(script);
-    return script;
-  }
 
   ngAfterViewInit(): void {
   }
@@ -252,6 +239,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       markersWontHide: true,
       basicFormatEvents: true,
       nearbyDistance: 5,
+      circleSpiralSwitchover: Infinity,
+      circleFootSeparation: 50,
     });
     this.oms.addListener('click', (marker) => {
       this.markerSelect(marker.desc);
@@ -268,7 +257,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   automaticSpiderify(c) {
     google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
-      if (this.gmap.getZoom() >= 16 && this.oms.markersNearMarker(c[0], true).length > 1) {
+      if (this.gmap.getZoom() >= 16 && this.oms.markersNearMarker(c[0], true).length === 1) {
         google.maps.event.trigger(c[0], 'click');
       }
     });
@@ -322,20 +311,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
-
-// FindLatLong(address, callback) {
-//  const geocoder = new google.maps.Geocoder();
-//  // tslint:disable-next-line:only-arrow-functions
-//  geocoder.geocode({ address }, (results, status) => {
-//    if (status === google.maps.GeocoderStatus.OK) {
-//      const lat = results[0].geometry.location.lat();
-//      const lng = results[0].geometry.location.lng();
-//      callback({ Status: 'OK', Latitude: lat, Longitude: lng });
-//    }
-//  });
-// }
-
   /**
    * Retrieve the information from the selected map marker and redirect the user to the corresponding document.
    * @param label - label including the id

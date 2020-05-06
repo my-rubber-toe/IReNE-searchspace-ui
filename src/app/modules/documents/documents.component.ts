@@ -1,5 +1,5 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
@@ -11,11 +11,13 @@ import {DocumentsTableComponent} from './documents-table/documents-table.compone
 import {DatePipe} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {SearchComponent} from '../home/search/search.component';
+import {DateHeaderComponent} from './date-header.component';
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [],
 })
 export class DocumentsComponent implements OnInit, AfterViewInit {
@@ -25,6 +27,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   @ViewChild('searchComponent') search: SearchComponent;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
+  @ViewChild('picker') picker: MatDatepicker<Date>;
   date1 = new FormControl({value: '', disabled: true});
   date2 = new FormControl({value: '', disabled: true});
   maxDate: Date;
@@ -38,19 +41,18 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   filters: Filters[];
   events: string[] = [];
   formControl = new FormControl({value: '', disabled: true});
-  creatorCtrl = new FormControl( {value: '', disabled: true});
+  creatorCtrl = new FormControl({value: '', disabled: true});
   languageList: string[] = ['English', 'Spanish'];
   structureList: string[];
   dmgList: string[];
   tagList: string[];
   publicationFilter;
   incidentFilter;
-  private falseYears = [];
-  private firstCheck = false;
   yearSelected = false;
-  private falseMonths = [];
   monthSelected = false;
-  loading: boolean;
+  dateHeaderComponent = DateHeaderComponent;
+  private falseYears = [];
+  private falseMonths = [];
 
   constructor(
     private filtersService: SearchSpaceService,
@@ -199,17 +201,6 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.creatorCtrl.setValue(null);
   }
 
-  /**
-   * filter for the autocomplete of the authors field
-   * @param value author to filter
-   *
-   */
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.authors.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   ngAfterViewInit(): void {
     this.route.queryParams.subscribe(params => {
       // @ts-ignore
@@ -241,5 +232,16 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.date2.reset();
     this.table.filterSelection.clear();
     this.table.applyFilter();
+  }
+
+  /**
+   * filter for the autocomplete of the authors field
+   * @param value author to filter
+   *
+   */
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.authors.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
   }
 }
