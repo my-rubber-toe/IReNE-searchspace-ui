@@ -245,7 +245,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       basicFormatEvents: true,
       nearbyDistance: 5,
       circleSpiralSwitchover: Infinity,
-      circleFootSeparation: 50,
+      circleFootSeparation: 17,
     });
     this.oms.addListener('click', (marker) => {
       this.markerSelect(marker.desc);

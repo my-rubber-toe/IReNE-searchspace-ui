@@ -1,15 +1,6 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
@@ -27,7 +18,6 @@ import {DateHeaderComponent} from './date-header.component';
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [],
   encapsulation: ViewEncapsulation.None,
 })
@@ -194,6 +184,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   datePicker() {
     this.picker.selected = 'creationDate';
   }
+
   datePicker1() {
     this.picker.selected = 'incidentDate';
   }

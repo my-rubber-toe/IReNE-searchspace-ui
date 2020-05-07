@@ -1,8 +1,3 @@
-@import '~@angular/material/core/theming/palette';
-@import '~@angular/material/core/theming/theming';
-
-
-
 html {
   overflow: visible;
 }
@@ -27,9 +22,34 @@ app-search {
   font-weight: bold;
 }
 .mat-calendar-body-cell > .mat-calendar-body-cell-content:not(.mat-calendar-body-disabled) {
-  background-color: lightgrey;
+  background-color: #37474f;
+  color: white;
   border-color: transparent;
 }
 .mat-calendar-body-disabled > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
   background-color: white;
+  color: black;
+}
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover,
+.cdk-keyboard-focused, .cdk-program-focused {
+  & > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+    background-color: rgba(55, 71, 79, 0.80);
+  }
+}
+.cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected){
+  background-color: #37474f;
+  color: white;
+}
+
+.cdk-program-focused .mat-calendar-body-active:not(.mat-calendar-body-disabled) > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected){
+  background-color: #37474f;
+  color: white;
+}
+.cdk-program-focused .mat-calendar-body-active:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected){
+  background-color: rgba(55, 71, 79, 0.80);
+}
+
+.cdk-program-focused .mat-calendar-body-active.mat-calendar-body-disabled > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected){
+  background-color: white;
+  color: black;
 }
