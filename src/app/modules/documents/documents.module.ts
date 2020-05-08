@@ -14,18 +14,19 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FlexModule} from '@angular/flex-layout';
 import {DocumentsRoutingModule} from './documents-routing.module';
-import {DocumentsComponent} from './documents.component';
 import {HomeModule} from '../home/home.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { DateHeaderComponent } from './date-header.component';
+import {DocumentsComponent} from './documents.component';
 
 
 @NgModule({
-  declarations: [DocumentsTableComponent, DocumentsComponent],
+  declarations: [DocumentsTableComponent, DocumentsComponent, DateHeaderComponent],
   exports: [
-    DocumentsTableComponent
+    DocumentsTableComponent,
   ],
     imports: [
         CommonModule,

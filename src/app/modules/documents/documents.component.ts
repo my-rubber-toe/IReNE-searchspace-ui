@@ -1,4 +1,5 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation
+} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
@@ -11,12 +12,14 @@ import {DocumentsTableComponent} from './documents-table/documents-table.compone
 import {DatePipe} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {SearchComponent} from '../home/search/search.component';
+import {DateHeaderComponent} from './date-header.component';
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
   providers: [],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DocumentsComponent implements OnInit, AfterViewInit {
   @Output() sendChange = new EventEmitter();
@@ -38,19 +41,20 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   filters: Filters[];
   events: string[] = [];
   formControl = new FormControl({value: '', disabled: true});
-  creatorCtrl = new FormControl( {value: '', disabled: true});
+  creatorCtrl = new FormControl({value: '', disabled: true});
   languageList: string[] = ['English', 'Spanish'];
   structureList: string[];
   dmgList: string[];
   tagList: string[];
-  publicationFilter;
-  incidentFilter;
-  private falseYears = [];
-  private firstCheck = false;
+  dateFilter;
   yearSelected = false;
-  private falseMonths = [];
   monthSelected = false;
-  loading: boolean;
+  dateHeaderComponent = DateHeaderComponent;
+  private falseYears = [];
+  private falseMonths = [];
+  private picker = {
+    selected: ''
+  };
 
   constructor(
     private filtersService: SearchSpaceService,
@@ -71,93 +75,50 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line:deprecation
         startWith(null),
         map((creator: string | null) => creator ? this._filter(creator) : this.authors.slice()));
-      /**
-       * Definition of the filter of the calendar to display what  dates can  be selected
-       * @param d date to check
-       */
-      this.publicationFilter = (d: Date | null): boolean => {
-        if (!this.yearSelected) {
-          if (this.falseYears.includes(d.getFullYear())) {
-            return false;
-          } else {
-            if (this.table.dataSource.data.some(e => {
-              return e.creationDate.includes(d.getFullYear().toString());
-            })) {
-              return true;
-            } else {
-              this.falseYears.push(d.getFullYear());
-              return false;
-            }
-          }
-        }
-        if (this.yearSelected && !this.monthSelected) {
-          if (this.falseMonths.includes(d.getMonth())) {
-            return false;
-          } else {
-            let date;
-            if (d.getMonth() + 1 < 10) {
-              date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
-            } else {
-              date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
-            }
-            if (this.table.dataSource.data.some(e => {
-              return e.creationDate.includes(date);
-            })) {
-              return true;
-            } else {
-              this.falseMonths.push(d.getMonth());
-              return false;
-            }
-          }
-        }
-        return this.table.dataSource.data.some(e => {
-          return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
-        });
-      };
-      /**
-       * Definition of the filter of the calendar to display what  dates can  be selected
-       * @param d date to check
-       */
-      this.incidentFilter = (d: Date | null): boolean => {
-        if (!this.yearSelected) {
-          if (this.falseYears.includes(d.getFullYear())) {
-            return false;
-          } else {
-            if (this.table.dataSource.data.some(e => {
-              return e.incidentDate.includes(d.getFullYear().toString());
-            })) {
-              return true;
-            } else {
-              this.falseYears.push(d.getFullYear());
-              return false;
-            }
-          }
-        }
-        if (this.yearSelected && !this.monthSelected) {
-          if (this.falseMonths.includes(d.getMonth())) {
-            return false;
-          } else {
-            let date;
-            if (d.getMonth() + 1 < 10) {
-              date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
-            } else {
-              date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
-            }
-            if (this.table.dataSource.data.some(e => {
-              return e.incidentDate.includes(date);
-            })) {
-              return true;
-            } else {
-              this.falseMonths.push(d.getMonth());
-              return false;
-            }
-          }
-        }
-        return this.table.dataSource.data.some(e => {
-          return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
-        });
-      };
     });
+    /**
+     * Definition of the filter of the calendar to display what  dates can  be selected
+     * @param d date to check
+     */
+    this.dateFilter = (d: Date | null): boolean => {
+      if (!this.yearSelected) {
+        if (this.falseYears.includes(d.getFullYear())) {
+          return false;
+        } else {
+          if (this.table.dataSource.data.some(e => {
+            return e[this.picker.selected].includes(d.getFullYear().toString());
+          })) {
+            return true;
+          } else {
+            this.falseYears.push(d.getFullYear());
+            return false;
+          }
+        }
+      }
+      if (!this.monthSelected) {
+        if (this.falseMonths.includes(d.getMonth().toString() + d.getFullYear().toString())) {
+          return false;
+        } else {
+          let date;
+          date = d.getFullYear().toString() + '-';
+          if (d.getMonth() + 1 < 10) {
+            date = date + '0';
+          }
+          date = date + (d.getMonth() + 1).toString();
+          if (this.table.dataSource.data.some(e => {
+            return e[this.picker.selected].includes(date);
+          })) {
+            return true;
+          } else {
+            this.falseMonths.push(d.getMonth().toString() + d.getFullYear().toString());
+            return false;
+          }
+        }
+      }
+      return this.table.dataSource.data.some(e => {
+        return e[this.picker.selected] === this.datePipe.transform(d, 'yyyy-MM-dd');
+      });
+    };
   }
 
   /**
@@ -199,17 +160,6 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.creatorCtrl.setValue(null);
   }
 
-  /**
-   * filter for the autocomplete of the authors field
-   * @param value author to filter
-   *
-   */
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.authors.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   ngAfterViewInit(): void {
     this.route.queryParams.subscribe(params => {
       // @ts-ignore
@@ -231,6 +181,14 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.falseMonths = [];
   }
 
+  datePicker() {
+    this.picker.selected = 'creationDate';
+  }
+
+  datePicker1() {
+    this.picker.selected = 'incidentDate';
+  }
+
   resetFilters() {
     this.formControl.reset();
     this.creatorCtrl.reset();
@@ -241,5 +199,16 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.date2.reset();
     this.table.filterSelection.clear();
     this.table.applyFilter();
+  }
+
+  /**
+   * filter for the autocomplete of the authors field
+   * @param value author to filter
+   *
+   */
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.authors.filter(creator => creator.toLowerCase().indexOf(filterValue) === 0);
   }
 }
