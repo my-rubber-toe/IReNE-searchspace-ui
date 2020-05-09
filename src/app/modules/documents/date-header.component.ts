@@ -11,60 +11,69 @@ import {takeUntil} from 'rxjs/operators';
     .mat-calendar-header {
       padding: 8px 8px 0 8px;
     }
+
     .mat-calendar-controls {
       display: flex;
       margin: 5% calc(33% / 7 - 16px);
     }
+
     .mat-icon-button:hover .mat-button-focus-overlay {
       opacity: 0.04;
     }
+
     .mat-calendar-spacer {
       flex: 1 1 auto;
     }
+
     .mat-calendar-previous-button,
     .mat-calendar-next-button {
       position: relative;
     }
+
     .mat-calendar-previous-button::after {
       border-left-width: 2px;
       transform: translateX(2px) rotate(-45deg);
     }
+
     .mat-calendar-next-button::after {
       border-right-width: 2px;
       transform: translateX(-2px) rotate(45deg);
     }
+
     .mat-calendar-table-header th {
       text-align: center;
       padding: 0 0 8px 0;
     }
+
     .mat-text:disabled {
-    color: black;
+      color: black;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div class="mat-calendar-header">
-  <div class="mat-calendar-controls">
-    <button color="text" mat-button [disabled] = true
-            (click)="currentPeriodClicked()" [attr.aria-label]="periodButtonLabel"
-            cdkAriaLive="polite">
-      {{periodButtonText}}
-    </button>
+  template: `
+    <div class="mat-calendar-header">
+      <div class="mat-calendar-controls">
+        <button color="text" mat-button [disabled]=true
+                (click)="currentPeriodClicked()" [attr.aria-label]="periodButtonLabel"
+                cdkAriaLive="polite">
+          {{periodButtonText}}
+        </button>
 
-    <div class="mat-calendar-spacer"></div>
+        <div class="mat-calendar-spacer"></div>
 
-    <ng-content></ng-content>
+        <ng-content></ng-content>
 
-    <button mat-icon-button type="button" class="mat-calendar-previous-button"
-            [disabled]="!previousEnabled()" (click)="previousClicked()"
-            [attr.aria-label]="prevButtonLabel">
-    </button>
+        <button mat-icon-button type="button" class="mat-calendar-previous-button"
+                [disabled]="!previousEnabled()" (click)="previousClicked()"
+                [attr.aria-label]="prevButtonLabel">
+        </button>
 
-    <button mat-icon-button type="button" class="mat-calendar-next-button"
-            [disabled]="!nextEnabled()" (click)="nextClicked()"
-            [attr.aria-label]="nextButtonLabel">
-    </button>
-  </div>
-  </div>
+        <button mat-icon-button type="button" class="mat-calendar-next-button"
+                [disabled]="!nextEnabled()" (click)="nextClicked()"
+                [attr.aria-label]="nextButtonLabel">
+        </button>
+      </div>
+    </div>
   `
 })
 export class DateHeaderComponent<D> implements OnDestroy {
@@ -77,15 +86,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
     calendar.stateChanges
       .pipe(takeUntil(this.destroyed))
       .subscribe(() => cdr.markForCheck());
-  }
-
-  getCurrentView() {
-    return this.calendar.currentView;
-  }
-
-  ngOnDestroy() {
-    this.destroyed.next();
-    this.destroyed.complete();
   }
 
   get periodButtonLabel(): string {
@@ -136,6 +136,15 @@ export class DateHeaderComponent<D> implements OnDestroy {
     }[this.calendar.currentView];
   }
 
+  getCurrentView() {
+    return this.calendar.currentView;
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
   /** Handles user clicks on the period label. */
   currentPeriodClicked(): void {
     this.calendar.currentView = this.calendar.currentView === 'month' ? 'multi-year' : 'month';
@@ -174,19 +183,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
     return !this.calendar.maxDate ||
       !this._isSameView(this.calendar.activeDate, this.calendar.maxDate);
   }
-  /** Whether the two dates represent the same view in the current view mode (month or year). */
-  private _isSameView(date1: D, date2: D): boolean {
-    if (this.calendar.currentView === 'month') {
-      return this.dateAdapter.getYear(date1) === this.dateAdapter.getYear(date2) &&
-        this.dateAdapter.getMonth(date1) === this.dateAdapter.getMonth(date2);
-    }
-    if (this.calendar.currentView === 'year') {
-      return this.dateAdapter.getYear(date1) === this.dateAdapter.getYear(date2);
-    }
-    // Otherwise we are in 'multi-year' view.
-    return this.isSameMultiYearView(
-      this.dateAdapter, date1, date2, this.calendar.minDate, this.calendar.maxDate);
-  }
 
   /**
    * When the multi-year view is first opened, the active year will be in view.
@@ -220,6 +216,7 @@ export class DateHeaderComponent<D> implements OnDestroy {
   euclideanModulo(a: number, b: number): number {
     return (a % b + b) % b;
   }
+
   isSameMultiYearView<Date>(
     dateAdapter: DateAdapter<D>, date1: D, date2: D, minDate: D | null, maxDate: D | null): boolean {
     const year1 = dateAdapter.getYear(date1);
@@ -227,5 +224,19 @@ export class DateHeaderComponent<D> implements OnDestroy {
     const startingYear = this.getStartingYear(dateAdapter, minDate, maxDate);
     return Math.floor((year1 - startingYear) / yearsPerPage) ===
       Math.floor((year2 - startingYear) / yearsPerPage);
+  }
+
+  /** Whether the two dates represent the same view in the current view mode (month or year). */
+  private _isSameView(date1: D, date2: D): boolean {
+    if (this.calendar.currentView === 'month') {
+      return this.dateAdapter.getYear(date1) === this.dateAdapter.getYear(date2) &&
+        this.dateAdapter.getMonth(date1) === this.dateAdapter.getMonth(date2);
+    }
+    if (this.calendar.currentView === 'year') {
+      return this.dateAdapter.getYear(date1) === this.dateAdapter.getYear(date2);
+    }
+    // Otherwise we are in 'multi-year' view.
+    return this.isSameMultiYearView(
+      this.dateAdapter, date1, date2, this.calendar.minDate, this.calendar.maxDate);
   }
 }
