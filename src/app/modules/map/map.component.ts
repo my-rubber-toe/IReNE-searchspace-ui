@@ -22,8 +22,6 @@ declare const OverlappingMarkerSpiderfier;
   encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  publicationFilter;
-  incidentFilter;
 
   constructor(
     private filterService: FilterService,
@@ -33,7 +31,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar,
   ) {
   }
-
   @ViewChild('inputToDate1', {
     read: MatInput
   }) inputToDate1: MatInput;
@@ -125,6 +122,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   yearSelected = false;
   private falseMonths = [];
   monthSelected = false;
+  private picker = {
+    selected: ''
+  };
+  dateFilter;
+
+  ///////////////////// HELPERS//////////////////////////////////////
+  loading = true;
 
   // tslint:disable-next-line:jsdoc-format
   /**@ignore */
@@ -149,13 +153,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     * Definition of the filter of the calendar to display what  dates can  be selected
     * @param d date to check
     */
-    this.publicationFilter = (d: Date | null): boolean => {
+    this.dateFilter = (d: Date | null): boolean => {
       if (!this.yearSelected) {
         if (this.falseYears.includes(d.getFullYear())) {
           return false;
         } else {
           if (this.dataSource.data.some(e => {
-            return e.creationDate.includes(d.getFullYear().toString());
+            return e[this.picker.selected].includes(d.getFullYear().toString());
           })) {
             return true;
           } else {
@@ -164,71 +168,28 @@ export class MapComponent implements OnInit, AfterViewInit {
           }
         }
       }
-      if (this.yearSelected && !this.monthSelected) {
-        if (this.falseMonths.includes(d.getMonth())) {
+      if (!this.monthSelected) {
+        if (this.falseMonths.includes(d.getMonth().toString() + d.getFullYear().toString())) {
           return false;
         } else {
           let date;
+          date = d.getFullYear().toString() + '-';
           if (d.getMonth() + 1 < 10) {
-            date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
-          } else {
-            date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
+            date = date + '0';
           }
+          date = date + (d.getMonth() + 1).toString();
           if (this.dataSource.data.some(e => {
-            return e.creationDate.includes(date);
+            return e[this.picker.selected].includes(date);
           })) {
             return true;
           } else {
-            this.falseMonths.push(d.getMonth());
+            this.falseMonths.push(d.getMonth().toString() + d.getFullYear().toString());
             return false;
           }
         }
       }
       return this.dataSource.data.some(e => {
-        return e.creationDate === this.datePipe.transform(d, 'yyyy-MM-dd');
-      });
-    };
-    /**
-     * Definition of the filter of the calendar to display what  dates can  be selected
-     * @param d date to check
-     */
-    this.incidentFilter = (d: Date | null): boolean => {
-      if (!this.yearSelected) {
-        if (this.falseYears.includes(d.getFullYear())) {
-          return false;
-        } else {
-          if (this.dataSource.data.some(e => {
-            return e.incidentDate.includes(d.getFullYear().toString());
-          })) {
-            return true;
-          } else {
-            this.falseYears.push(d.getFullYear());
-            return false;
-          }
-        }
-      }
-      if (this.yearSelected && !this.monthSelected) {
-        if (this.falseMonths.includes(d.getMonth())) {
-          return false;
-        } else {
-          let date;
-          if (d.getMonth() + 1 < 10) {
-            date = d.getFullYear().toString() + '-' + '0' + (d.getMonth() + 1).toString();
-          } else {
-            date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString();
-          }
-          if (this.dataSource.data.some(e => {
-            return e.incidentDate.includes(date);
-          })) {
-            return true;
-          } else {
-            this.falseMonths.push(d.getMonth());
-            return false;
-          }
-        }
-      }
-      return this.dataSource.data.some(e => {
-        return e.incidentDate === this.datePipe.transform(d, 'yyyy-MM-dd');
+        return e[this.picker.selected] === this.datePipe.transform(d, 'yyyy-MM-dd');
       });
     };
   }
@@ -258,6 +219,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       // map is ready
       this.updateMap();
     });
+    this.loading = false;
   }
 
   automaticSpiderify(c) {
@@ -334,8 +296,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.dirtyFields = true;
   }
 
-  ///////////////////// HELPERS//////////////////////////////////////
-
 
   /**
    * Applies the filter on the data based on the selected filters. Use MatTableDataSource for easier filtering operations.
@@ -405,5 +365,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.monthSelected = false;
     this.falseYears = [];
     this.falseMonths = [];
+  }
+
+  datePicker() {
+    this.picker.selected = 'creationDate';
+  }
+
+  datePicker2() {
+    this.picker.selected = 'incidentDate';
   }
 }
