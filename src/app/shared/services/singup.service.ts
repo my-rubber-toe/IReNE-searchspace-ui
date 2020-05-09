@@ -21,6 +21,7 @@ export class SingupService {
    * Use google sing in to retrive the information to create a Collaborator Request
    */
   public signUp() {
+    localStorage.clear();
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
         // on success this will return user data from google.
@@ -28,7 +29,7 @@ export class SingupService {
           `Hi ${userData.firstName}, Creating Request.\n Please wait`
         );
         Swal.showLoading();
-        this.collabRequest(userData.firstName, userData.lastName, userData.email)
+        this.collabRequest(userData.firstName, userData.lastName, userData.email, userData.idToken)
           .subscribe(
             x => {
               Swal.fire('Access Request', 'Access Request created', 'success');
@@ -47,8 +48,8 @@ export class SingupService {
   /**
    *  Send the info for creating a  Collaborator request
    */
-  private  collabRequest(firstName: string, lastName: string, email: string) {
-    return this.http.post(`${environment.serverUrl}/collab-request/`, {firstName , lastName, email }, this.httpOptions);
+  private collabRequest(firstName: string, lastName: string, email: string, idToken: string) {
+    return this.http.post(`${environment.serverUrl}/collab-request/`, {firstName , lastName, email, idToken }, this.httpOptions);
   }
 
   /**
