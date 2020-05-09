@@ -88,7 +88,7 @@ export class DocumentsTableComponent implements OnInit {
         this.subscription.unsubscribe();
       }));
     }
-    }
+  }
 
   /**
    * Paginates and sorts the datasource.
@@ -103,7 +103,7 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.documentService.getDocuments().subscribe(  (event: HttpEvent<any>) => {
+    this.subscription = this.documentService.getDocuments().subscribe((event: HttpEvent<any>) => {
       if (event.type === HttpEventType.DownloadProgress) {
         this.value = event.loaded / event.total * 100;
       }
