@@ -35,7 +35,6 @@
     "express": "^4.17.1",
     "path": "^0.12.7",
     "rxjs": "~6.5.4",
-    "sweetalert2": "^9.10.9",
     "tslib": "^1.10.0",
     "typescript": "~3.7.5",
     "zone.js": "~0.10.2"

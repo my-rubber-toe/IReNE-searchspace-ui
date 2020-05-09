@@ -1,0 +1,14 @@
+<ng-container *ngIf="success, else failed">
+<h1 mat-dialog-title  fxLayoutAlign="center">Request Created</h1>
+<div fxLayout="row" fxLayoutAlign="center center" mat-dialog-content>
+  <img style="width: 20%; margin-bottom: 5%;" src="../../../assets/pictures/ok.svg" alt="OK">
+  <h2> Your request was created, an administrator will evaluate the request</h2>
+</div>
+</ng-container>
+<ng-template #failed>
+  <h1 mat-dialog-title fxLayoutAlign="center">Request Failed</h1>
+  <div fxLayout="row" fxLayoutAlign="center center" mat-dialog-content>
+    <img style="width: 20%;" src="../../../assets/pictures/bad.svg" alt="Bad Request">
+    <h2> The request can not be created. If you already created a request do not submit another one</h2>
+  </div>
+</ng-template>

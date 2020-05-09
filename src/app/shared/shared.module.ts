@@ -10,13 +10,16 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {DialogDataComponent} from './services/singup.service';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    SidenavComponent
+    SidenavComponent,
+    DialogDataComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +30,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatIconModule,
     MatListModule,
     MatToolbarModule,
+    MatDialogModule,
   ],
   exports: [
     HeaderComponent,
