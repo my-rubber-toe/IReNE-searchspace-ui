@@ -1,9 +1,11 @@
-<mat-form-field fxFill appearance="outline" hintLabel="Search the database" floatLabel="always" class="search">
+<mat-form-field appearance="outline" class="search" floatLabel="always" fxFill hintLabel="Search the database">
   <label>
-    <input matInput aria-label="Search in the database" label="Search in the database" (keyup)="apply($event)" (keydown.enter)="applySubmit()"
-           type="search" placeholder="Search" [formControl]="search" >
+    <input (keydown.enter)="applySubmit()" (keyup)="apply($event)" [formControl]="search"
+           aria-label="Search in the database" label="Search in the database"
+           matInput placeholder="Search" type="search">
   </label>
-  <button mat-button matSuffix mat-icon-button aria-label="Search">
-    <mat-icon>search</mat-icon>
+  <button (click)="applySubmit();" aria-label="Search" mat-button mat-icon-button matSuffix>
+    <img #searchImg style="height: 70%; outline: none; margin-top: -13px;" alt="search"
+         src="../../../../assets/pictures/search-black-48dp.svg">
   </button>
 </mat-form-field>

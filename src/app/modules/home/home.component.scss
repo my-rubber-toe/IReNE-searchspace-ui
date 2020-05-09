@@ -1,11 +1,5 @@
-html {overflow: visible;}
 mat-card {display: flex;flex-direction: column;margin: 5px;width: 100%;}
 .mat-card-header {display: flex;flex-direction: row;flex-shrink: 0;}
-.mat-card-content {flex-grow: 1;overflow: auto;}
-button {width: 100%;}
-mat-card-header {justify-content: center;}
-p {text-align: justify;opacity: .85;}
-p#irene {opacity: 1;font-size: 5em;font-weight: bold;}
-p#searchspace {opacity: 1;font-size: 2em;font-weight: bold}
-h2 {opacity: .9;text-align: center}
+.mat-card-content {flex-grow: 1;overflow: auto;font-size: 16px;}
+mat-card-header {justify-content: center; font-size: large; font-weight: bold}
 img {cursor: pointer;outline: none;}

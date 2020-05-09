@@ -16,6 +16,6 @@ export class HomeComponent implements OnInit {
   }
 
   sendSubmit(event: Event) {
-    this.router.navigate(['/documents'], { queryParams: { search: event} });
+    this.router.navigate(['/documents'], {queryParams: {search: event}});
   }
 }

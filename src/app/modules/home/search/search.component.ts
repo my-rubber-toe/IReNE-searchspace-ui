@@ -24,7 +24,6 @@ export class SearchComponent implements OnInit {
    * form control
    */
   public search;
-
   /**
    * Send and event with the value of the search and a different event when the user deletes the value in the searchbar
    * @param event value of the Searchbar
@@ -36,15 +35,12 @@ export class SearchComponent implements OnInit {
       this.typed.emit(event);
     }
   }
-
   constructor(
   ) {
   }
-
   ngOnInit(): void {
     this.search = new FormControl('');
   }
-
   applySubmit() {
     this.submitEvent.emit(this.search.value);
   }
