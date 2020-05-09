@@ -4,47 +4,41 @@ import {MatCalendar, MatDatepickerIntl, yearsPerPage} from '@angular/material/da
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 import {takeUntil} from 'rxjs/operators';
 
-/** Custom header component for datepicker. */
+/** Custom header component for datepicker. Replicating the view used on Material datepicker sourcecode, but
+ * with modification on the current period functions for better management of the current view in the calendar
+ */
 @Component({
   selector: 'app-date-header',
   styles: [`
     .mat-calendar-header {
       padding: 8px 8px 0 8px;
     }
-
     .mat-calendar-controls {
       display: flex;
       margin: 5% calc(33% / 7 - 16px);
     }
-
     .mat-icon-button:hover .mat-button-focus-overlay {
       opacity: 0.04;
     }
-
     .mat-calendar-spacer {
       flex: 1 1 auto;
     }
-
     .mat-calendar-previous-button,
     .mat-calendar-next-button {
       position: relative;
     }
-
     .mat-calendar-previous-button::after {
       border-left-width: 2px;
       transform: translateX(2px) rotate(-45deg);
     }
-
     .mat-calendar-next-button::after {
       border-right-width: 2px;
       transform: translateX(-2px) rotate(45deg);
     }
-
     .mat-calendar-table-header th {
       text-align: center;
       padding: 0 0 8px 0;
     }
-
     .mat-text:disabled {
       color: black;
     }
@@ -78,7 +72,6 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class DateHeaderComponent<D> implements OnDestroy {
   private destroyed = new Subject<void>();
-
   constructor(
     private intl: MatDatepickerIntl,
     private calendar: MatCalendar<D>, private dateAdapter: DateAdapter<D>,
@@ -87,12 +80,10 @@ export class DateHeaderComponent<D> implements OnDestroy {
       .pipe(takeUntil(this.destroyed))
       .subscribe(() => cdr.markForCheck());
   }
-
   get periodButtonLabel(): string {
     return this.calendar.currentView === 'month' ?
       this.intl.switchToMultiYearViewLabel : this.intl.switchToMonthViewLabel;
   }
-
   /** The label for the current calendar view. */
   get periodButtonText(): string {
     if (this.calendar.currentView === 'month') {
@@ -103,7 +94,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
     if (this.calendar.currentView === 'year') {
       return this.dateAdapter.getYearName(this.calendar.activeDate);
     }
-
     // The offset from the active year to the "slot" for the starting year is the
     // *actual* first rendered year in the multi-year view, and the last year is
     // just yearsPerPage - 1 away.
@@ -117,7 +107,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
       this.dateAdapter.getYearName(this.dateAdapter.createDate(maxYearOfPage, 0, 1));
     return this.intl.formatYearRange(minYearName, maxYearName);
   }
-
   /** The label for the previous button. */
   get prevButtonLabel(): string {
     return {
@@ -126,7 +115,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
       'multi-year': this.intl.prevMultiYearLabel
     }[this.calendar.currentView];
   }
-
   /** The label for the next button. */
   get nextButtonLabel(): string {
     return {
@@ -135,21 +123,14 @@ export class DateHeaderComponent<D> implements OnDestroy {
       'multi-year': this.intl.nextMultiYearLabel
     }[this.calendar.currentView];
   }
-
-  getCurrentView() {
-    return this.calendar.currentView;
-  }
-
   ngOnDestroy() {
     this.destroyed.next();
     this.destroyed.complete();
   }
-
   /** Handles user clicks on the period label. */
   currentPeriodClicked(): void {
     this.calendar.currentView = this.calendar.currentView === 'month' ? 'multi-year' : 'month';
   }
-
   /** Handles user clicks on the previous button. */
   previousClicked(): void {
     this.calendar.activeDate = this.calendar.currentView === 'month' ?
@@ -158,7 +139,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
         this.calendar.activeDate, this.calendar.currentView === 'year' ? -1 : -yearsPerPage
       );
   }
-
   /** Handles user clicks on the next button. */
   nextClicked(): void {
     this.calendar.activeDate = this.calendar.currentView === 'month' ?
@@ -168,7 +148,6 @@ export class DateHeaderComponent<D> implements OnDestroy {
         this.calendar.currentView === 'year' ? 1 : yearsPerPage
       );
   }
-
   /** Whether the previous period button is enabled. */
   previousEnabled(): boolean {
     if (!this.calendar.minDate) {

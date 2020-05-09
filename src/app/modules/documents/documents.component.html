@@ -50,7 +50,8 @@
             [removable]="removable"
             [selectable]="selectable">
             {{author}}
-            <mat-icon *ngIf="removable" matChipRemove>cancel</mat-icon>
+            <mat-icon *ngIf="removable"
+                      matChipRemove><img src="../../../assets/pictures/bad.svg" alt="cancel"></mat-icon>
           </mat-chip>
           <label aria-label="Enter creator name">
             <input

@@ -25,20 +25,34 @@ import {Subscription} from 'rxjs';
 
 export class DocumentsTableComponent implements OnInit {
   /**
-   * To show and hide the table
+   * Paginator used on the table
    */
-  @Input() show: boolean;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  /**
+   * Sorting used on the table
+   */
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   /**
    * Event produced by the search bar with the words to use as filters
    */
   tempEvent: string;
+  /**
+   * Data source to use on the table
+   */
   dataSource: MatTableDataSource<DocumentMetadata>;
+  /**
+   * Save the original Data Source values for recovery
+   */
   tempDataSource: MatTableDataSource<DocumentMetadata>;
+  /**
+   * Columns to display on the table
+   */
   displayedColumns: string[] = ['title', 'creatorFullName',
     'creationDate', 'incidentDate', 'lastModificationDate',
     'language', 'actions'];
+  /**
+   * Expanded row
+   */
   expandedElement: DocumentMetadata | null;
   /**
    * Map of the categories to filter and what values to use as filters
@@ -52,8 +66,17 @@ export class DocumentsTableComponent implements OnInit {
     ['incidentDate', ''],
     ['creationDate', '']
   ]);
+  /**
+   * Progress value for the progress bar
+   */
   public value = 0;
+  /**
+   * Boolean to indicate if the documents finished loading
+   */
   loading = true;
+  /**
+   * Subscription to the request to get documents
+   */
   private subscription: Subscription;
 
   constructor(
@@ -64,8 +87,8 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   /**
-   * Filter the data calling the service function with the selection of the filters to use and with the datasource that have
-   * all the documents. Then will filter with the words in the searchbar using searchFilter(). After filtering calls paginateSort for
+   * Filter the data calling the service function with the selection of the filters to use and with the data source that have
+   * all the documents. Then will filter with the words in the search bar using searchFilter(). After filtering calls paginateSort for
    * sorting and pagination.
    */
   applyFilter() {
@@ -77,8 +100,8 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   /**\
-   * Filter the datasource with value of the event.
-   * @param event words to filter, the event is send it by the searchbar.
+   * Filter the data source with value of the event.
+   * @param event words to filter, the event is send it by the search bar.
    */
   searchFilter(event) {
     if (typeof event !== 'undefined') {
@@ -91,8 +114,8 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   /**
-   * Paginates and sorts the datasource.
-   * @param table datasource to paginate and sort
+   * Paginates and sorts the data source.
+   * @param table data source to paginate and sort
    */
   paginateSort(table: MatTableDataSource<DocumentMetadata>) {
     table.sort = this.sort;
@@ -102,6 +125,11 @@ export class DocumentsTableComponent implements OnInit {
     }
   }
 
+  /**
+   * Gets the documents and create the Data Source fot the table with it. Declare the custom filter predicate to use on the data filter,
+   *
+   * paginate and sorts the data source. Also updates the value of the progress bar based on the http events.
+   */
   ngOnInit(): void {
     this.subscription = this.documentService.getDocuments().subscribe((event: HttpEvent<any>) => {
       if (event.type === HttpEventType.DownloadProgress) {
@@ -139,8 +167,8 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   /**
-   * Updates the event to filter using the searchbar
-   * @param event words to filter by the searchbar.
+   * Updates the event to filter using the search bar
+   * @param event words to filter by the search bar.
    */
   searchEvent(event: Event) {
     this.tempEvent = (event.target as HTMLInputElement).value;
