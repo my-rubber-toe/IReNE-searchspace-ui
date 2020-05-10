@@ -12,9 +12,16 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Used by the search bar for redirecting to /documents and sending the values as query parameters.
+   * @param event value in the search bar
+   */
   sendSubmit(event: Event) {
     this.router.navigate(['/documents'], {queryParams: {search: event}});
   }
