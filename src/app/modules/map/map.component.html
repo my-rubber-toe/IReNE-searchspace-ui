@@ -35,7 +35,7 @@
                 updateMap()" [formControl]="publicationDate" [matDatepickerFilter]="dateFilter"
                    [matDatepicker]="picker" [max]="todayDate" matInput value=null>
           </label>
-          <mat-datepicker-toggle [disabled]=loading [for]="picker"
+          <mat-datepicker-toggle [for]="picker"
                                  matSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker (closed)="datesChecked()" (monthSelected)="monthSelected = true"
                           (opened)="datePicker()" (yearSelected)="yearSelected = true"

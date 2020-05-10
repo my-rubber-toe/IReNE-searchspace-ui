@@ -13,6 +13,9 @@ import MarkerClusterer from '@google/markerclustererplus';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {DateHeaderComponent} from '../documents/date-header.component';
 
+/**
+ * For use in the spiderfy
+ */
 declare const OverlappingMarkerSpiderfier;
 
 @Component({
@@ -21,7 +24,7 @@ declare const OverlappingMarkerSpiderfier;
   styleUrls: ['./map.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit {
 
   constructor(
     private filterService: FilterService,
@@ -31,39 +34,67 @@ export class MapComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar,
   ) {
   }
+  /**
+   * To control the date1 input child in HTML
+   */
   @ViewChild('inputToDate1', {
     read: MatInput
   }) inputToDate1: MatInput;
-
+  /**
+   * To control the date2 input child in HTML
+   */
   @ViewChild('inputToDate2', {
     read: MatInput
   }) inputToDate2: MatInput;
-
+  /**
+   * To control the mat-select1 input child in HTML
+   */
   @ViewChild('someSelect1', {
     read: MatSelect
   }) someSelect1: MatSelect;
-
+  /**
+   * To control the mat-select2 input child in HTML
+   */
   @ViewChild('someSelect2', {
     read: MatSelect
   }) someSelect2: MatSelect;
-
+  /**
+   * To control the mat-select3 input child in HTML
+   */
   @ViewChild('someSelect3', {
     read: MatSelect
   }) someSelect3: MatSelect;
-
+  /**
+   * To control the mat-select4 input child in HTML
+   */
   @ViewChild('someSelect4', {
     read: MatSelect
   }) someSelect4: MatSelect;
-
-  dirtyFields = false;
-
+  /**
+   * Interface to use in the documents(See models documentation)
+   */
   documents: MapMetadata[];
 
-  // Google Map Data Setup
+  ///////// Settings for Google Maps ///////////////
+  /**
+   * @ignore
+   */
   title = '';
+  /**
+   * Google Maps
+   */
   gmap;
+  /**
+   * @ignore
+   */
   type = 'Map';
+  /**
+   * @ignore
+   */
   center: google.maps.LatLngLiteral;
+  /**
+   * @ignore
+   */
   mapOptions: google.maps.MapOptions = {
     mapTypeId: 'roadmap',
     mapTypeControl: true,
@@ -78,11 +109,19 @@ export class MapComponent implements OnInit, AfterViewInit {
       lng: -66.5901489
     }
   };
+  /**
+   * Overlapping Marker Spiderfier
+   */
   oms;
+  /**
+   * Custom component of the DatePicker header using the material picker sourcecode to maintain the material design, but with
+   *
+   * custom functions and disabled buttons for better handling of the current view
+   */
   headerComponent = DateHeaderComponent;
 
   /**
-   * The available filters that will be used for the data.
+   * Map of the categories to filter and what values to use as filters
    */
   filterSelection: Map<string, any> = new Map<string, any>([
     ['location', ''],
@@ -93,58 +132,125 @@ export class MapComponent implements OnInit, AfterViewInit {
     ['incidentDate', ''],
     ['creationDate', '']
   ]);
-
+  /**
+   * Create today's date for to set the max date in the datepickers
+   */
   todayDate = new Date();
 
-  // Option Forms and Date
-  publicationDate = new FormControl('');
-  incidentDate = new FormControl('');
-
-  infrastructure = new FormControl();
+  /**
+   * Date controller for Publication Date input
+   */
+  publicationDate = new FormControl({value: '', disabled: true});
+  /**
+   * Date controller for Incident Date input
+   */
+  incidentDate = new FormControl({value: '', disabled: true});
+  /**
+   * Control of the inputs of infrastructure  filter
+   */
+  infrastructure = new FormControl({value: '', disabled: true});
+  /**
+   * Array to save options of the Structure filter
+   */
   infrastructureList: string[];
-
-  damage = new FormControl();
+  /**
+   * Control of the inputs of damage filter
+   */
+  damage = new FormControl({value: '', disabled: true});
+  /**
+   * Array to save options of the Damages filter
+   */
   damageList: string[];
-
-  tags = new FormControl();
+  /**
+   * Control of the inputs of tags filter
+   */
+  tags = new FormControl({value: '', disabled: true});
+  /**
+   * Array to save options of the Tags filter
+   */
   tagsList: string[];
-
-  language = new FormControl();
+  /**
+   * Control of the inputs of language filter
+   */
+  language = new FormControl({value: '', disabled: true});
+  /**
+   * Option for the language filter
+   */
   languageList: string[] = ['English', 'Spanish'];
 
   /**
    * The data source to be used.
    */
   dataSource: MatTableDataSource<MapMetadata>;
+  /**
+   * Save the original Data Source values for recovery
+   */
   tempDataSource: MatTableDataSource<MapMetadata>;
+  /**
+   * Marker Cluster
+   */
   private markerCluster: MarkerClusterer;
+  /**
+   * Array to save the years that have are not present in any document to improve speed of the dates filtering.
+   *
+   * If a year of a date is not present in any documents, that year will be added to this array and will be lookup first to not search
+   * all documents again.
+   */
   private falseYears = [];
+  /**
+   * Boolean to know if the user selected the year view in the datepickers, this helps to improve filtering. Only the possibles months
+   *
+   * will be filtered
+   */
   yearSelected = false;
+  /**
+   * Array to save the months with year that have are not present in any document to improve speed of the dates filtering.
+   *
+   * If a month and year of a date is not present in any documents, that year will be added to this array and will be lookup first to not
+   *
+   * search all documents again.
+   */
   private falseMonths = [];
+  /**
+   * Boolean to know if the user selected the month view in the datepickers, this helps to improve filtering. Only the possibles days
+   *
+   * will be filtered
+   */
   monthSelected = false;
+  /**
+   * To set the value of the picker for date filtering.
+   */
   private picker = {
     selected: ''
   };
+  /**
+   * @ignore
+   */
   dateFilter;
 
   ///////////////////// HELPERS//////////////////////////////////////
+  /**
+   * Boolean variable to know when the documents and the map finished loading and stop displaying the spinner
+   */
   loading = true;
 
-  // tslint:disable-next-line:jsdoc-format
-  /**@ignore */
+  /**
+   * Get  the documents and calls loadmap() to start loading the map.
+   *
+   * Also get the options to use in the filters selection
+   */
   ngOnInit() {
     this.searchSpaceService.getMapDocuments().add(() => {
       this.dataSource = new MatTableDataSource<MapMetadata>(this.searchSpaceService.map);
       this.tempDataSource = this.dataSource;
       this.loadMap();
     });
-
-    // Retrieve all the available filters in the database.
     this.searchSpaceService.getFilters().add(() => {
       this.infrastructureList = this.searchSpaceService.filters[`infrastructures`];
       this.damageList = this.searchSpaceService.filters[`damages`];
       this.tagsList = this.searchSpaceService.filters[`tags`];
     });
+    // sets the map center to Puerto Rico
     this.center = {
       lat: 18.2208328,
       lng: -66.5901489,
@@ -194,9 +300,11 @@ export class MapComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngAfterViewInit(): void {
-  }
-
+  /**
+   * Load the map and create an instance of it and map it to the HTML element with id map-element, also create initialize the marker
+   *
+   * spiderfy and cluster API . Add listeners to the marker, so when clicked redirect the user to read the document.
+   */
   loadMap() {
     const mapElement = document.getElementById('map-element');
     this.gmap = new google.maps.Map(mapElement, this.mapOptions);
@@ -219,9 +327,21 @@ export class MapComponent implements OnInit, AfterViewInit {
       // map is ready
       this.updateMap();
     });
+    this.tags.enable();
+    this.damage.enable();
+    this.infrastructure.enable();
+    this.publicationDate.enable();
+    this.incidentDate.enable();
+    this.language.enable();
     this.loading = false;
   }
 
+  /**
+   * Add a listener to the clusters to expand the inside spiderfy when clicked and the cluster do a zoom to a level 16 or more,
+   *
+   * and the map finished loading the tiles
+   * @param c - cluster to add the listener
+   */
   automaticSpiderify(c) {
     google.maps.event.addListenerOnce(this.gmap, 'tilesloaded', () => {
       if (this.gmap.getZoom() >= 16 && this.oms.markersNearMarker(c[0], true).length === 1) {
@@ -231,19 +351,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Set the fields to be dirty and disable the button
-   */
-  setDirty() {
-    this.dirtyFields = true;
-  }
-
-  /**
    * Update the map with the new values based on the selected search criteria. Marker on the map is treated as a 3 item array
-   * Set the dirty to false,  so the user need to change a value in the filters to press update button again.
    * [location, title, docId]
    */
   updateMap() {
-    this.dirtyFields = false;
     this.applyFilter();
     google.maps.event.clearListeners(this.markerCluster, 'click');
     this.oms.removeAllMarkers();
@@ -293,7 +404,6 @@ export class MapComponent implements OnInit, AfterViewInit {
    */
   selectionEvent(selection: any, type: string) {
     this.filterSelection.set(type, selection);
-    this.dirtyFields = true;
   }
 
 
@@ -340,7 +450,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.incidentDate.clearValidators();
     this.publicationDate.clearValidators();
-    this.dirtyFields = false;
     this.applyFilter();
     this.oms.removeAllMarkers();
     this.markerCluster.clearMarkers();
@@ -353,24 +462,29 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (this.dataSource.data.length < this.tempDataSource.data.length || this.oms.getMarkers().length === 0) {
       this.resetFilters();
       this.dataSource.data = this.tempDataSource.data;
-      this.dirtyFields = false;
       this.updateMap();
     } else {
       this.snackBar.open('All items are being displayed.', null, {duration: 3000});
     }
   }
-
+  /**
+   * Function when the datepickers close to reset the values of the filtered dates
+   */
   datesChecked() {
     this.yearSelected = false;
     this.monthSelected = false;
     this.falseYears = [];
     this.falseMonths = [];
   }
-
+  /**
+   * Called from the Publication Date picker to indicate that the dates to filter for selection are the creation dates.
+   */
   datePicker() {
     this.picker.selected = 'creationDate';
   }
-
+  /**
+   * Called from the Incident Date picker to indicate that the dates to filter for selection are the incident dates.
+   */
   datePicker2() {
     this.picker.selected = 'incidentDate';
   }

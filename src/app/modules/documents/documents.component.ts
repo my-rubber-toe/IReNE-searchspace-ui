@@ -38,11 +38,11 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
    */
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
   /**
-   * Date controllers for Publication Date input
+   * Date controller for Publication Date input
    */
   date1 = new FormControl({value: '', disabled: true});
   /**
-   * Date controllers for Incident Date input
+   * Date controller for Incident Date input
    */
   date2 = new FormControl({value: '', disabled: true});
   /**
