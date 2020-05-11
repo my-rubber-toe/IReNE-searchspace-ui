@@ -19,8 +19,8 @@ export class CollabrequestComponent implements OnInit {
   /**
    * Calling the Sign Up service for google login and validation of the request
    */
- signUp() {
-   this.singupService.signUp();
+  signUp() {
+    this.singupService.signUp();
 
   }
 }

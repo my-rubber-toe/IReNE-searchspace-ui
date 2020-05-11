@@ -24,6 +24,13 @@ export class SearchComponent implements OnInit {
    * form control
    */
   public search;
+
+  /**
+   * @ignore
+   */
+  constructor() {
+  }
+
   /**
    * Send and event with the value of the search and a different event when the user deletes the value in the search bar
    * @param event value of the Search bar
@@ -34,13 +41,6 @@ export class SearchComponent implements OnInit {
     } else {
       this.typed.emit(event);
     }
-  }
-
-  /**
-   * @ignore
-   */
-  constructor(
-  ) {
   }
 
   /**

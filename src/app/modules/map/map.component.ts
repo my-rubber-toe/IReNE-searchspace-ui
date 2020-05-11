@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
@@ -26,14 +26,6 @@ declare const OverlappingMarkerSpiderfier;
 })
 export class MapComponent implements OnInit {
 
-  constructor(
-    private filterService: FilterService,
-    private datePipe: DatePipe,
-    private searchSpaceService: SearchSpaceService,
-    private router: Router,
-    private snackBar: MatSnackBar,
-  ) {
-  }
   /**
    * To control the date1 input child in HTML
    */
@@ -74,7 +66,6 @@ export class MapComponent implements OnInit {
    * Interface to use in the documents(See models documentation)
    */
   documents: MapMetadata[];
-
   ///////// Settings for Google Maps ///////////////
   /**
    * @ignore
@@ -119,7 +110,6 @@ export class MapComponent implements OnInit {
    * custom functions and disabled buttons for better handling of the current view
    */
   headerComponent = DateHeaderComponent;
-
   /**
    * Map of the categories to filter and what values to use as filters
    */
@@ -136,7 +126,6 @@ export class MapComponent implements OnInit {
    * Create today's date for to set the max date in the datepickers
    */
   todayDate = new Date();
-
   /**
    * Date controller for Publication Date input
    */
@@ -177,7 +166,6 @@ export class MapComponent implements OnInit {
    * Option for the language filter
    */
   languageList: string[] = ['English', 'Spanish'];
-
   /**
    * The data source to be used.
    */
@@ -186,6 +174,26 @@ export class MapComponent implements OnInit {
    * Save the original Data Source values for recovery
    */
   tempDataSource: MatTableDataSource<MapMetadata>;
+  /**
+   * Boolean to know if the user selected the year view in the datepickers, this helps to improve filtering. Only the possibles months
+   *
+   * will be filtered
+   */
+  yearSelected = false;
+  /**
+   * Boolean to know if the user selected the month view in the datepickers, this helps to improve filtering. Only the possibles days
+   *
+   * will be filtered
+   */
+  monthSelected = false;
+  /**
+   * @ignore
+   */
+  dateFilter;
+  /**
+   * Boolean variable to know when the documents and the map finished loading and stop displaying the spinner
+   */
+  loading = true;
   /**
    * Marker Cluster
    */
@@ -198,12 +206,6 @@ export class MapComponent implements OnInit {
    */
   private falseYears = [];
   /**
-   * Boolean to know if the user selected the year view in the datepickers, this helps to improve filtering. Only the possibles months
-   *
-   * will be filtered
-   */
-  yearSelected = false;
-  /**
    * Array to save the months with year that have are not present in any document to improve speed of the dates filtering.
    *
    * If a month and year of a date is not present in any documents, that year will be added to this array and will be lookup first to not
@@ -212,27 +214,20 @@ export class MapComponent implements OnInit {
    */
   private falseMonths = [];
   /**
-   * Boolean to know if the user selected the month view in the datepickers, this helps to improve filtering. Only the possibles days
-   *
-   * will be filtered
-   */
-  monthSelected = false;
-  /**
    * To set the value of the picker for date filtering.
    */
   private picker = {
     selected: ''
   };
-  /**
-   * @ignore
-   */
-  dateFilter;
 
-  ///////////////////// HELPERS//////////////////////////////////////
-  /**
-   * Boolean variable to know when the documents and the map finished loading and stop displaying the spinner
-   */
-  loading = true;
+  constructor(
+    private filterService: FilterService,
+    private datePipe: DatePipe,
+    private searchSpaceService: SearchSpaceService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+  ) {
+  }
 
   /**
    * Get  the documents and calls loadmap() to start loading the map.
@@ -389,6 +384,7 @@ export class MapComponent implements OnInit {
       });
     }
   }
+
   /**
    * Retrieve the information from the selected map marker and redirect the user to the corresponding document.
    * @param label - label including the id
@@ -467,6 +463,7 @@ export class MapComponent implements OnInit {
       this.snackBar.open('All items are being displayed.', null, {duration: 3000});
     }
   }
+
   /**
    * Function when the datepickers close to reset the values of the filtered dates
    */
@@ -476,12 +473,14 @@ export class MapComponent implements OnInit {
     this.falseYears = [];
     this.falseMonths = [];
   }
+
   /**
    * Called from the Publication Date picker to indicate that the dates to filter for selection are the creation dates.
    */
   datePicker() {
     this.picker.selected = 'creationDate';
   }
+
   /**
    * Called from the Incident Date picker to indicate that the dates to filter for selection are the incident dates.
    */

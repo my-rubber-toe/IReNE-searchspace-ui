@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 })
 export class SingupService {
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
   private success: boolean;
 
@@ -17,17 +17,19 @@ export class SingupService {
     private socialAuthService: AuthService,
     private http: HttpClient,
     public dialog: MatDialog,
-  ) {}
+  ) {
+  }
 
   /**
-   * Use google sing in to retrieve the information to create a Collaborator Request
+   * Use google sing in to retrieve the information to create a Collaborator Request and sent the Google token for validation
+   * on backend
    */
   public signUp() {
     localStorage.clear();
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
         this.collabRequest(userData.firstName, userData.lastName, userData.email, userData.idToken)
-        .subscribe(
+          .subscribe(
             x => {
               this.success = true;
               this.dialog.open(DialogDataComponent, {
@@ -48,18 +50,19 @@ export class SingupService {
     );
     return this.success;
   }
-  /**
-   *  Send the info for creating a  Collaborator request
-   */
-  private collabRequest(firstName: string, lastName: string, email: string, idToken: string) {
-    return this.http.post(`${environment.serverUrl}/collab-request/`, {firstName , lastName, email, idToken }, this.httpOptions);
-  }
 
   /**
    * Sign outs the user after retrieving the information
    */
   signOut(): void {
     this.socialAuthService.signOut();
+  }
+
+  /**
+   *  Send the info for creating a  Collaborator request
+   */
+  private collabRequest(firstName: string, lastName: string, email: string, idToken: string) {
+    return this.http.post(`${environment.serverUrl}/collab-request/`, {firstName, lastName, email, idToken}, this.httpOptions);
   }
 }
 
@@ -69,6 +72,8 @@ export class SingupService {
 })
 export class DialogDataComponent {
   success: any;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, ) {
-    this.success = data.success; }
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,) {
+    this.success = data.success;
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {SearchSpaceService} from '../../../shared/services/searchspace.service';
 import {MatPaginator} from '@angular/material/paginator';
@@ -140,7 +140,7 @@ export class DocumentsTableComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate =
-          (data: DocumentMetadata, filters: string, ) => {
+          (data: DocumentMetadata, filters: string,) => {
             const matchFilter = [];
             const filterArray = filters.split(' ');
             const columns = (Object as any).values(data);
