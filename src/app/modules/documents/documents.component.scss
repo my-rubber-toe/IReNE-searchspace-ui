@@ -1,61 +1,39 @@
-html {
-  overflow: visible;
-}
-
-.home {
-  overflow: visible;
-}
-
+html {overflow: visible;}
+.home {overflow: visible;}
 mat-form-field.side {
   width: 100%;
   margin-left: 10%;
   margin-top: 5%;
 }
-
-app-documents-table {
-  padding-left: 1%;
-}
-
-mat-datepicker {
-  color: black;
-}
-
-.mat-calendar-body {
-  font-weight: bold;
-}
-
+app-documents-table {padding-left: 1%;}
+mat-datepicker {color: black;}
+.mat-calendar-body {font-weight: bold;}
 .mat-calendar-body-cell > .mat-calendar-body-cell-content:not(.mat-calendar-body-disabled) {
   background-color: #37474f;
   color: white;
   border-color: transparent;
 }
-
 .mat-calendar-body-disabled > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
   background-color: white;
   color: black;
 }
-
 .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover,
 .cdk-keyboard-focused, .cdk-program-focused {
   & > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
     background-color: rgba(55, 71, 79, 0.80);
   }
 }
-
 .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
   background-color: #37474f;
   color: white;
 }
-
 .cdk-program-focused .mat-calendar-body-active:not(.mat-calendar-body-disabled) > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
   background-color: #37474f;
   color: white;
 }
-
 .cdk-program-focused .mat-calendar-body-active:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
   background-color: rgba(55, 71, 79, 0.80);
 }
-
 .cdk-program-focused .mat-calendar-body-active.mat-calendar-body-disabled > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
   background-color: white;
   color: black;
