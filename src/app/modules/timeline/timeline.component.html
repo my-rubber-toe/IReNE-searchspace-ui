@@ -64,7 +64,9 @@
     </div>
     <div style="padding-left: 10em; padding-top: 10em;">
       <table  mat-table [dataSource]="timelinesource" class="mat-elevation-z8" matSort>
+        <th colspan="3">Membership Dates</th>
         <ng-container matColumnDef="Event">
+          
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Event </th>
           <td class= "cell" mat-cell *matCellDef="let element"> {{element.event}} </td>
         </ng-container>
