@@ -11,7 +11,9 @@ import {PreviewModule} from './layouts/preview/preview.module';
 import {AuthServiceConfig, GoogleLoginProvider, LoginOpt, SocialLoginModule} from 'angularx-social-login';
 
 const googleLoginOptions: LoginOpt = {
-  scope: 'profile email'
+  scope: 'profile email',
+  prompt: 'select_account',
+  hosted_domain: 'upr.edu',
 };
 
 const config = new AuthServiceConfig([
