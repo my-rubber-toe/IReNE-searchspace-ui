@@ -58,6 +58,8 @@ Run
 
 ## Running the app
 
+Before running the app go to src/environments/environment.ts and environment.prod.ts and the serverURl for the
+actual backend server url in use.
 At this point you can either run `npm start` or `ng serve` to run the application.
 
 ## Generating Documentation
