@@ -5,29 +5,30 @@ html {
 table {
   width: 100%;
   border-collapse: collapse;
-
-
-}
-
-td, tr {
-  border: .5px solid black;
-  text-indent: 20px;
-  width: 33%;
-
-}
-
-.cell {
-  text-indent: 1px;
 }
 
 th {
   border: .5px solid black;
-  text-indent: 20px;
-
   background-color: rgb(190, 190, 190);
   font-weight: bold;
   font-size: large;
 }
+
+td, tr {
+  border: .5px solid black;
+  width: 33%;
+
+}
+
+.highlight{
+  background: #42A948; /* green */
+}
+
+/* .cell {
+  text-indent: 1px;
+} */
+
+
 
 /* mat-select.items .mat-select-arrow{
   visibility: hidden;

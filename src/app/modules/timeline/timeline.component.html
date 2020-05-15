@@ -34,21 +34,6 @@
           </mat-select>
         </mat-form-field>
 
-
-        <!-- <mat-form-field class="side">
-            <mat-label>Category X</mat-label>
-            <mat-select  [formControl]= "category_x"  (selectionChange)="updateCatX()" (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
-              <mat-option  *ngFor="let catX of categoryX" [value]="catX">{{catX}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="side">
-            <mat-label>Category Y</mat-label>
-            <mat-select [formControl]= "category_y"  (selectionChange)="updateCatY()" (keyup)="sendValueY(subjectValue.value)" #subjectValue placeholder="Publication Date" >
-              <mat-option  *ngFor="let catY of categoryY" [value]="catY">{{catY}}</mat-option>
-            </mat-select>
-          </mat-form-field> -->
-
-
       </div>
     </div>
     <div fxFlex="1" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 10em; padding-top: 1em;">
@@ -60,35 +45,40 @@
             [options]="options"
             [width]="width"
             [height]="height"
+            (select)="onSelect($event)"
         ></google-chart>
     </div>
     <div style="padding-left: 10em; padding-top: 10em;">
+      <table mat-table [dataSource]="titleSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="Title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Case Study Title</th>
+          <td mat-cell *matCellDef="let element" limitTo:1> {{element.selTitle}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true">
+        </tr>
+        <tr class="columnHeaders" mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+      </table>
       <table mat-table [dataSource]="timelinesource" class="mat-elevation-z8" matSort>
         <ng-container matColumnDef="Event">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Event</th>
-          <td class="cell" mat-cell *matCellDef="let element"> {{element.event}} </td>
+          <td class="cell" mat-cell *matCellDef="let element ; let i =  index"
+          [ngClass]="{'highlight': selectedRowIndex === i}" (click)="showForEdit(i)"> {{element.event}} </td>
         </ng-container>
         <ng-container matColumnDef="Start Date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date</th>
-          <td mat-cell *matCellDef="let element"> {{element.start}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> Start Date</th>
+          <td mat-cell *matCellDef="let element ; let i =  index" style="padding-left: 15px;" 
+          [ngClass]="{'highlight': selectedRowIndex === i}" (click)="showForEdit(i)">{{element.start}} </td> 
         </ng-container>
         <ng-container matColumnDef="End Date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date</th>
-          <td mat-cell *matCellDef="let element"> {{element.end}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;"> End Date</th>
+          <td mat-cell *matCellDef="let element ; let i =  index" style="padding-left: 15px;"
+          [ngClass]="{'highlight': selectedRowIndex === i}" (click)="showForEdit(i)"> {{element.end}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" >
+        </tr>
+        
         <tr class="columnHeaders" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <!-- <google-chart #chart
-      [title]="titleT"
-      [type]="typeT"
-      [data]="dataT"
-      [columnNames]="columnNamesT"
-      [options]="optionsT"
-      [width]="widthT"
-      [height]="heightT"
-      (select)="onSelectT($event)"
-  ></google-chart> -->
     </div>
 
   </div>
