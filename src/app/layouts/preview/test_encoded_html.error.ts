@@ -1,1 +1,0 @@
-export const invalidHtml = 'Template <script>alert("0wned")</script> <b>Syntax</b>';

@@ -42,7 +42,7 @@ interface Document {
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.css'],
+  styleUrls: ['./preview.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 
