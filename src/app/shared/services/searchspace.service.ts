@@ -28,8 +28,7 @@ export class SearchSpaceService {
   private behaveCS = new BehaviorSubject<Object>({textVal: 'title'});
   private TimelineCat = new BehaviorSubject<Object>({
     infrasDocList: 'Building',
-    damageDocList: 'Earthquake',
-    tagsDoc: 'Hurricane'
+    damageDocList: 'Earthquake'
   });
 
   constructor(private http: HttpClient) {
