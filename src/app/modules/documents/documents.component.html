@@ -1,11 +1,10 @@
-<div fxFill class="documents">
+<div class="documents" fxFill>
   <mat-divider></mat-divider>
   <div fxLayout="column" fxLayoutAlign="space-evenly stretch">
     <div fxLayoutAlign="center" fxLayoutGap="3px">
-      <app-search #searchComponent fxFlex="80"
-                  (typed)="documentsTableComponent.searchEvent($event);
-                  documentsTableComponent.show = true; documentsTableComponent.applyFilter()"
-                  (empty)="documentsTableComponent.searchEvent($event); documentsTableComponent.applyFilter()">
+      <app-search #searchComponent (empty)="documentsTableComponent.searchEvent($event);
+      documentsTableComponent.applyFilter()" (typed)="documentsTableComponent.searchEvent($event);
+       documentsTableComponent.applyFilter()" fxFlex="75">
       </app-search>
     </div>
   </div>
@@ -13,50 +12,57 @@
     <div fxFlex="10">
       <mat-form-field class="side">
         <mat-label>Select publication date</mat-label>
-        <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="dateFilter"
-               [matDatepicker]="picker" (dateChange)="checkEvent($event);
-               documentsTableComponent.selectionEvent([$event.value], 'creationDate');
-              documentsTableComponent.applyFilter()" [formControl]="date1" value=null
-        >
-        <mat-datepicker-toggle matSuffix [for]="picker"
-                               [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
-        <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true" (opened)="datePicker()"
-                        [calendarHeaderComponent]="dateHeaderComponent" (monthSelected)="monthSelected = true"
-                        startView="multi-year" #picker></mat-datepicker>
+        <label aria-label="Select publication date">
+          <input (dateChange)="checkEvent($event);
+                 documentsTableComponent.selectionEvent([$event.value], 'creationDate');
+                documentsTableComponent.applyFilter()" [formControl]="date1" [matDatepickerFilter]="dateFilter"
+                 [matDatepicker]="picker" [max]="maxDate" [min]="minDate" matInput value=null>
+        </label>
+        <mat-datepicker-toggle [disabled]=documentsTableComponent.loading [for]="picker"
+                               matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker (closed)="datesChecked()" (monthSelected)="monthSelected = true"
+                        (opened)="datePicker()" (yearSelected)="yearSelected = true"
+                        [calendarHeaderComponent]="dateHeaderComponent" startView="multi-year"></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="side">
-        <mat-label>Select incident date</mat-label>
-        <input matInput [max]="maxDate" [min]="minDate" [matDatepickerFilter]="dateFilter"
-               [matDatepicker]="picker2"
-               (dateChange)="checkEvent($event);
-              documentsTableComponent.selectionEvent([$event.value], 'incidentDate');
-              documentsTableComponent.applyFilter()" [formControl]="date2" value="=null"
-        >
-        <mat-datepicker-toggle matSuffix [for]="picker2" [disabled] = documentsTableComponent.loading></mat-datepicker-toggle>
-        <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true" (opened)="datePicker1()"
-                        (monthSelected)="monthSelected = true" [calendarHeaderComponent]="dateHeaderComponent"
-                        startView="multi-year" #picker2></mat-datepicker>
+        <mat-label aria-label="Select incident date">Select incident date</mat-label>
+        <label aria-label="Select incident date">
+          <input (dateChange)="checkEvent($event);
+                documentsTableComponent.selectionEvent([$event.value], 'incidentDate');
+                documentsTableComponent.applyFilter()" [formControl]="date2" [matDatepickerFilter]="dateFilter" [matDatepicker]="picker2"
+                 [max]="maxDate"
+                 [min]="minDate" matInput value="=null"
+          >
+        </label>
+        <mat-datepicker-toggle [disabled]=documentsTableComponent.loading [for]="picker2"
+                               matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker2 (closed)="datesChecked()" (monthSelected)="monthSelected = true"
+                        (opened)="datePicker1()" (yearSelected)="yearSelected = true"
+                        [calendarHeaderComponent]="dateHeaderComponent" startView="multi-year"></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="side">
-        <mat-chip-list #chipList aria-label="Author selection" [disabled]=documentsTableComponent.loading>
+        <mat-chip-list #chipList [disabled]=documentsTableComponent.loading aria-label="Author selection">
           <mat-chip
-            *ngFor="let author of selectedAuthors"
-            [selectable]="selectable"
-            [removable]="removable"
             (removed)="remove(author);
            documentsTableComponent.selectionEvent(selectedAuthors, 'authorFullName');
-           documentsTableComponent.applyFilter()">
+           documentsTableComponent.applyFilter()"
+            *ngFor="let author of selectedAuthors"
+            [removable]="removable"
+            [selectable]="selectable">
             {{author}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            <mat-icon *ngIf="removable"
+                      matChipRemove><img src="../../../assets/pictures/bad.svg" alt="cancel"></mat-icon>
           </mat-chip>
-          <input
-            placeholder="Authors"
-            #creatorInput
-            [formControl]="creatorCtrl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          >
+          <label aria-label="Enter creator name">
+            <input
+              #creatorInput
+              [formControl]="creatorCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              placeholder="Authors"
+            >
+          </label>
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event);
        documentsTableComponent.selectionEvent(selectedAuthors, 'authorFullName'); documentsTableComponent.applyFilter()">
@@ -67,43 +73,44 @@
       </mat-form-field>
       <mat-form-field class="side">
         <mat-label>Infrastructure</mat-label>
-        <mat-select [formControl]="formControl" multiple
-                    (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'infrasDocList');
-      documentsTableComponent.applyFilter()">
-          <mat-option *ngFor="let structure of structureList"
-                      [value]="structure['infrastructureType']">{{structure['infrastructureType']}}</mat-option>
+        <mat-select (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'infrasDocList');
+      documentsTableComponent.applyFilter()" [formControl]="formControl" aria-label="Select a Infrastructure"
+                    multiple>
+          <mat-option *ngFor="let structure of structureList" [value]="structure['infrastructureType']"
+                      aria-label="Options of Infrastructure" role="option">{{structure['infrastructureType']}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="side">
         <mat-label>Damages</mat-label>
-        <mat-select [formControl]="formControl" multiple
-                    (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'damageDocList');
-      documentsTableComponent.applyFilter()">
+        <mat-select (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'damageDocList');
+      documentsTableComponent.applyFilter()" [formControl]="formControl"
+                    multiple>
           <mat-option *ngFor="let dmg of dmgList" [value]="dmg['damageType']">{{dmg['damageType']}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="side">
         <mat-label>Language</mat-label>
-        <mat-select [formControl]="formControl" multiple
-                    (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'language');
-      documentsTableComponent.applyFilter()">
+        <mat-select (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'language');
+      documentsTableComponent.applyFilter()" [formControl]="formControl"
+                    multiple>
           <mat-option *ngFor="let language of languageList" [value]="language">{{language}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="side">
         <mat-label>Tags</mat-label>
-        <mat-select [formControl]="formControl" multiple
-                    (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'tagsDoc');
-      documentsTableComponent.applyFilter()">
+        <mat-select (selectionChange)="documentsTableComponent.selectionEvent($event.value, 'tagsDoc');
+      documentsTableComponent.applyFilter()" [formControl]="formControl"
+                    multiple>
           <mat-option *ngFor="let tag of tagList" [value]="tag['tagItem']">{{tag['tagItem']}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="primary"  style="margin-left: 10%;" (click)="resetFilters()"
-              [disabled] = documentsTableComponent.loading>
+      <button (click)="resetFilters()" [disabled]=documentsTableComponent.loading color="primary" mat-raised-button
+              style="margin-left: 10%;">
         Reset Filters
       </button>
     </div>
     <mat-divider [vertical]="true" fxFlex="1" style="height: 500px"></mat-divider>
-    <app-documents-table show="true" fxFlex="80" #documentsTableComponent></app-documents-table>
+    <app-documents-table #documentsTableComponent fxFlex="80" show="true"></app-documents-table>
   </div>
 </div>

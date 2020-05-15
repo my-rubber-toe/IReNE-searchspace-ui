@@ -1,54 +1,54 @@
-import {Injectable} from '@angular/core';
+import {Component, Inject, Injectable} from '@angular/core';
 import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import Swal from 'sweetalert2';
 import {environment} from '../../../environments/environment';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SingupService {
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
+  private success: boolean;
 
   constructor(
     private socialAuthService: AuthService,
     private http: HttpClient,
-  ) {}
+    public dialog: MatDialog,
+  ) {
+  }
 
   /**
-   * Use google sing in to retrive the information to create a Collaborator Request
+   * Use google sing in to retrieve the information to create a Collaborator Request and sent the Google token for validation
+   * on backend
    */
   public signUp() {
+    localStorage.clear();
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
-        // on success this will return user data from google.
-        Swal.fire(
-          `Hi ${userData.firstName}, Creating Request.\n Please wait`
-        );
-        Swal.showLoading();
-        this.collabRequest(userData.firstName, userData.lastName, userData.email)
+        this.collabRequest(userData.firstName, userData.lastName, userData.email, userData.idToken)
           .subscribe(
             x => {
-              Swal.fire('Access Request', 'Access Request created', 'success');
+              this.success = true;
+              this.dialog.open(DialogDataComponent, {
+                data: {
+                  success: true,
+                }
+              });
               this.signOut();
             },
-            (error) => {
-              Swal.fire(
-                'Request Failed',
-                'Request already exists',
-                'error'
-              );
+            () => {
+              this.dialog.open(DialogDataComponent, {
+                data: {
+                  success: false,
+                }
+              });
             });
       }
     );
-  }
-  /**
-   *  Send the info for creating a  Collaborator request
-   */
-  private  collabRequest(firstName: string, lastName: string, email: string) {
-    return this.http.post(`${environment.serverUrl}/collab-request/`, {firstName , lastName, email }, this.httpOptions);
+    return this.success;
   }
 
   /**
@@ -56,5 +56,24 @@ export class SingupService {
    */
   signOut(): void {
     this.socialAuthService.signOut();
+  }
+
+  /**
+   *  Send the info for creating a  Collaborator request
+   */
+  private collabRequest(firstName: string, lastName: string, email: string, idToken: string) {
+    return this.http.post(`${environment.serverUrl}/collab-request/`, {firstName, lastName, email, idToken}, this.httpOptions);
+  }
+}
+
+@Component({
+  selector: 'app-dialog-data-component',
+  templateUrl: 'dialog-data.html',
+})
+export class DialogDataComponent {
+  success: any;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,) {
+    this.success = data.success;
   }
 }

@@ -1,11 +1,9 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-  <button mat-icon-button (click)="sidenav.toggle()">
-      <span class="material-icons">
-          menu
-      </span>
+  <button mat-icon-button (click)="sidenav.toggle();">
+    <img src="../../../../assets/pictures/menu.svg" alt="menu">
   </button>
-      <img routerLink="/home"
+      <img class="logo" routerLink="/home"
        src="assets/pictures/app_logo_white.png" alt="Logo of IReNE">
 <span>
   Interdisciplinary Research Network Extension</span>
@@ -17,8 +15,6 @@
 <a mat-button  routerLink="/map">Map</a>
 <a mat-button  routerLink="/collabrequest">Collaborator Access</a>
 <a mat-button  routerLink="/about">About</a>
-<span class="material-icons">
-    help
-  </span>
+    <img src="../../../../assets/pictures/help.svg" alt="help">
   </mat-toolbar-row>
 </mat-toolbar>

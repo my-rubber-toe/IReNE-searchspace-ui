@@ -1,12 +1,11 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from '../../shared/services/searchspace.service';
 import {Filters} from '../../shared/models/searchspace.model';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {DocumentsTableComponent} from './documents-table/documents-table.component';
 import {DatePipe} from '@angular/common';
@@ -22,36 +21,130 @@ import {DateHeaderComponent} from './date-header.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class DocumentsComponent implements OnInit, AfterViewInit {
-  @Output() sendChange = new EventEmitter();
-  @Output() selectedEvent = new EventEmitter();
+  /**
+   * To control the creator input child in HTML
+   */
   @ViewChild('creatorInput') creatorInput: ElementRef<HTMLInputElement>;
+  /**
+   * To control the events of the Search Component
+   */
   @ViewChild('searchComponent') search: SearchComponent;
+  /**
+   * Autocomplete control
+   */
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  /**
+   * To manipulate and use the variables of DocumentTableComponent
+   */
   @ViewChild('documentsTableComponent') table: DocumentsTableComponent;
+  /**
+   * Date controller for Publication Date input
+   */
   date1 = new FormControl({value: '', disabled: true});
+  /**
+   * Date controller for Incident Date input
+   */
   date2 = new FormControl({value: '', disabled: true});
+  /**
+   * Max date to use in the datepickers
+   */
   maxDate: Date;
+  /**
+   * Min date to use in the datepickers
+   */
   minDate: Date = new Date(1970, 0, 1);
+  /**
+   * Value to know if a author is selectable and present it in the possible options in HTML
+   */
   selectable = true;
+  /**
+   * Value to know if a author is removable  of the selected options
+   */
   removable = true;
+  /**
+   * @ignore
+   */
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  /**
+   * Array to store possible authors options
+   */
   authors: string[];
+  /**
+   * Array to save the selected authors to filter
+   */
   selectedAuthors: string[] = [];
+  /**
+   * Filtered options when the user starts to write the name of the author
+   */
   filteredAuthors: Observable<string[]>;
+  /**
+   * Array of the Interface Filters(See Documentation for models) that save the options for the different categories of filters
+   */
   filters: Filters[];
-  events: string[] = [];
+  /**
+   * Control of the inputs of filters
+   */
   formControl = new FormControl({value: '', disabled: true});
+  /**
+   * Control for the authors filter input
+   */
   creatorCtrl = new FormControl({value: '', disabled: true});
+  /**
+   * Option for the language filter
+   */
   languageList: string[] = ['English', 'Spanish'];
+  /**
+   * Array to save options of the Structure filter
+   */
   structureList: string[];
+  /**
+   * Array to save options of the Damages filter
+   */
   dmgList: string[];
+  /**
+   * Array to save options of the Tags filter
+   */
   tagList: string[];
+  /**
+   * @ignore
+   */
   dateFilter;
+  /**
+   * Boolean to know if the user selected the year view in the datepickers, this helps to improve filtering. Only the possibles months
+   *
+   * will be filtered
+   */
   yearSelected = false;
+  /**
+   * Boolean to know if the user selected the month view in the datepickers, this helps to improve filtering. Only the possibles days
+   *
+   * will be filtered
+   */
   monthSelected = false;
+  /**
+   * Custom component of the DatePicker header using the material picker sourcecode to maintain the material design, but with
+   *
+   * custom functions and disabled buttons for better handling of the current view
+   */
   dateHeaderComponent = DateHeaderComponent;
+  /**
+   * Array to save the years that have are not present in any document to improve speed of the dates filtering.
+   *
+   * If a year of a date is not present in any documents, that year will be added to this array and will be lookup first to not search
+   * all documents again.
+   */
   private falseYears = [];
+  /**
+   * Array to save the months with year that have are not present in any document to improve speed of the dates filtering.
+   *
+   * If a month and year of a date is not present in any documents, that year will be added to this array and will be lookup first to not
+   *
+   * search all documents again.
+   */
   private falseMonths = [];
+  /**
+   * To set the value of the picker for date filtering.
+   */
   private picker = {
     selected: ''
   };
@@ -72,12 +165,16 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
       this.structureList = this.filters[`infrastructures`];
       this.tagList = this.filters[`tags`];
       this.filteredAuthors = this.creatorCtrl.valueChanges.pipe(
-        // tslint:disable-next-line:deprecation
-        startWith(null),
         map((creator: string | null) => creator ? this._filter(creator) : this.authors.slice()));
     });
     /**
-     * Definition of the filter of the calendar to display what  dates can  be selected
+     * Definition of the filter of the calendar to display what  dates can  be selected.
+     *
+     * If no years is selected the filter will be based on the year of the date.
+     *
+     * If a year is selected the filter will be based on month asd year of the date.
+     *
+     * If month and year is selected the filter will be based on the day of the date.
      * @param d date to check
      */
     this.dateFilter = (d: Date | null): boolean => {
@@ -122,7 +219,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Check that the value selected in the calendar is not null and then format it
+   * Check that the value selected in the calendar is not null and then format it to use on the filter
    * @param event - date selected in the calendar
    */
   checkEvent(event: MatDatepickerInputEvent<any>) {
@@ -134,7 +231,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Removes creator from the selected options and add it back to the possible options
+   * Removes author from the selected options and add it back to the possible options
    * @param author - author to remove from the selected options
    */
   remove(author: string): void {
@@ -160,6 +257,10 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.creatorCtrl.setValue(null);
   }
 
+  /**
+   * Receives the query parameters from home to filter the table when the search initiate  on Home view.
+   * Use the subscription in the table component to know when the documents finished loading and enable the filter selections.
+   */
   ngAfterViewInit(): void {
     this.route.queryParams.subscribe(params => {
       // @ts-ignore
@@ -174,6 +275,9 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Function when the datepickers close to reset the values of the filtered dates
+   */
   datesChecked() {
     this.yearSelected = false;
     this.monthSelected = false;
@@ -181,14 +285,23 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
     this.falseMonths = [];
   }
 
+  /**
+   * Called from the Publication Date picker to indicate that the dates to filter for selection are the creation dates.
+   */
   datePicker() {
     this.picker.selected = 'creationDate';
   }
 
+  /**
+   * Called from the Incident Date picker to indicate that the dates to filter for selection are the incident dates.
+   */
   datePicker1() {
     this.picker.selected = 'incidentDate';
   }
 
+  /**
+   * Reset all the filter selections
+   */
   resetFilters() {
     this.formControl.reset();
     this.creatorCtrl.reset();
@@ -202,7 +315,7 @@ export class DocumentsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * filter for the autocomplete of the authors field
+   * Filter for the autocomplete of the authors field
    * @param value author to filter
    *
    */

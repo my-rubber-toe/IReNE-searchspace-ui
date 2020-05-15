@@ -28,24 +28,28 @@
         <br>
         <br>
         <mat-form-field>
-          <mat-label>Publication date</mat-label>
-          <input #inputToDate1 matInput [matDatepicker]="picker" [max]="todayDate" [formControl]="publicationDate"
-                 [matDatepickerFilter]="publicationFilter"
-                 (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'creationDate'); updateMap()">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
-                          (monthSelected)="monthSelected = true" [calendarHeaderComponent]="headerComponent"
-                          startView="multi-year" #picker></mat-datepicker>
+          <mat-label>Select publication date</mat-label>
+          <label aria-label="Select publication date">
+            <input #inputToDate1 (dateChange)="datePreCheck($event);
+                 selectionEvent([$event.value], 'creationDate');
+                updateMap()" [formControl]="publicationDate" [matDatepickerFilter]="dateFilter"
+                   [matDatepicker]="picker" [max]="todayDate" matInput value=null>
+          </label>
+          <mat-datepicker-toggle [for]="picker"
+                                 matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #picker (closed)="datesChecked()" (monthSelected)="monthSelected = true"
+                          (opened)="datePicker()" (yearSelected)="yearSelected = true"
+                          [calendarHeaderComponent]="headerComponent" startView="multi-year"></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Incident date</mat-label>
           <input #inputToDate2 matInput [matDatepicker]="picker2" [max]="todayDate" [formControl]="incidentDate"
-                 [matDatepickerFilter]="incidentFilter"
+                 [matDatepickerFilter]="dateFilter"
                  (dateChange)="datePreCheck($event); selectionEvent([$event.value], 'incidentDate'); updateMap()">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker (closed)="datesChecked()" (yearSelected)="yearSelected = true"
                           (monthSelected)="monthSelected = true" [calendarHeaderComponent]="headerComponent"
-                          startView="multi-year" #picker2></mat-datepicker>
+                          (opened)="datePicker2()" startView="multi-year" #picker2></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Infrastructure</mat-label>
@@ -79,7 +83,8 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="1" style="padding-left: 7em;">
+      <div fxFill fxLayoutAlign="center center">
+        <mat-spinner style="z-index: -99; margin-left: 50%;" *ngIf="loading"></mat-spinner>
         <div class="map-element" id="map-element">
         </div>
       </div>

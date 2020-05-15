@@ -7,6 +7,7 @@ import {SingupService} from '../../shared/services/singup.service';
   styleUrls: ['./collabrequest.component.scss']
 })
 export class CollabrequestComponent implements OnInit {
+
   constructor(
     private singupService: SingupService,
   ) {
@@ -16,9 +17,10 @@ export class CollabrequestComponent implements OnInit {
   }
 
   /**
-   * Calling the Sign Up service
+   * Calling the Sign Up service for google login and validation of the request
    */
   signUp() {
     this.singupService.signUp();
+
   }
 }

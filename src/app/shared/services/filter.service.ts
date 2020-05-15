@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {DocumentMetadata, MapMetadata} from '../models/searchspace.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +10,10 @@ export class FilterService {
   }
 
   /**
-   * Filter the datasource using the filterSelection Map with categories and values of it. And returns the Datasoruce filtered.
+   * Filter the DataSource using the filterSelection Map with categories and values of it. And returns the DataSource filtered.
    * @param filterSelection Map with keys of the categories to filter and the values of it
    * @param tempDataSource DataSource to filter
-   * @return filteringDatasource Datasource filtered
+   * @return filteringDataSource DataSource filtered
    */
   applyFilter(filterSelection: Map<string, any>, tempDataSource: MatTableDataSource<any>) {
     const filteringDataSource = new MatTableDataSource<any>();
@@ -24,7 +23,7 @@ export class FilterService {
   }
 
   /**
-   *    * Using the filterSelection Map keys will filter the tempDatasource in the categories specified by the keys
+   *    * Using the filterSelection Map keys will filter the tempDataSource in the categories specified by the keys
    * with values in the map of the key corresponding to it.
    * @param filteringDataSource filterSelection Map with keys of the categories to filter and the values of it
    * @param filterSelection tempDataSource DataSource to filter

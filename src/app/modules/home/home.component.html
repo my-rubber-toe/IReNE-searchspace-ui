@@ -1,38 +1,31 @@
-<div fxFill class="home">
+<div class="home" fxFill>
   <div fxLayout="column" fxLayoutAlign="center">
     <div fxLayout="row wrap" fxLayoutAlign="center center">
-      <div style="margin-top: 5vh; margin-bottom: 5vh" fxFlex="grow" fxLayoutAlign="center">
-        <p id="irene">
-          IReNE
-        </p>
-        <p id="searchspace">Search Space</p>
+      <div fxFlex="grow" fxLayoutAlign="center" style="margin-top: 5vh; margin-bottom: 5vh;">
+        <h1 style="font-size: 5em; font-weight: bold;">IReNE</h1>
+        <p style="font-size: 3em; font-weight: bold;">Search Space</p>
       </div>
-      <app-search (submitEvent)="sendSubmit($event)" fxFlex="60" fxFlexOrder="1">
-      </app-search>
+      <app-search (submitEvent)="sendSubmit($event)" fxFlex="60" fxFlexOrder="1"></app-search>
       <mat-card class="disclaimer" fxFlex="60" fxFlexOrder="2">
-        <mat-card-header>
-          <h2>
-            Welcome to the Interdisciplinary Research Network Extension
-          </h2>
+        <mat-card-header style="margin-bottom: 10px;">
+          Welcome to the Interdisciplinary Research Network Extension
         </mat-card-header>
-        <mat-card-content>
-          <p>
-            IReN is a web application developed to facilitate the creation and access of case studies
-            regarding the multi-faceted infrastructure damages of natural disasters in Puerto Rico. The web application
-            allows for the creation, searching, and editing of case studies and was developed by students from the
-            University of Puerto Rico to help the RISE-UP initiative document, collaborate, and share information that
-            will help create more resilient future infrastructure in Puerto Rico.
-          </p>
+        <mat-card-content style="text-align: justify;">
+          IReN is a web application developed to facilitate the creation and access of case studies
+          regarding the multi-faceted infrastructure damages of natural disasters in Puerto Rico. The web application
+          allows for the creation, searching, and editing of case studies and was developed by students from the
+          University of Puerto Rico to help the RISE-UP initiative document, collaborate, and share information that
+          will help create more resilient future infrastructure in Puerto Rico.
         </mat-card-content>
       </mat-card>
     </div>
     <div fxLayout="row" fxLayoutAlign="center start">
-      <div fxLayout="row" fxFlex="60" fxLayoutAlign="space-evenly ">
+      <div fxFlex="60" fxLayout="row" fxLayoutAlign="space-evenly ">
         <mat-card>
           <mat-card-header>
             <mat-card-title>Search</mat-card-title>
           </mat-card-header>
-          <img routerLink="/documents" mat-card-image src="../../../assets/pictures/search-black-48dp.svg" alt="search">
+          <img alt="search" mat-card-image routerLink="/documents" src="../../../assets/pictures/search-black-48dp.svg">
           <mat-card-content>
             Search documents in the database and apply different filters.
           </mat-card-content>
@@ -41,7 +34,7 @@
           <mat-card-header>
             <mat-card-title>Map</mat-card-title>
           </mat-card-header>
-          <img routerLink="/map" mat-card-image src="../../../assets/pictures/room_black.svg" alt="search">
+          <img alt="search" mat-card-image routerLink="/map" src="../../../assets/pictures/room_black.svg">
           <mat-card-content>
             Select filters for the documents and show the locations of it in a map.
           </mat-card-content>
@@ -50,7 +43,7 @@
           <mat-card-header>
             <mat-card-title>Timeline</mat-card-title>
           </mat-card-header>
-          <img routerLink="/timeline" mat-card-image src="../../../assets/pictures/date_range.svg" alt="search">
+          <img alt="search" mat-card-image routerLink="/timeline" src="../../../assets/pictures/date_range.svg">
           <mat-card-content>
             Select document to visualize the timeline of it.
           </mat-card-content>
@@ -59,7 +52,7 @@
           <mat-card-header>
             <mat-card-title>XvsY Plot</mat-card-title>
           </mat-card-header>
-          <img routerLink="/xy" mat-card-image src="../../../assets/pictures/show_chart.svg" alt="search">
+          <img alt="search" mat-card-image routerLink="/xy" src="../../../assets/pictures/show_chart.svg">
           <mat-card-content>
             Select filters and view a X vs Y plot to visualize the correlation.
           </mat-card-content>
