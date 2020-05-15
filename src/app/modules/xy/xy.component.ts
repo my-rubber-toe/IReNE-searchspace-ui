@@ -190,7 +190,7 @@ export class XyComponent implements OnInit {
                 titleFontSize: 15
               },
               vAxis: {
-                title: 'Categories of Type ' + x,
+                title: 'Categories: ' + x + ' types',
                 titleFontSize: 15
               },
               fontSize: 10,
