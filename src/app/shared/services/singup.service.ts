@@ -1,5 +1,5 @@
 import {Component, Inject, Injectable} from '@angular/core';
-import {AuthService, GoogleLoginProvider} from 'angularx-social-login';
+import {AuthService, GoogleLoginProvider, SocialUser} from 'angularx-social-login';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
@@ -26,29 +26,34 @@ export class SingupService {
    */
   public signUp() {
     localStorage.clear();
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(reason => {}
+    ).then(
       (userData) => {
-        this.collabRequest(userData.firstName, userData.lastName, userData.email, userData.idToken)
-          .subscribe(
-            x => {
-              this.success = true;
-              this.dialog.open(DialogDataComponent, {
-                data: {
-                  success: true,
-                }
+        if (userData instanceof SocialUser) {
+          this.collabRequest(userData.firstName, userData.lastName, userData.email, userData.idToken)
+            .subscribe(
+              x => {
+                this.success = true;
+                this.dialog.open(DialogDataComponent, {
+                  data: {
+                    success: true,
+                  }
+                });
+                this.signOut();
+              },
+              () => {
+                this.dialog.open(DialogDataComponent, {
+                  data: {
+                    success: false,
+                  }
+                });
+                this.signOut();
               });
-              this.signOut();
-            },
-            () => {
-              this.dialog.open(DialogDataComponent, {
-                data: {
-                  success: false,
-                }
-              });
-            });
+        }
       }
-    );
-    return this.success;
+    ).finally(() => {
+      return this.success;
+    });
   }
 
   /**
