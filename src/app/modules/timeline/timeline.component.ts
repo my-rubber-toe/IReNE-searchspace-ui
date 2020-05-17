@@ -229,7 +229,6 @@ export class TimelineComponent implements OnInit {
             titleEvent = this.tempDataSource.filteredData[index].timeline[i]['event'];
             timelineTable[i] = [titleEvent, new Date(Date.parse(start)), new Date((Date.parse(end)))];
           }
-
           // sorts the events for the table
           timelineTable = timelineTable.sort(this.compareDate);
 
