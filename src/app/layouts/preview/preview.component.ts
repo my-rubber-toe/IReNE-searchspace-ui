@@ -63,6 +63,9 @@ export class PreviewComponent implements OnInit {
   actor: Array<Actor> = [];
   section: Array<Section> = [];
   value = 0;
+  /**
+   * Boolean to indicate if the request started.
+   */
   startLoading = false;
   constructor(
     private activatedRoute: ActivatedRoute,
