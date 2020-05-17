@@ -11,7 +11,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {DialogDataComponent} from './services/singup.service';
+import {ConfirmDataComponent} from './services/singup.service';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -20,6 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     FooterComponent,
     SidenavComponent,
     DialogDataComponent,
+    ConfirmDataComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +36,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatListModule,
     MatToolbarModule,
     MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
   ],
   exports: [
     HeaderComponent,

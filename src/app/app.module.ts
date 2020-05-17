@@ -13,7 +13,6 @@ import {AuthServiceConfig, GoogleLoginProvider, LoginOpt, SocialLoginModule} fro
 const googleLoginOptions: LoginOpt = {
   scope: 'profile email',
   prompt: 'select_account',
-  hosted_domain: 'upr.edu',
 };
 
 const config = new AuthServiceConfig([
