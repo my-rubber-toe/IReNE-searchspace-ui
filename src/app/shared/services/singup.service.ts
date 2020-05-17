@@ -1,6 +1,6 @@
 import {Component, Inject, Injectable} from '@angular/core';
 import {AuthService, GoogleLoginProvider, SocialUser} from 'angularx-social-login';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 
@@ -21,12 +21,12 @@ export class SingupService {
   }
 
   /**
-   * Use google sing in to retrieve the information to create a Collaborator Request and sent the Google token for validation
+   * Use google sign in to retrieve the information to create a Collaborator Request and sent the Google token for validation
    * on backend
    */
   public signUp() {
     localStorage.clear();
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(reason => {}
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(error => {}
     ).then(
       (userData) => {
         if (userData instanceof SocialUser) {
@@ -41,14 +41,33 @@ export class SingupService {
                 });
                 this.signOut();
               },
-              () => {
-                this.dialog.open(DialogDataComponent, {
-                  data: {
-                    success: false,
+              (e: HttpErrorResponse) => {
+                if (e.status === 409) {
+                  this.dialog.open(DialogDataComponent, {
+                    data: {
+                      success: false,
+                      message: 'This Request has been created already, please wait for the decision of the administrators.',
+                    }
+                  });
+                } else {
+                  if (e.status === 400) {
+                    this.dialog.open(DialogDataComponent, {
+                      data: {
+                        success: false,
+                        message: 'Invalid email, only emails from UPR are allowed',
+                      }
+                    });
+                  } else {
+                    this.dialog.open(DialogDataComponent, {
+                      data: {
+                        success: false,
+                        message: 'The request can not be created. Please contact an administrator',
+                      }
+                    });
                   }
-                });
-                this.signOut();
+              }
               });
+          this.signOut();
         }
       }
     ).finally(() => {
@@ -77,8 +96,10 @@ export class SingupService {
 })
 export class DialogDataComponent {
   success: any;
+  message: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, ) {
     this.success = data.success;
+    this.message = data.message;
   }
 }
