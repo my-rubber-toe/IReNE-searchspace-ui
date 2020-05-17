@@ -1,3 +1,6 @@
+/*
+  Author: Jainel M. Torres Santos <jainel.torres@upr.edu>
+*/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl} from '@angular/forms';
 import { SearchSpaceService } from 'src/app/shared/services/searchspace.service';
@@ -40,8 +43,8 @@ export class XyComponent implements OnInit {
   options = {};
   // data is filled in ngOnInit()
   data = [];
-  width = 1000;
-  height = 550;
+  width = 1050;
+  height = 650;
 
   verticalDict = {
     Damage: 'damageDocList',

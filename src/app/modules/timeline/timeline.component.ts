@@ -1,3 +1,7 @@
+/*
+  Author: Jainel M. Torres Santos <jainel.torres@upr.edu>
+*/
+
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {SearchSpaceService} from 'src/app/shared/services/searchspace.service';
@@ -44,6 +48,7 @@ export class TimelineComponent implements OnInit {
   elementTimeline: timelinetabledoc[] = [];
   elementTitle: selectedTitle[] = [];
 
+  //drop down lists in UI
   timeTitle = new FormControl();
   timelineTitles: string [];
 
@@ -55,24 +60,21 @@ export class TimelineComponent implements OnInit {
 
 
   //the index of the row to highlight
-  selectedRowIndex: Number = -1 ;
+  selectedRowIndex: number = -1 ;
   /*
       parameters for timeline View
+      title & data is filled in ngonInit()
   */
-  // title & data is filled in ngonInit()
   title = '';
   type = 'Timeline';
   columnNames = ['Event', 'Bar Label', 'Start', 'End'];
   options = {
     enableScrollWheel: true,
-    colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+    colors: ['#e6693e', '#f6c7b6']
   };
   data = [];
   width = 850;
   height = 650;
-  /*
-      parameters for timeline Table
-  */
 
   constructor(private docservice: SearchSpaceService) {
     this.infrastructure.setValue(['Building']);
@@ -90,7 +92,7 @@ export class TimelineComponent implements OnInit {
 
   }
 
-  // sends selected value to ngonInit()
+  // sends selected title to ngonInit()
   sendValueCS(value) {
     this.docservice.setBehaviorViewCS({textVal: value});
   }
@@ -104,6 +106,7 @@ export class TimelineComponent implements OnInit {
     return catTitle.selTitle;
   }
 
+  // sends selected categories to ngonInit()
   sendValueTCAT(infras, damage) {
     this.docservice.setBehaviorViewTCAT({
       infrasDocList: infras,
@@ -111,23 +114,26 @@ export class TimelineComponent implements OnInit {
     });
   }
 
-  //Gives the index of the event selected on the graph
-  onSelect(event){
-    this.selectedRowIndex = event[0].row
-  }
-
-  //highlights the selected event on the table
-  showForEdit(row) { 
-    this.selectedRowIndex = row;
-  }
-  // gets selected title from html
+  // gets selected categories from html
   updateTCAT() {
     const cat: selectedCat = {
       infrasDocList: this.infrastructure.value,
       damageDocList: this.damage.value
     };
     this.sendValueTCAT(cat.infrasDocList, cat.damageDocList);
-    // return catTitle.selTitle;
+  }
+
+  //Gives the index of the selected event on the graph
+  onSelect(event){
+    for(let i = 0; i < this.timelinesource.filteredData.length; i++){
+      if(this.data[event[0].row][1] == this.timelinesource.filteredData[i].event){
+        this.selectedRowIndex = i;
+      } 
+    }
+  }
+  //highlights the selected event on the table
+  showForEdit(row) { 
+    this.selectedRowIndex = row;
   }
 
   ngOnInit(): void {
@@ -203,6 +209,7 @@ export class TimelineComponent implements OnInit {
               break;
             }
           }
+
           let timelineGraph = [];
           let timelineTable = [];
           
@@ -214,11 +221,12 @@ export class TimelineComponent implements OnInit {
             // for the graph
             start = this.tempDataSource.filteredData[index].timeline[i][`eventStartDate`];
             end = this.tempDataSource.filteredData[index].timeline[i][`eventEndDate`];
-            timelineGraph[i] = ['Timeline', '',
-              Date.parse(start), Date.parse(end)];
+  
+            timelineGraph[i] = ['Timeline', this.tempDataSource.filteredData[index].timeline[i]['event'],
+              Date.parse(start), Date.parse(end) + 100000000];
 
             // for the table
-            titleEvent = this.tempDataSource.filteredData[index].timeline[i][`event`];
+            titleEvent = this.tempDataSource.filteredData[index].timeline[i]['event'];
             timelineTable[i] = [titleEvent, new Date(Date.parse(start)), new Date((Date.parse(end)))];
           }
 
@@ -229,7 +237,6 @@ export class TimelineComponent implements OnInit {
           this.data = timelineGraph;
           let start_date = '';
           let end_date = '';
-          this.elementTimeline = [];
           for (let i = 0; i < timelineTable.length; i++) {
             start_date = String(timelineTable[i][1]);
             end_date = String(timelineTable[i][2]);
@@ -239,10 +246,13 @@ export class TimelineComponent implements OnInit {
               end: end_date.substring(3, 7) + '. ' + end_date.substring(8, 16)
             };
           }
+          this.timelinesource = new MatTableDataSource<timelinetabledoc>(this.elementTimeline);
+          
+          //datatable for the header table
           this.elementTitle[0] = {
             selTitle: this.tempDataSource.filteredData[index].title};
           this.titleSource = new  MatTableDataSource<selectedTitle>(this.elementTitle);
-          this.timelinesource = new MatTableDataSource<timelinetabledoc>(this.elementTimeline);
+                    
         });
       });
     });

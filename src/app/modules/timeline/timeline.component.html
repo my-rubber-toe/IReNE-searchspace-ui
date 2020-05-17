@@ -1,3 +1,6 @@
+<!--
+  Author: Jainel M. Torres Santos <jainel.torres@upr.edu>
+-->
 <div class="timeline-graph">
   <h1 style="padding: 0em 2em;"><b>Timeline View</b></h1>
   <p style="padding: 0px 2em;">
@@ -48,7 +51,7 @@
             (select)="onSelect($event)"
         ></google-chart>
     </div>
-    <div style="padding-left: 10em; padding-top: 10em;">
+    <div style="padding-left: 10em; padding-top: 15em;">
       <table mat-table [dataSource]="titleSource" class="mat-elevation-z8" matSort>
         <ng-container matColumnDef="Title">
           <th mat-header-cell *matHeaderCellDef mat-sort-header > Case Study Title</th>
