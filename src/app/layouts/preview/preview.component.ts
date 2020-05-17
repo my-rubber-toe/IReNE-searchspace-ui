@@ -63,6 +63,7 @@ export class PreviewComponent implements OnInit {
   actor: Array<Actor> = [];
   section: Array<Section> = [];
   value = 0;
+  startLoading = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -79,6 +80,7 @@ export class PreviewComponent implements OnInit {
       this.http.request(req).subscribe(
         (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.DownloadProgress) {
+            this.startLoading = true;
             this.value = event.loaded / event.total * 100;
           }
           if (event.type === HttpEventType.Response) {

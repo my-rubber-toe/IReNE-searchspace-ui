@@ -5,7 +5,9 @@
   align-items: center;
   flex-direction: column;
 }
-
+mat-card-title {
+  line-height: 1em;
+}
 .preview-container{
   display: flex;
   flex-direction: column;
@@ -13,24 +15,20 @@
   align-items: center;
   overflow: hidden;
 }
-
 .preview-card {
   padding-left: 2em;
   /* 8in width */
   width: 768px;
 }
-
 .title-section{
-  display: flex; 
-  justify-content: flex-start space-between; 
+  display: flex;
+  justify-content: flex-start space-between;
   align-items: center;
   flex-wrap: wrap;
 }
-
 .title-box{
   padding-left: 4em;
 }
-
 :root {
   --ck-highlight-marker-blue: #72cdfd;
   --ck-highlight-marker-green: #63f963;
@@ -41,7 +39,6 @@
   --ck-image-style-spacing: 1.5em;
   --ck-todo-list-checkmark-size: 16px;
 }
-
 /* ckeditor5-image/theme/imageresize.css */
 .ck-content .image.image_resized {
   max-width: 100%;
@@ -68,7 +65,7 @@
   clear: both;
   text-align: center;
   margin: 1em auto;
-  
+
 }
 /* ckeditor5-image/theme/image.css */
 .ck-content .image > img {
