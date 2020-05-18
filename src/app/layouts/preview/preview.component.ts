@@ -1,5 +1,5 @@
 import {HttpClient, HttpEvent, HttpEventType, HttpRequest} from '@angular/common/http';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {environment} from 'src/environments/environment';
@@ -46,7 +46,7 @@ interface Document {
   encapsulation: ViewEncapsulation.None,
 })
 
-export class PreviewComponent implements OnInit {
+export class PreviewComponent implements OnInit, AfterViewInit {
   loadingDocument = true;
   notFound = false;
   title = '';
@@ -77,6 +77,9 @@ export class PreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
       const req = new HttpRequest('GET', `${environment.serverUrl}/documents/view/` + id, {reportProgress :  true, } );
