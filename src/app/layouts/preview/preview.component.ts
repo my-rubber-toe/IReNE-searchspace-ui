@@ -1,5 +1,5 @@
 import {HttpClient, HttpEvent, HttpEventType, HttpRequest} from '@angular/common/http';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {environment} from 'src/environments/environment';
@@ -46,7 +46,7 @@ interface Document {
   encapsulation: ViewEncapsulation.None,
 })
 
-export class PreviewComponent implements OnInit {
+export class PreviewComponent implements OnInit, AfterViewInit {
   loadingDocument = true;
   notFound = false;
   title = '';
@@ -77,17 +77,21 @@ export class PreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
       const req = new HttpRequest('GET', `${environment.serverUrl}/documents/view/` + id, {reportProgress :  true, } );
       this.http.request(req).subscribe(
         (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.DownloadProgress) {
+            this.loadingDocument = true;
             this.startLoading = true;
             this.value = event.loaded / event.total * 100;
           }
           if (event.type === HttpEventType.Response) {
-            const doc = event.body[`message`];
+            const doc = event.body[`message`][0];
             this.title = doc.title;
             this.description = doc.description;
             this.creatorFullName = doc.creatorFullName;

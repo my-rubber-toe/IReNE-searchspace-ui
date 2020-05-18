@@ -1,7 +1,4 @@
 <div style="overflow: hidden;" *ngIf="!notFound">
-  <div class="spinner-container" *ngIf="!startLoading">
-    <mat-spinner></mat-spinner>
-  </div>
   <div class="spinner-container" *ngIf="loadingDocument">
     <mat-spinner mode="determinate" [value]="value"></mat-spinner>
   </div>
@@ -13,7 +10,7 @@
           <mat-card-title style="overflow-wrap: normal;">{{title}}</mat-card-title>
           <mat-card-subtitle>
             <br>
-            <div *ngIf="description.length > 0">
+            <div *ngIf="description">
               <h2>Description</h2>
               <div>{{description}}</div>
             </div>
