@@ -31,7 +31,7 @@ export class SingupService {
     ).then(
       (userData: SocialUser) => {
         if (userData instanceof SocialUser) {
-          const emailValidator = new FormControl(userData.email, Validators.pattern('^[a-z0-9._%+-]+@upr.edu$'));
+          const emailValidator = new FormControl(userData.email, Validators.pattern('^[\\.a-z0-9]*(@upr\\.edu)$'));
           if (!emailValidator.hasError('pattern')) {
           this.activeDialog = this.dialog.open(ConfirmDataComponent, {
             data: {

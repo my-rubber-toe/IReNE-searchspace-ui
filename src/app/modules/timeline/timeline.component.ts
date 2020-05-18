@@ -128,11 +128,11 @@ export class TimelineComponent implements OnInit {
     for(let i = 0; i < this.timelinesource.filteredData.length; i++){
       if(this.data[event[0].row][1] == this.timelinesource.filteredData[i].event){
         this.selectedRowIndex = i;
-      } 
+      }
     }
   }
   //highlights the selected event on the table
-  showForEdit(row) { 
+  showForEdit(row) {
     this.selectedRowIndex = row;
   }
 
@@ -161,7 +161,7 @@ export class TimelineComponent implements OnInit {
 
           // sets default value for case study
           this.timeTitle.setValue(this.dataSource.filteredData[0].title);
-          
+
           // gets the title for each case study for the dropdown list in UI
           // also sets the tempdatasource with the filtered categories selected
           if (cats.infrasDocList.length == 0) {
@@ -190,7 +190,9 @@ export class TimelineComponent implements OnInit {
                 for (let k = 0; k < cats.damageDocList.length; k++) {
                   if ((this.dataSource.filteredData[i].infrasDocList.includes(cats.infrasDocList[j])
                     || this.dataSource.filteredData[i].damageDocList.includes(cats.damageDocList[k]))
-                    && !timelineTitle.includes(this.dataSource.filteredData[i].title)) {
+                    && !timelineTitle.includes(this.dataSource.filteredData[i].title)
+                    && typeof this.dataSource.filteredData[i].timeline !== 'undefined'
+                    && this.dataSource.filteredData[i].timeline.length !== 0 ) {
                     timelineTitle.push(this.dataSource.filteredData[i].title);
                     this.tempDataSource.data.push(this.dataSource.filteredData[i]);
 
@@ -212,7 +214,7 @@ export class TimelineComponent implements OnInit {
 
           let timelineGraph = [];
           let timelineTable = [];
-          
+
           let start = '';
           let end = '';
           let titleEvent = '';
@@ -221,7 +223,7 @@ export class TimelineComponent implements OnInit {
             // for the graph
             start = this.tempDataSource.filteredData[index].timeline[i][`eventStartDate`];
             end = this.tempDataSource.filteredData[index].timeline[i][`eventEndDate`];
-  
+
             timelineGraph[i] = ['Timeline', this.tempDataSource.filteredData[index].timeline[i]['event'],
               Date.parse(start), Date.parse(end) + 100000000];
 
@@ -246,12 +248,12 @@ export class TimelineComponent implements OnInit {
             };
           }
           this.timelinesource = new MatTableDataSource<timelinetabledoc>(this.elementTimeline);
-          
+
           //datatable for the header table
           this.elementTitle[0] = {
             selTitle: this.tempDataSource.filteredData[index].title};
           this.titleSource = new  MatTableDataSource<selectedTitle>(this.elementTitle);
-                    
+
         });
       });
     });
