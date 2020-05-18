@@ -27,10 +27,10 @@
             <div *ngIf="author.length > 0">
               <p><b>Authors:</b></p>
               <div class="title-section">
-                <div class="title-box" *ngFor="let author of author">
-                  <p>{{author.author_FN}} {{author.author_LN}}</p>
-                  <p>{{author.author_email}}</p>
-                  <p>{{author.author_faculty}}</p>
+                <div class="author-box" *ngFor="let author of author">
+                  <p><b>Name:</b> {{author.author_FN}} {{author.author_LN}}</p>
+                  <p><b>Email:</b> {{author.author_email}}</p>
+                  <p><b>Faculty:</b> {{author.author_faculty}}</p>
                 </div>
               </div>
             </div>
@@ -59,9 +59,9 @@
             <div *ngIf="actor.length > 0">
               <p><b>Actors:</b></p>
               <div class="title-section">
-                <div class="title-box" *ngFor="let actor of actor">
-                  <p>{{actor.actor_FN}} {{actor.actor_LN}}</p>
-                  <p>{{actor.role}}</p>
+                <div class="actor-box" *ngFor="let actor of actor">
+                  <p><b>Name:</b> {{actor.actor_FN}} {{actor.actor_LN}}</p>
+                  <p><b>Role:</b> {{actor.role}}</p>
                 </div>
               </div>
             </div>
