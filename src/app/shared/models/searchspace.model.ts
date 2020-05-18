@@ -98,7 +98,6 @@ export interface Timeline {
     id: string;
     title: string;
     timeline: Array<object>;
-    tagsDoc: Array<string>;
     infrasDocList: Array<string>;
     damageDocList: Array<string>;
 }

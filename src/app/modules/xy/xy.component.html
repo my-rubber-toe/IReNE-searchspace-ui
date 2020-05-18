@@ -1,3 +1,6 @@
+<!--
+  Author: Jainel M. Torres Santos <jainel.torres@upr.edu>
+-->
 <div class="comparison-graph">
   <h1 style="padding: 0em 2em;"><b>Comparison View</b></h1>
   <p style="padding: 0px 2em;">
@@ -13,16 +16,16 @@
   </p>
 
   <div fxFill style="overflow: hidden">
-    <div fxFlex="10" fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
-      <div fxFlex="10">
-        <mat-form-field class="side">
+    <div fxLayout="row" fxLayoutAlign="start stretch" style="padding-left: 1em; padding-top: 2em;">
+      <div fxFlex="1">
+        <mat-form-field>
           <mat-label>Vertical Axis</mat-label>
           <mat-select [formControl]="category_x" (selectionChange)="updateCatX()"
                       (keyup)="sendValueX(subjectValue.value)" #subjectValue placeholder="Damage">
             <mat-option *ngFor="let catX of categoryX" [value]="catX">{{catX}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="side">
+        <mat-form-field>
           <mat-label>Horizontal Axis</mat-label>
           <mat-select [formControl]="category_y" (selectionChange)="updateCatY()"
                       (keyup)="sendValueY(subjectValue.value)" #subjectValue placeholder="Publication Date">
@@ -31,10 +34,11 @@
         </mat-form-field>
 
       </div>
+      <div  fxFlex="1"  style="padding-left: 15em; padding-top:1em">
+        <google-chart #chart class="chart" [title]="title" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options"
+          [height]="height" [width]= "width" ></google-chart>
+      </div>
     </div>
-    <div  fxFlex="1" fxLayoutAlign="center center" style="padding-left: 5em;">
-      <google-chart #chart class="chart" [title]="title" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options"
-        [height]="height" [width]= "width" ></google-chart>
-    </div>
+    
   </div>
 </div>

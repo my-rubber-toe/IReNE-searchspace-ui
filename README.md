@@ -50,6 +50,8 @@ run automatically which will build the application.
 
 ## Build
 
+Before building the app go to src/environments/environment.ts and environment.prod.ts and the serverURl for the
+actual backend server url in use.
 Run
 ```
 "ng build --optimization=true --buildOptimizer=true --progress=true --output-path dist --aot --prod"

@@ -1,3 +1,6 @@
+mat-progress-bar{
+  height: .5em;
+}
 .table-container {
   max-height: 60vh;
   overflow: auto;
@@ -28,14 +31,5 @@ tr.example-element-row:not(.example-expanded-row):active {background: #efefef;}
 }
 .example-element-description {padding: 16px;}
 .example-element-description-attribution {opacity: 0.5;}
-mat-select.items .mat-select-arrow {
-  visibility: hidden;
-  z-index: 999;
-}
-mat-select.items .mat-select-placeholder {color: rgba(black, 1);}
-mat-select.items .mat-option-disabled {color: rgba(black, 1);}
-
-td {
-  cursor: pointer;
-}
+td {cursor: pointer;}
 

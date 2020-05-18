@@ -1,3 +1,7 @@
+/*
+  Author: Jainel M. Torres Santos <jainel.torres@upr.edu>
+*/
+
 html {
   overflow: visible;
 }
@@ -21,24 +25,7 @@ td, tr {
 }
 
 .highlight{
-  background: #42A948; /* green */
+  background: rgb(124, 201, 105);
 }
 
-/* .cell {
-  text-indent: 1px;
-} */
 
-
-
-/* mat-select.items .mat-select-arrow{
-  visibility: hidden;
-      z-index: 999;
-}
-
-mat-select.items .mat-select-placeholder{
-  color: rgba(black, 1);
-}
-
-mat-select.items .mat-option-disabled{
-  color: rgba(black, 1);
-} */

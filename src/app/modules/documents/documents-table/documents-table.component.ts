@@ -75,6 +75,10 @@ export class DocumentsTableComponent implements OnInit {
    */
   loading = true;
   /**
+   * Boolean to indicate if the request started.
+   */
+  startLoading = false;
+  /**
    * Subscription to the request to get documents
    */
   private subscription: Subscription;
@@ -133,6 +137,7 @@ export class DocumentsTableComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.documentService.getDocuments().subscribe((event: HttpEvent<any>) => {
       if (event.type === HttpEventType.DownloadProgress) {
+        this.startLoading = true;
         this.value = event.loaded / event.total * 100;
       }
       if (event.type === HttpEventType.Response) {
@@ -140,7 +145,7 @@ export class DocumentsTableComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate =
-          (data: DocumentMetadata, filters: string,) => {
+          (data: DocumentMetadata, filters: string, ) => {
             const matchFilter = [];
             const filterArray = filters.split(' ');
             const columns = (Object as any).values(data);

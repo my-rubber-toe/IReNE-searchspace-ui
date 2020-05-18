@@ -5,9 +5,7 @@
   align-items: center;
   flex-direction: column;
 }
-mat-card-title {
-  line-height: 1em;
-}
+
 .preview-container{
   display: flex;
   flex-direction: column;
@@ -15,20 +13,24 @@ mat-card-title {
   align-items: center;
   overflow: hidden;
 }
+
 .preview-card {
   padding-left: 2em;
   /* 8in width */
   width: 768px;
 }
+
 .title-section{
-  display: flex;
-  justify-content: flex-start space-between;
+  display: flex; 
+  justify-content: flex-start space-between; 
   align-items: center;
   flex-wrap: wrap;
 }
+
 .title-box{
   padding-left: 4em;
 }
+
 :root {
   --ck-highlight-marker-blue: #72cdfd;
   --ck-highlight-marker-green: #63f963;
@@ -39,6 +41,7 @@ mat-card-title {
   --ck-image-style-spacing: 1.5em;
   --ck-todo-list-checkmark-size: 16px;
 }
+
 /* ckeditor5-image/theme/imageresize.css */
 .ck-content .image.image_resized {
   max-width: 100%;
@@ -65,7 +68,6 @@ mat-card-title {
   clear: both;
   text-align: center;
   margin: 1em auto;
-
 }
 /* ckeditor5-image/theme/image.css */
 .ck-content .image > img {
@@ -163,7 +165,6 @@ mat-card-title {
 .ck-content .table {
   margin: 1em auto;
   display: table;
-  border: 1px solid black;
 }
 /* ckeditor5-table/theme/table.css */
 .ck-content .table table {
@@ -171,21 +172,19 @@ mat-card-title {
   border-spacing: 0;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
+  border: 1px double hsl(0, 0%, 70%);
 }
 /* ckeditor5-table/theme/table.css */
 .ck-content .table table td,
 .ck-content .table table th {
   min-width: 2em;
   padding: .4em;
-  border-color:black;
-  border: 1px solid black;
+  border-color: hsl(0, 0%, 75%);
 }
 /* ckeditor5-table/theme/table.css */
 .ck-content .table table th {
   font-weight: bold;
   background: hsla(0, 0%, 0%, 5%);
-  border: 1px solid black;
 }
 /* ckeditor5-list/theme/todolist.css */
 .ck-content .todo-list {
