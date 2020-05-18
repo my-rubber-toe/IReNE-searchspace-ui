@@ -83,11 +83,12 @@ export class PreviewComponent implements OnInit {
       this.http.request(req).subscribe(
         (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.DownloadProgress) {
+            this.loadingDocument = true;
             this.startLoading = true;
             this.value = event.loaded / event.total * 100;
           }
           if (event.type === HttpEventType.Response) {
-            const doc = event.body[`message`];
+            const doc = event.body[`message`][0];
             this.title = doc.title;
             this.description = doc.description;
             this.creatorFullName = doc.creatorFullName;

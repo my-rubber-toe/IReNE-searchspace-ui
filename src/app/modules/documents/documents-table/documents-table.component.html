@@ -43,7 +43,7 @@
       <ng-container matColumnDef="actions">
         <th *matHeaderCellDef mat-header-cell>Actions</th>
         <td *matCellDef="let element" mat-cell>
-          <button (click)="previewDoc(element._id.$oid)" color="primary"
+          <button (click)="previewDoc(element._id)" color="primary"
                   mat-icon-button
                   matTooltip="View Document"
                   matTooltipPosition="right"
