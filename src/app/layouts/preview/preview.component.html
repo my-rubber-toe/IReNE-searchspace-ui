@@ -1,6 +1,6 @@
 <div style="overflow: hidden;" *ngIf="!notFound">
   <div class="spinner-container" *ngIf="loadingDocument">
-    <mat-spinner mode="determinate" [value]="value"></mat-spinner>
+    <mat-spinner mode="indeterminate" [value]="value"></mat-spinner>
   </div>
 
   <div class="preview-container" *ngIf="!loadingDocument">
