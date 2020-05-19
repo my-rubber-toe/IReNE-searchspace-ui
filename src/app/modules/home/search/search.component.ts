@@ -1,3 +1,6 @@
+/*
+  Author: Alejandro Vasquez Nuñez <alejandro.vasquez@upr.edu>
+*/
 import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormControl} from '@angular/forms';
 

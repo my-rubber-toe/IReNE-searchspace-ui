@@ -1,3 +1,6 @@
+/*
+  Author: Alejandro Vasquez Nuñez <alejandro.vasquez@upr.edu>
+*/
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';

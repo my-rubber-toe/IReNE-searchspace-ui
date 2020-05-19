@@ -160,7 +160,12 @@ export class TimelineComponent implements OnInit {
           this.selectedRowIndex = -1;
 
           // sets default value for case study
-          this.timeTitle.setValue(this.dataSource.filteredData[0].title);
+          for (let i = 0; i < this.dataSource.filteredData.length; i++) {
+            if (typeof this.dataSource.filteredData[i].timeline !== 'undefined' && this.dataSource.filteredData[i].timeline.length !== 0) {
+              this.timeTitle.setValue(this.dataSource.filteredData[i].title);
+              break;
+            }
+          }
 
           // gets the title for each case study for the dropdown list in UI
           // also sets the tempdatasource with the filtered categories selected

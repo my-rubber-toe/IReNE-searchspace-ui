@@ -1,3 +1,6 @@
+/*
+  Author: Alejandro Vasquez Nuñez <alejandro.vasquez@upr.edu>
+*/
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {SearchSpaceService} from '../../../shared/services/searchspace.service';

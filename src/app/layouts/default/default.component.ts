@@ -1,3 +1,6 @@
+/*
+  Author: Alejandro Vasquez Nuñez <alejandro.vasquez@upr.edu>
+*/
 import {Component, OnInit} from '@angular/core';
 
 @Component({

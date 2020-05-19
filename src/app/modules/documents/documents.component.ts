@@ -1,3 +1,6 @@
+/*
+  Author: Alejandro Vasquez Nuñez <alejandro.vasquez@upr.edu>
+*/
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {FormControl} from '@angular/forms';

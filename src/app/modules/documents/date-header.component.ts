@@ -1,3 +1,6 @@
+/*
+  Author: Alejandro Vasquez Nuñez <alejandro.vasquez@upr.edu>
+*/
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
 import {MatCalendar, MatDatepickerIntl, yearsPerPage} from '@angular/material/datepicker';
